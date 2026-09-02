@@ -17,7 +17,13 @@ try{
      const v=VOCAB_BY_ID.get(id);
      const selected=selectExamExample(v,String(year));
      const html=examExampleHTML(v);
-     return {year:selected.example&&selected.example.year,mode:selected.example&&selected.example.mode,matched:selected.example&&selected.example.matchedForm,html};
+     return {
+       year:selected.example&&selected.example.year,
+       mode:selected.example&&selected.example.mode,
+       matched:selected.example&&selected.example.matchedForm,
+       sentence:selected.example&&selected.example.sentence,
+       html
+     };
    }
    const silent=[];
    for(const v of VOCAB){
@@ -48,8 +54,8 @@ try{
      }
    };
  });
- assert.equal(check.believe.year,2019);assert.match(check.believe.html,/Who would believe such a stupid story/);
- assert.equal(check.lot.year,2026);assert.match(check.lot.html,/a lot of people/);
+ assert.equal(check.believe.year,2019);assert.equal(check.believe.sentence,'Who would believe such a stupid story?');
+ assert.equal(check.lot.year,2026);assert.match(check.lot.sentence,/a lot of people/);
  assert.equal(check.close.year,2024);assert.equal(check.close.matched,'closely');assert.match(check.close.html,/派生形 closely/);
  assert.deepEqual(check.silent,[],'silent selected-year fallback exists');
  assert.equal(check.translations.help,'私は歴史で一番助けが必要です。');
