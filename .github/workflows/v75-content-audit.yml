@@ -7,6 +7,7 @@ on:
     paths:
       - index.html
       - tools/audit_v75_content.mjs
+      - tools/audit_v75_review_candidates.mjs
       - .github/workflows/v75-content-audit.yml
 
 permissions:
@@ -21,7 +22,9 @@ jobs:
           ref: fix/v7.5-user-test-remediation
           fetch-depth: 0
       - name: Run exhaustive example audit
-        run: node tools/audit_v75_content.mjs
+        run: |
+          node tools/audit_v75_content.mjs
+          node tools/audit_v75_review_candidates.mjs
       - name: Commit audit evidence
         shell: bash
         run: |
