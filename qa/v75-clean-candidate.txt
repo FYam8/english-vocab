@@ -1,0 +1,3 @@
+v7.5 clean-pass candidate
+Product index generated at e32bb65114605b957493d83c0a509cc5afbb80a2.
+Test-only trigger; does not alter product code or persisted data schema.
