@@ -103,26 +103,27 @@
   assert.equal((await page.locator('#toast').textContent()).trim(),'');
   await page.evaluate(()=>endSession(true));
 
-  // VOC-04/07/09/10/11/12: content, evidence, selected-year note, and accessibility.
+  // VOC-04/07/09/10/11/12: content, evidence, selected-year example, and accessibility.
   await openFresh();
   const contentChecks=await page.evaluate(()=>{
     const hard=EXAM_EXAMPLES['w90545631866000'];
     state.settings.year='2019';
     const believe=VOCAB_BY_ID.get('w3032116916');
-    const mismatch=examExampleHTML(believe);
+    const selectedYearExample=examExampleHTML(believe);
     const stem=VOCAB_BY_ID.get('p2681140134');
     const term=VOCAB_BY_ID.get('w90945261587363');
     const useful=VOCAB_BY_ID.get('w2386378786');
     return {
       hardJa:hard.ja,
-      mismatch,
+      selectedYearExample,
       stemDisplay:v75DisplayWord(stem),stemType:stem.entryType,stemQuestionType:chooseType(stem,false),
       termType:term.entryType,termEvidence:term.evidenceType,termCompact:v75CompactEvidence(term),
       usefulCompact:v75CompactEvidence(useful)
     };
   });
   assert.equal(contentChecks.hardJa,'うん、その理科のテストは私にも難しかったです。');
-  assert.match(contentChecks.mismatch,/この語は2019年度にも確認されています。表示例文は2026年度のものです。/);
+  assert.match(contentChecks.selectedYearExample,/2019年度 問題冊子/);
+  assert.match(contentChecks.selectedYearExample,/Who would .*believe.* such a stupid story/);
   assert.equal(contentChecks.stemDisplay,'What will ... probably say next?');
   assert.equal(contentChecks.stemType,'listeningQuestionStem');
   assert.equal(contentChecks.stemQuestionType,'choice');
