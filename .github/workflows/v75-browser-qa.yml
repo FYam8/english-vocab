@@ -1,0 +1,72 @@
+name: v7.5 two-pass Chromium QA
+
+on:
+  push:
+    branches:
+      - fix/v7.5-user-test-remediation
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  chromium-user-pass:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Assemble browser test
+        run: |
+          cat tools/v75_browser_test.part*.mjs > /tmp/v75_browser_test.mjs
+          node --check /tmp/v75_browser_test.mjs
+
+      - name: Existing-user protection static gate
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          s=Path('index.html').read_text()
+          assert 'const SCHEMA_VERSION=7;' in s
+          assert 'const STORAGE_KEY="waseshibu_vocab_state";' in s
+          assert 'localStorage.clear(' not in s
+          assert 'localStorage.removeItem(STORAGE_KEY)' not in s
+          assert 'waseshibu_vocab_active_session_v1' in s
+          assert '2019-2026-v7.5-user-test-remediation' in s
+          assert 'const VOCAB=' in s
+          print('existing-user static gate: PASS')
+          PY
+
+      - name: Install Playwright Chromium
+        run: |
+          cd /tmp
+          npm init -y >/dev/null 2>&1
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps chromium
+
+      - name: Start local app server
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/v75-http.log 2>&1 &
+          echo $! >/tmp/v75-http.pid
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:4173/index.html >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/v75-http.log
+          exit 1
+
+      - name: USER-PASS-1
+        env:
+          NODE_PATH: /tmp/node_modules
+          V75_TEST_URL: http://127.0.0.1:4173/index.html
+          V75_PASS: USER-PASS-1
+        run: node /tmp/v75_browser_test.mjs
+
+      - name: USER-PASS-2
+        env:
+          NODE_PATH: /tmp/node_modules
+          V75_TEST_URL: http://127.0.0.1:4173/index.html
+          V75_PASS: USER-PASS-2
+        run: node /tmp/v75_browser_test.mjs
+
+      - name: Final diff hygiene
+        run: git diff --check
