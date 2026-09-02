@@ -25,7 +25,7 @@ jobs:
       - name: Commit audit evidence
         shell: bash
         run: |
-          if git diff --quiet -- qa/content-audit; then
+          if [ -z "$(git status --porcelain -- qa/content-audit)" ]; then
             echo "audit output unchanged"
             exit 0
           fi
