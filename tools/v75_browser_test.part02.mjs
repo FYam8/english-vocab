@@ -19,7 +19,9 @@
   await page.evaluate(()=>{
     const p=getProgress(VOCAB[0].id);p.correct=5;p.incorrect=2;p.mastery=3;p.evidence=9;p.lastStudied='2026-09-01T10:00:00.000Z';
     state.stats.totalAnswers=100;state.settings.mode='random';state.settingsUpdatedAt=new Date(Date.now()-120000).toISOString();saveState();hydrateUiFromState();
+    navigateToView('settings');
   });
+  await page.waitForFunction(()=>location.hash==='#settings'&&document.getElementById('view-settings').classList.contains('active'));
   const downloadPromise=page.waitForEvent('download');
   await page.click('#exportBtn');
   const download=await downloadPromise;
