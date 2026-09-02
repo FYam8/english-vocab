@@ -20,6 +20,7 @@ jobs:
         run: |
           cat tools/v75_browser_test.part*.mjs > /tmp/v75_browser_test.mjs
           node --check /tmp/v75_browser_test.mjs
+          node --check tools/v75_content_browser_test.mjs
 
       - name: Existing-user protection static gate
         run: |
@@ -59,14 +60,18 @@ jobs:
           NODE_PATH: /tmp/node_modules
           V75_TEST_URL: http://127.0.0.1:4173/index.html
           V75_PASS: USER-PASS-1
-        run: node /tmp/v75_browser_test.mjs
+        run: |
+          node /tmp/v75_browser_test.mjs
+          node tools/v75_content_browser_test.mjs
 
       - name: USER-PASS-2
         env:
           NODE_PATH: /tmp/node_modules
           V75_TEST_URL: http://127.0.0.1:4173/index.html
           V75_PASS: USER-PASS-2
-        run: node /tmp/v75_browser_test.mjs
+        run: |
+          node /tmp/v75_browser_test.mjs
+          node tools/v75_content_browser_test.mjs
 
       - name: Final diff hygiene
         run: git diff --check
