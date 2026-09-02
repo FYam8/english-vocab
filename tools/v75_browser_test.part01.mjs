@@ -66,13 +66,13 @@
   await start('recommended','10','all');
   const navQ=await page.evaluate(()=>currentQuestion.questionInstanceId);
   await page.click('.nav button[data-view="list"]');
-  await page.waitForFunction(()=>location.hash==='#list');
+  await page.waitForFunction(()=>location.hash==='#list'&&document.getElementById('view-list').classList.contains('active'));
   assert.equal(await page.locator('#view-list').evaluate(el=>el.classList.contains('active')),true);
   await page.goBack({waitUntil:'domcontentloaded'});
-  await page.waitForFunction(()=>location.hash==='#learn');
+  await page.waitForFunction(()=>location.hash==='#learn'&&document.getElementById('view-learn').classList.contains('active'));
   assert.equal(await page.evaluate(()=>session&&session.active&&currentQuestion.questionInstanceId),navQ);
   await page.goForward({waitUntil:'domcontentloaded'});
-  await page.waitForFunction(()=>location.hash==='#list');
+  await page.waitForFunction(()=>location.hash==='#list'&&document.getElementById('view-list').classList.contains('active'));
   assert.equal(await page.evaluate(()=>session&&session.active&&currentQuestion.questionInstanceId),navQ);
   await page.evaluate(()=>endSession(true));
 
