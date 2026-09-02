@@ -1,0 +1,40 @@
+name: Apply v7.5 user-test remediation
+
+on:
+  push:
+    branches:
+      - fix/v7.5-user-test-remediation
+    paths:
+      - tools/v75_override.part*.js
+      - tools/apply_v75_patch.py
+      - .github/workflows/apply-v75-patch.yml
+
+permissions:
+  contents: write
+
+jobs:
+  patch-and-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/v7.5-user-test-remediation
+          fetch-depth: 0
+      - name: Check override syntax
+        run: cat tools/v75_override.part*.js > /tmp/v75_override.js && node --check /tmp/v75_override.js
+      - name: Apply deterministic patch and static audit
+        run: python tools/apply_v75_patch.py
+      - name: Diff check
+        run: git diff --check
+      - name: Commit patched app
+        shell: bash
+        run: |
+          if git diff --quiet -- index.html; then
+            echo "index.html already up to date"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Implement vocabulary v7.5 user-test remediation"
+          git push origin HEAD:fix/v7.5-user-test-remediation
