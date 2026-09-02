@@ -1,0 +1,76 @@
+[
+  {
+    "id": "w1284177306",
+    "word": "close",
+    "meaning": "閉じる／近い",
+    "years": [
+      2020,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2025,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "Their communities are close, with families usually marrying other Quechua-speakers.",
+      "matchedForm": "close",
+      "ja": "彼らの共同体は結びつきが強く、家族はたいてい他のケチュア語話者と結婚します。"
+    }
+  },
+  {
+    "id": "w3032116916",
+    "word": "believe",
+    "meaning": "信じる、〜と思う",
+    "years": [
+      2019,
+      2021,
+      2022,
+      2023,
+      2025,
+      2026
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2026,
+      "source": "リスニングスクリプト",
+      "page": 3,
+      "mode": "exact",
+      "sentence": "Some people believe that when we dream, our brain continues to work on problems from the day—like studying for a test or thinking about a decision.",
+      "matchedForm": "believe",
+      "ja": "夢を見ているとき、脳はその日の問題、たとえばテスト勉強や何かの決断について考えることなどに引き続き取り組んでいる、と考える人もいます。"
+    }
+  },
+  {
+    "id": "w1094248838",
+    "word": "lot",
+    "meaning": "たくさん；区画",
+    "years": [
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2025,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "Today was fun, but we spent a lot of money!",
+      "matchedForm": "lot",
+      "ja": "今日は楽しかったけれど、たくさんお金を使いました。"
+    }
+  }
+]
