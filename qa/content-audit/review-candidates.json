@@ -1,0 +1,250 @@
+[
+  {
+    "id": "w2106363633",
+    "word": "disappear",
+    "years": [
+      2020
+    ],
+    "example": {
+      "sentence": "Before the summer was over, Sheila’s spell over me was gone, but the memory of losing the [ ] never disappeared.",
+      "year": 2020,
+      "source": "問題冊子",
+      "page": 7,
+      "matchedForm": "disappeared",
+      "mode": "exact",
+      "ja": "夏が終わる前にはシーラの私への魅力は消えていましたが、バスを失った記憶は決して消えませんでした。"
+    }
+  },
+  {
+    "id": "w0288940764",
+    "word": "environment",
+    "years": [
+      2023,
+      2025
+    ],
+    "example": {
+      "sentence": "The scientists were [ 1 ] that magpies might [ 2 ] a hard [ 3 ] living in a [ 4 ] environment caused by climate change.",
+      "year": 2023,
+      "source": "問題冊子",
+      "page": 10,
+      "matchedForm": "environment",
+      "mode": "exact",
+      "ja": "気候変動が理由で、より暖かくなってきた環境の中で、マグパイが生きていくのに苦労をするかもしれないことを科学者たちは心配していました。"
+    }
+  },
+  {
+    "id": "w1452406406",
+    "word": "magpie",
+    "years": [
+      2023
+    ],
+    "example": {
+      "sentence": "An adult female magpie was [ ] out another magpie in getting free from its harness.",
+      "year": 2023,
+      "source": "問題冊子",
+      "page": 10,
+      "matchedForm": "magpie",
+      "mode": "exact",
+      "ja": "成鳥のメスのカササギが、別のカササギがハーネスから抜け出すのを助けていました。"
+    }
+  },
+  {
+    "id": "w3338173923",
+    "word": "female",
+    "years": [
+      2023,
+      2024
+    ],
+    "example": {
+      "sentence": "An adult female magpie was [ ] out another magpie in getting free from its harness.",
+      "year": 2023,
+      "source": "問題冊子",
+      "page": 10,
+      "matchedForm": "female",
+      "mode": "exact",
+      "ja": "成鳥のメスのカササギが、別のカササギがハーネスから抜け出すのを助けていました。"
+    }
+  },
+  {
+    "id": "w3130268937",
+    "word": "bass",
+    "years": [
+      2020
+    ],
+    "example": {
+      "sentence": "He decided to give up the bass for the girl he liked.",
+      "year": 2020,
+      "source": "問題冊子",
+      "page": 8,
+      "matchedForm": "bass",
+      "mode": "exact",
+      "ja": "彼は好きな女の子のためにバスを手放すことにしました。"
+    }
+  },
+  {
+    "id": "p3891949381",
+    "word": "give up",
+    "years": [
+      2020
+    ],
+    "example": {
+      "sentence": "He decided to give up the bass for the girl he liked.",
+      "year": 2020,
+      "source": "問題冊子",
+      "page": 8,
+      "matchedForm": "give up",
+      "mode": "exact",
+      "ja": "彼は好きな女の子のためにバスを手放すことにしました。"
+    }
+  },
+  {
+    "id": "p3099442518",
+    "word": "help with",
+    "years": [
+      2021,
+      2023,
+      2026
+    ],
+    "example": {
+      "sentence": "I need the most help with History.",
+      "year": 2023,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "matchedForm": "help with",
+      "mode": "exact",
+      "ja": "私は歴史が一番苦手なので、最も助けが必要です。"
+    }
+  },
+  {
+    "id": "p4217966614",
+    "word": "by the time",
+    "years": [
+      2020,
+      2023
+    ],
+    "example": {
+      "sentence": "Anyway, by the time we arrived at the campsite, some bad weather had already started and we could see we weren’t going to have the dry weather we were hoping for.",
+      "year": 2023,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "matchedForm": "by the time",
+      "mode": "exact",
+      "ja": "とにかく、キャンプ場に着いたころにはすでに天気が崩れ始めていて、期待していたような晴天にはならないと分かりました。"
+    }
+  },
+  {
+    "id": "w1688387771",
+    "word": "effort",
+    "years": [
+      2020,
+      2021,
+      2024
+    ],
+    "example": {
+      "sentence": "Your effort will make no difference.”",
+      "year": 2021,
+      "source": "問題冊子",
+      "page": 7,
+      "matchedForm": "effort",
+      "mode": "exact",
+      "ja": "あなたが努力しても何も変わりません。」"
+    }
+  },
+  {
+    "id": "w2780795386",
+    "word": "difference",
+    "years": [
+      2021
+    ],
+    "example": {
+      "sentence": "Your effort will make no difference.”",
+      "year": 2021,
+      "source": "問題冊子",
+      "page": 7,
+      "matchedForm": "difference",
+      "mode": "exact",
+      "ja": "あなたが努力しても何も変わりません。」"
+    }
+  },
+  {
+    "id": "w91071520037954",
+    "word": "participation",
+    "years": [
+      2025
+    ],
+    "example": {
+      "sentence": "They should remove any barriers to participation.”",
+      "year": 2025,
+      "source": "問題冊子",
+      "page": 12,
+      "matchedForm": "participation",
+      "mode": "exact",
+      "ja": "参加を妨げるものはすべて取り除くべきです。」"
+    }
+  },
+  {
+    "id": "w3032116916",
+    "word": "believe",
+    "years": [
+      2019,
+      2021,
+      2022,
+      2023,
+      2025,
+      2026
+    ],
+    "example": {
+      "sentence": "Some people believe that when we dream, our brain continues to work on problems from the day—like studying for a test or thinking about a decision.",
+      "year": 2026,
+      "source": "リスニングスクリプト",
+      "page": 3,
+      "matchedForm": "believe",
+      "mode": "exact",
+      "ja": "夢を見ているとき、脳はその日の問題、たとえばテスト勉強や何かの決断について考えることなどに引き続き取り組んでいる、と考える人もいます。"
+    }
+  },
+  {
+    "id": "w1094248838",
+    "word": "lot",
+    "years": [
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "example": {
+      "sentence": "Today was fun, but we spent a lot of money!",
+      "year": 2025,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "matchedForm": "lot",
+      "mode": "exact",
+      "ja": "今日は楽しかったけれど、たくさんお金を使いました。"
+    }
+  },
+  {
+    "id": "w1284177306",
+    "word": "close",
+    "years": [
+      2020,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "example": {
+      "sentence": "Their communities are close, with families usually marrying other Quechua-speakers.",
+      "year": 2025,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "matchedForm": "close",
+      "mode": "exact",
+      "ja": "彼らの共同体は結びつきが強く、家族はたいてい他のケチュア語話者と結婚します。"
+    }
+  }
+]
