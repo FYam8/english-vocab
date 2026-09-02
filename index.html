@@ -1313,6 +1313,9 @@ persistActiveSession=function(){
 function clearActiveSession(){
   try{localStorage.removeItem(V75_ACTIVE_SESSION_KEY)}catch(e){console.warn("Active session clear failed",e)}
 }
+// Hoisted bindings required by the strict-mode single-file app before the v7.5 overrides assign implementations.
+var clearToast;
+var persistActiveSession;
 function loadActiveSession(){
   try{
     const raw=localStorage.getItem(V75_ACTIVE_SESSION_KEY);
