@@ -1,0 +1,1637 @@
+[
+  {
+    "id": "p9000000016",
+    "word": "turn over",
+    "meaning": "ひっくり返す",
+    "years": [
+      2019
+    ],
+    "layer": "challenge",
+    "level": 70,
+    "example": {
+      "year": 2019,
+      "source": "問題冊子",
+      "page": 5,
+      "mode": "exact",
+      "sentence": "Once he handed the test papers out, he asked the students to turn them over.",
+      "matchedForm": "turn them over",
+      "ja": "彼はテスト用紙を配り終えると、生徒たちに裏返すよう言いました。"
+    }
+  },
+  {
+    "id": "p9000000017",
+    "word": "no good",
+    "meaning": "役に立たない",
+    "years": [
+      2019,
+      2024
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2019,
+      "source": "問題冊子",
+      "page": 6,
+      "mode": "exact",
+      "sentence": "“If you’ve had your three wishes, it’s ①no good to you now, Morris,” said Mr. White.",
+      "matchedForm": "no good",
+      "ja": "「3つの願いをもう使ったのなら、今となっては①役に立たないだろう、モリス」とホワイト氏は言いました。"
+    }
+  },
+  {
+    "id": "p9000000018",
+    "word": "belong to",
+    "meaning": "〜に所属する",
+    "years": [
+      2019
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2019,
+      "source": "問題冊子",
+      "page": 4,
+      "mode": "completed",
+      "sentence": "He asked me if I belonged to the local soccer team.",
+      "matchedForm": "belonged to",
+      "ja": "彼は私が地元のサッカーチームに所属しているかどうか尋ねました。",
+      "note": "語句整序を公式解答に従って並べた完成文"
+    }
+  },
+  {
+    "id": "w90367666872245",
+    "word": "achieve",
+    "meaning": "達成する",
+    "years": [
+      2022
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2022,
+      "source": "問題冊子",
+      "page": 10,
+      "mode": "exact",
+      "sentence": "Mrs Packletide decided to shoot a tiger because she wanted to achieve something bigger than Loona Bimberton.",
+      "matchedForm": "achieve",
+      "ja": "ミセス・パクルタイドは、ルーナ・ビンバートンよりも大きなことを成し遂げたかったので、トラを撃つことにしました。"
+    }
+  },
+  {
+    "id": "w90429937316572",
+    "word": "addition",
+    "meaning": "追加、付加",
+    "years": [
+      2021,
+      2022
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2021,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "In addition, people who have studied another language tend to have broader views of the world.",
+      "matchedForm": "addition",
+      "ja": "さらに、別の言語を学んだことのある人は、世界に対してより広い見方をする傾向があります。"
+    }
+  },
+  {
+    "id": "w90934409154259",
+    "word": "advice",
+    "meaning": "助言、アドバイス",
+    "years": [
+      2020,
+      2025
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2020,
+      "source": "問題冊子",
+      "page": 10,
+      "mode": "exact",
+      "sentence": "Indeed, although peanut treatment sounds attractive to many patients, it has to be done with a doctor’s advice.",
+      "matchedForm": "advice",
+      "ja": "実際、ピーナッツ治療は多くの患者にとって魅力的に聞こえますが、医師の助言のもとで行わなければなりません。"
+    }
+  },
+  {
+    "id": "w90060458104716",
+    "word": "afford",
+    "meaning": "〜する余裕がある／買う余裕がある",
+    "years": [
+      2024
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2024,
+      "source": "問題冊子",
+      "page": 6,
+      "mode": "exact",
+      "sentence": "Her mother couldn’t afford one.",
+      "matchedForm": "afford",
+      "ja": "彼女の母親には、それを買う余裕がありませんでした。"
+    }
+  },
+  {
+    "id": "w90318383545101",
+    "word": "afraid",
+    "meaning": "恐れて、心配して",
+    "years": [
+      2019,
+      2020,
+      2022,
+      2024
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2020,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "No, I’m afraid they have all sold out.",
+      "matchedForm": "afraid",
+      "ja": "いいえ、残念ですが、すべて売り切れました。"
+    }
+  },
+  {
+    "id": "w90228375350281",
+    "word": "agree",
+    "meaning": "同意する、意見が一致する",
+    "years": [
+      2019,
+      2020,
+      2022,
+      2025,
+      2026
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2026,
+      "source": "リスニングスクリプト",
+      "page": 3,
+      "mode": "exact",
+      "sentence": "Of course, not all scientists agree.",
+      "matchedForm": "agree",
+      "ja": "もちろん、すべての科学者が同意しているわけではありません。"
+    }
+  },
+  {
+    "id": "w90207160019794",
+    "word": "application",
+    "meaning": "申請、応募／応用",
+    "years": [
+      2020
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2020,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "Sign up for a membership card by filling out an application form and handing it to any sales clerk.",
+      "matchedForm": "application",
+      "ja": "申込書に記入して販売員に渡し、会員カードに登録してください。"
+    }
+  },
+  {
+    "id": "w90110865057662",
+    "word": "area",
+    "meaning": "地域、区域／分野",
+    "years": [
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2026
+    ],
+    "layer": "diagnostic",
+    "level": 60,
+    "example": {
+      "year": 2023,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "Some animals yawn to scare away enemies from their home areas.",
+      "matchedForm": "areas",
+      "ja": "動物の中には、自分の縄張りから敵を追い払うためにあくびをするものもいます。"
+    }
+  },
+  {
+    "id": "w91077663039198",
+    "word": "assist",
+    "meaning": "手伝う、援助する",
+    "years": [
+      2024
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2024,
+      "source": "リスニングスクリプト",
+      "page": 3,
+      "mode": "exact",
+      "sentence": "There’s a fire escape map on the back of your door to assist you.",
+      "matchedForm": "assist",
+      "ja": "ドアの裏には、あなたを助けるための非常避難経路図があります。"
+    }
+  },
+  {
+    "id": "w90859020558528",
+    "word": "attract",
+    "meaning": "引きつける",
+    "years": [
+      2021,
+      2022
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2021,
+      "source": "問題冊子",
+      "page": 12,
+      "mode": "exact",
+      "sentence": "These large living collections attract and support many other sea creatures.",
+      "matchedForm": "attract",
+      "ja": "こうした大きな生きた集合体は、ほかの多くの海の生き物を引き寄せ、支えています。"
+    }
+  },
+  {
+    "id": "w90712321811822",
+    "word": "aware",
+    "meaning": "気づいている、認識している",
+    "years": [
+      2024
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2024,
+      "source": "問題冊子",
+      "page": 10,
+      "mode": "exact",
+      "sentence": "If they play just for fun, it makes us wonder about their emotions and how aware they are of their surroundings.",
+      "matchedForm": "aware",
+      "ja": "もし彼らがただ楽しむために遊ぶのなら、彼らの感情や周囲をどれほど認識しているのかについて考えさせられます。"
+    }
+  },
+  {
+    "id": "w90758933899543",
+    "word": "barrier",
+    "meaning": "障壁、妨げ",
+    "years": [
+      2025
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2021,
+      "source": "問題冊子",
+      "page": 12,
+      "mode": "exact",
+      "sentence": "The scientists decided to test their idea at the Great Barrier Reef.",
+      "matchedForm": "barrier",
+      "ja": "科学者たちはグレート・バリア・リーフで自分たちの考えを試すことにしました。"
+    }
+  },
+  {
+    "id": "w91083734674299",
+    "word": "begin",
+    "meaning": "始める、始まる",
+    "years": [
+      2020,
+      2021,
+      2024,
+      2025
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2021,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "Let me share a few more that might encourage you before we begin studying.",
+      "matchedForm": "begin",
+      "ja": "勉強を始める前に、みなさんを励ませるかもしれないことをもう少し紹介します。"
+    }
+  },
+  {
+    "id": "w90166631171189",
+    "word": "behave",
+    "meaning": "振る舞う",
+    "years": [
+      2023,
+      2025
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2025,
+      "source": "問題冊子",
+      "page": 13,
+      "mode": "exact",
+      "sentence": "A researcher believes that social expectations may influence how children behave in certain clothes.",
+      "matchedForm": "behave",
+      "ja": "ある研究者は、社会的な期待が、子どもたちが特定の服装をしたときの行動に影響する可能性があると考えています。"
+    }
+  },
+  {
+    "id": "w90265251297862",
+    "word": "bring",
+    "meaning": "持ってくる、もたらす",
+    "years": [
+      2019,
+      2020,
+      2021,
+      2022,
+      2024,
+      2025,
+      2026
+    ],
+    "layer": "diagnostic",
+    "level": 60,
+    "example": {
+      "year": 2021,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "I brought one hundred and fifty dollars.",
+      "matchedForm": "brought",
+      "ja": "私は150ドル持ってきました。"
+    }
+  },
+  {
+    "id": "w90048026068357",
+    "word": "campaign",
+    "meaning": "運動、キャンペーン",
+    "years": [
+      2020
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2020,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "Also, today is the last day of our Savings Club campaign.",
+      "matchedForm": "campaign",
+      "ja": "また、今日はSavings Clubキャンペーンの最終日です。"
+    }
+  },
+  {
+    "id": "w90620797691685",
+    "word": "capital",
+    "meaning": "首都／資本",
+    "years": [
+      2022
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2022,
+      "source": "問題冊子",
+      "page": 4,
+      "mode": "exact",
+      "sentence": "It is the capital of France.",
+      "matchedForm": "capital",
+      "ja": "そこはフランスの首都です。"
+    }
+  },
+  {
+    "id": "w90336560713120",
+    "word": "catch",
+    "meaning": "捕まえる／間に合う／（病気に）かかる",
+    "years": [
+      2019,
+      2020,
+      2021,
+      2023
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2019,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "After that, we’ll have an hour and a half of free time before we catch the bus back to school.",
+      "matchedForm": "catch",
+      "ja": "その後、学校へ戻るバスに乗るまで、1時間半の自由時間があります。"
+    }
+  },
+  {
+    "id": "w90804275455767",
+    "word": "certain",
+    "meaning": "ある一定の／確かな",
+    "years": [
+      2019,
+      2022,
+      2025
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2019,
+      "source": "問題冊子",
+      "page": 11,
+      "mode": "exact",
+      "sentence": "Some antibiotics do not work for certain types of bacteria any longer.",
+      "matchedForm": "certain",
+      "ja": "抗生物質の中には、ある種類の細菌にはもう効かないものがあります。"
+    }
+  },
+  {
+    "id": "w90314673658499",
+    "word": "challenging",
+    "meaning": "難しいがやりがいのある",
+    "years": [
+      2021
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2021,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "Now, learning a second language later in life may seem like a challenging task for many of you, especially after university.",
+      "matchedForm": "challenging",
+      "ja": "さて、大学卒業後など、人生の後半で第二言語を学ぶことは、多くの人にとって難しい課題に思えるかもしれません。"
+    }
+  },
+  {
+    "id": "w90303143579528",
+    "word": "choose",
+    "meaning": "選ぶ",
+    "years": [
+      2019,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "layer": "diagnostic",
+    "level": 60,
+    "example": {
+      "year": 2023,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "I suggest that we choose this other brand, which is half the price.",
+      "matchedForm": "choose",
+      "ja": "値段が半分のこちらの別のブランドを選ぶことを提案します。"
+    }
+  },
+  {
+    "id": "w90013242056660",
+    "word": "clear",
+    "meaning": "明確な／きれいな；片づける",
+    "years": [
+      2022,
+      2026
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2022,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "The coffee table is clear.",
+      "matchedForm": "clear",
+      "ja": "コーヒーテーブルの上には何もありません。"
+    }
+  },
+  {
+    "id": "w90671609867257",
+    "word": "comfortable",
+    "meaning": "快適な",
+    "years": [
+      2025
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2025,
+      "source": "問題冊子",
+      "page": 12,
+      "mode": "exact",
+      "sentence": "The study also found that girls feel less comfortable being active if they have to wear clothes like skirts or dresses.",
+      "matchedForm": "comfortable",
+      "ja": "この研究では、スカートやドレスのような服を着なければならない場合、女子は活動することにあまり心地よさを感じないことも分かりました。"
+    }
+  },
+  {
+    "id": "w90896386285614",
+    "word": "complete",
+    "meaning": "完成させる／完全な",
+    "years": [
+      2023
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2023,
+      "source": "問題冊子",
+      "page": 10,
+      "mode": "exact",
+      "sentence": "But now they need to figure out a good way to track these birds and try again to complete their original research.",
+      "matchedForm": "complete",
+      "ja": "しかし今、研究者たちはこれらの鳥を追跡する良い方法を考え出し、元の研究を完了するためにもう一度試す必要があります。"
+    }
+  },
+  {
+    "id": "w90340273405922",
+    "word": "complex",
+    "meaning": "複雑な",
+    "years": [
+      2024
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2024,
+      "source": "問題冊子",
+      "page": 10,
+      "mode": "exact",
+      "sentence": "This shows that bees are more complex than we thought.",
+      "matchedForm": "complex",
+      "ja": "これは、ミツバチが私たちの考えていた以上に複雑であることを示しています。"
+    }
+  },
+  {
+    "id": "w90338238613799",
+    "word": "conceal",
+    "meaning": "隠す",
+    "years": [
+      2020
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2020,
+      "source": "問題冊子",
+      "page": 6,
+      "mode": "exact",
+      "sentence": "The important thing now was that I had to conceal my love for fishing so that I wouldn’t look stupid.",
+      "matchedForm": "conceal",
+      "ja": "今大切だったのは、ばかに見られないように、釣りが好きだということを隠さなければならないということでした。"
+    }
+  },
+  {
+    "id": "w90476135804123",
+    "word": "concentrate",
+    "meaning": "集中する",
+    "years": [
+      2024
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2024,
+      "source": "問題冊子",
+      "page": 5,
+      "mode": "exact",
+      "sentence": "If such things happen, it would be difficult to concentrate on lessons.",
+      "matchedForm": "concentrate",
+      "ja": "そのようなことが起これば、授業に集中するのは難しいでしょう。"
+    }
+  },
+  {
+    "id": "w90059788056757",
+    "word": "confused",
+    "meaning": "混乱した",
+    "years": [
+      2019,
+      2023
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2019,
+      "source": "問題冊子",
+      "page": 5,
+      "mode": "exact",
+      "sentence": "The students were confused, but they started on the task.",
+      "matchedForm": "confused",
+      "ja": "生徒たちは戸惑いましたが、その課題に取りかかりました。"
+    }
+  },
+  {
+    "id": "w90601193689390",
+    "word": "correct",
+    "meaning": "正しい／訂正する",
+    "years": [
+      2022,
+      2026
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2022,
+      "source": "問題冊子",
+      "page": 8,
+      "mode": "exact",
+      "sentence": "A goat was tied at the correct distance from the tree to attract the old tiger.",
+      "matchedForm": "correct",
+      "ja": "年老いたトラを引き寄せるため、木から適切な距離のところにヤギがつながれました。"
+    }
+  },
+  {
+    "id": "w90539351619097",
+    "word": "courage",
+    "meaning": "勇気",
+    "years": [
+      2020,
+      2021
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2021,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "It takes courage for second-language learners to speak in front of others as they make mistakes.",
+      "matchedForm": "courage",
+      "ja": "第二言語の学習者が間違いをしながら人前で話すには勇気が必要です。"
+    }
+  },
+  {
+    "id": "w90648273355179",
+    "word": "creative",
+    "meaning": "創造的な",
+    "years": [
+      2021
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2021,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "They tend to be more creative and, as they get older, their brains stay healthy.",
+      "matchedForm": "creative",
+      "ja": "彼らはより創造的である傾向があり、年を取っても脳が健康に保たれます。"
+    }
+  },
+  {
+    "id": "w90287758065818",
+    "word": "curious",
+    "meaning": "好奇心のある",
+    "years": [
+      2021,
+      2026
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2026,
+      "source": "問題冊子",
+      "page": 11,
+      "mode": "exact",
+      "sentence": "She was still curious about the offer that Mr. Steward had made and wanted to know more about it.",
+      "matchedForm": "curious",
+      "ja": "彼女はスチュワード氏がした申し出についてまだ気になっており、それについてもっと知りたいと思っていました。"
+    }
+  },
+  {
+    "id": "w90716483798200",
+    "word": "danger",
+    "meaning": "危険",
+    "years": [
+      2022,
+      2025
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2022,
+      "source": "問題冊子",
+      "page": 10,
+      "mode": "exact",
+      "sentence": "Do you think we are in danger?",
+      "matchedForm": "danger",
+      "ja": "私たちは危険な状態にあると思いますか。"
+    }
+  },
+  {
+    "id": "w90634197441237",
+    "word": "data",
+    "meaning": "データ、資料",
+    "years": [
+      2025
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2025,
+      "source": "問題冊子",
+      "page": 12,
+      "mode": "exact",
+      "sentence": "The researchers of the study looked at existing data about the physical activity of more than 1 million children aged 5 to 17 years old from 135 countries.",
+      "matchedForm": "data",
+      "ja": "研究者たちは、135か国の5歳から17歳までの子ども100万人以上の身体活動に関する既存データを調べました。"
+    }
+  },
+  {
+    "id": "w90684310304226",
+    "word": "dead",
+    "meaning": "死んでいる",
+    "years": [
+      2019,
+      2020,
+      2021,
+      2022,
+      2026
+    ],
+    "layer": "diagnostic",
+    "level": 60,
+    "example": {
+      "year": 2019,
+      "source": "問題冊子",
+      "page": 7,
+      "mode": "exact",
+      "sentence": "“He has been dead for ten days, and besides, after the accident, he looked terrible.”",
+      "matchedForm": "dead",
+      "ja": "「彼は10日前に亡くなっています。それに、事故の後はひどい姿でした。」"
+    }
+  },
+  {
+    "id": "w91007874594915",
+    "word": "deliver",
+    "meaning": "届ける",
+    "years": [
+      2021,
+      2025
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2021,
+      "source": "問題冊子",
+      "page": 9,
+      "mode": "exact",
+      "sentence": "“Shall we just tell the man that the letter cannot be delivered?”",
+      "matchedForm": "delivered",
+      "ja": "「その手紙は配達できないと、その人に伝えるだけにしようか。」"
+    }
+  },
+  {
+    "id": "w90899266355078",
+    "word": "depend",
+    "meaning": "頼る／〜次第である",
+    "years": [
+      2023,
+      2026
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2023,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "Well, that depends, based on the animals we are looking at.",
+      "matchedForm": "depends",
+      "ja": "それは場合によります。どの動物を見ているかによって違います。"
+    }
+  },
+  {
+    "id": "w90247284373997",
+    "word": "design",
+    "meaning": "設計する／デザイン",
+    "years": [
+      2022,
+      2025
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2022,
+      "source": "問題冊子",
+      "page": 12,
+      "mode": "exact",
+      "sentence": "The scientists hope to continue designing more experiments.",
+      "matchedForm": "designing",
+      "ja": "科学者たちは、さらに多くの実験を設計し続けたいと考えています。"
+    }
+  },
+  {
+    "id": "w90680434390294",
+    "word": "desire",
+    "meaning": "強く望むこと、欲求",
+    "years": [
+      2022
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2022,
+      "source": "問題冊子",
+      "page": 8,
+      "mode": "exact",
+      "sentence": "She was not a brave person by nature, but she had a strong desire to shoot a tiger.",
+      "matchedForm": "desire",
+      "ja": "彼女は生まれつき勇敢な人ではありませんでしたが、トラを撃ちたいという強い願いがありました。"
+    }
+  },
+  {
+    "id": "w90309970166443",
+    "word": "destroy",
+    "meaning": "破壊する",
+    "years": [
+      2019,
+      2020,
+      2021
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2020,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "Today I want to talk about the Pacific Trash Vortex, which is destroying our ecosystem and killing marine life.",
+      "matchedForm": "destroying",
+      "ja": "今日は、生態系を壊し海洋生物を死なせているPacific Trash Vortexについて話したいと思います。"
+    }
+  },
+  {
+    "id": "w90732231263564",
+    "word": "device",
+    "meaning": "装置、機器",
+    "years": [
+      2020,
+      2022
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2020,
+      "source": "問題冊子",
+      "page": 10,
+      "mode": "exact",
+      "sentence": "His school keeps a medical device called an EpiPen in the front office.",
+      "matchedForm": "device",
+      "ja": "彼の学校では、EpiPenという医療器具を事務室に備えています。"
+    }
+  },
+  {
+    "id": "w90665148324327",
+    "word": "direct",
+    "meaning": "直接の／向ける、指示する",
+    "years": [
+      2024
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2024,
+      "source": "問題冊子",
+      "page": 10,
+      "mode": "exact",
+      "sentence": "They could take the direct path to the feeding place or go to the space where they could play with the balls.",
+      "matchedForm": "direct",
+      "ja": "彼らは餌場への直接の道を進むことも、ボールで遊べる場所へ行くこともできました。"
+    }
+  },
+  {
+    "id": "w90427102767278",
+    "word": "disagree",
+    "meaning": "意見が合わない、反対する",
+    "years": [
+      2022
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2022,
+      "source": "問題冊子",
+      "page": 8,
+      "mode": "exact",
+      "sentence": "Before Mrs Packletide could disagree, the tiger showed up.",
+      "matchedForm": "disagree",
+      "ja": "ミセス・パクルタイドが反対する前に、トラが姿を現しました。"
+    }
+  },
+  {
+    "id": "w90824183400442",
+    "word": "distance",
+    "meaning": "距離",
+    "years": [
+      2022
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2022,
+      "source": "問題冊子",
+      "page": 8,
+      "mode": "exact",
+      "sentence": "A goat was tied at the correct distance from the tree to attract the old tiger.",
+      "matchedForm": "distance",
+      "ja": "年老いたトラを引き寄せるため、木から適切な距離のところにヤギがつながれました。"
+    }
+  },
+  {
+    "id": "w90107937152137",
+    "word": "diverse",
+    "meaning": "多様な",
+    "years": [
+      2022
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2022,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "Rainforests are some of the most diverse places on Earth.",
+      "matchedForm": "diverse",
+      "ja": "熱帯雨林は地球上でも特に多様性に富んだ場所です。"
+    }
+  },
+  {
+    "id": "w91036485016278",
+    "word": "drop",
+    "meaning": "落とす／下がる",
+    "years": [
+      2019,
+      2021,
+      2023,
+      2024
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2024,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "Yes, I heard the temperature might drop to zero tonight.",
+      "matchedForm": "drop",
+      "ja": "はい、今夜は気温が0度まで下がるかもしれないと聞きました。"
+    }
+  },
+  {
+    "id": "w90129600286339",
+    "word": "effective",
+    "meaning": "効果的な",
+    "years": [
+      2020
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2020,
+      "source": "問題冊子",
+      "page": 10,
+      "mode": "exact",
+      "sentence": "Aimmune spent a year conducting the research in order to make sure the treatment was safe and effective.",
+      "matchedForm": "effective",
+      "ja": "Aimmuneは、その治療が安全で効果的であることを確かめるために、1年間研究を行いました。"
+    }
+  },
+  {
+    "id": "w90431624957122",
+    "word": "emotional",
+    "meaning": "感情的な",
+    "years": [
+      2026
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2026,
+      "source": "リスニングスクリプト",
+      "page": 3,
+      "mode": "exact",
+      "sentence": "Other times, they can be scary or emotional.",
+      "matchedForm": "emotional",
+      "ja": "また別のときには、夢は怖かったり感情的だったりすることがあります。"
+    }
+  },
+  {
+    "id": "w90939492683289",
+    "word": "emotion",
+    "meaning": "感情",
+    "years": [
+      2024,
+      2026
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2026,
+      "source": "リスニングスクリプト",
+      "page": 3,
+      "mode": "exact",
+      "sentence": "One theory is that dreams help us figure out our emotions.",
+      "matchedForm": "emotions",
+      "ja": "一つの理論では、夢は自分の感情を理解するのに役立つとされています。"
+    }
+  },
+  {
+    "id": "w90166052589649",
+    "word": "equal",
+    "meaning": "等しい、平等な",
+    "years": [
+      2020
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2020,
+      "source": "問題冊子",
+      "page": 10,
+      "mode": "exact",
+      "sentence": "That’s equal to about one peanut.",
+      "matchedForm": "equal",
+      "ja": "それはおよそピーナッツ1個分に相当します。"
+    }
+  },
+  {
+    "id": "w90954972896395",
+    "word": "examine",
+    "meaning": "調べる、検査する",
+    "years": [
+      2022
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2022,
+      "source": "問題冊子",
+      "page": 13,
+      "mode": "exact",
+      "sentence": "The scientists tracked the eye movements of participants to examine if they were focused or not during the test.",
+      "matchedForm": "examine",
+      "ja": "科学者たちは、テスト中に参加者が集中していたかどうかを調べるため、目の動きを追跡しました。"
+    }
+  },
+  {
+    "id": "w90279348567638",
+    "word": "exchange",
+    "meaning": "交換する／交換",
+    "years": [
+      2024
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2024,
+      "source": "リスニングスクリプト",
+      "page": 3,
+      "mode": "exact",
+      "sentence": "Countries often exchange gifts to help build good relationships.",
+      "matchedForm": "exchange",
+      "ja": "国々は良い関係を築くために、しばしば贈り物を交換します。"
+    }
+  },
+  {
+    "id": "w90889805630504",
+    "word": "exist",
+    "meaning": "存在する",
+    "years": [
+      2020,
+      2025
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2020,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "We throw away about sixty billion tons of plastic every year so it’s no wonder that these floating islands exist and are getting bigger!",
+      "matchedForm": "exist",
+      "ja": "私たちは毎年約600億トンものプラスチックを捨てているので、こうした浮かぶ島が存在し、さらに大きくなっているのも不思議ではありません。"
+    }
+  },
+  {
+    "id": "w90164747107247",
+    "word": "expectation",
+    "meaning": "期待、予想",
+    "years": [
+      2025
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2025,
+      "source": "問題冊子",
+      "page": 13,
+      "mode": "exact",
+      "sentence": "A researcher believes that social expectations may influence how children behave in certain clothes.",
+      "matchedForm": "expectations",
+      "ja": "ある研究者は、社会的な期待が、子どもたちが特定の服装をしたときの行動に影響する可能性があると考えています。"
+    }
+  },
+  {
+    "id": "w90992433167481",
+    "word": "express",
+    "meaning": "表現する／急行の",
+    "years": [
+      2019,
+      2023
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2023,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "The express train will only take one hour today.",
+      "matchedForm": "express",
+      "ja": "快速列車なら、今日は1時間しかかかりません。"
+    }
+  },
+  {
+    "id": "w90822411858889",
+    "word": "external",
+    "meaning": "外部の",
+    "years": [
+      2024
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2024,
+      "source": "リスニングスクリプト",
+      "page": 3,
+      "mode": "exact",
+      "sentence": "If you press 9, you’ll be able to call an external line.",
+      "matchedForm": "external",
+      "ja": "9を押せば、外線に電話できるようになります。"
+    }
+  },
+  {
+    "id": "w90117664105646",
+    "word": "extremely",
+    "meaning": "非常に、極めて",
+    "years": [
+      2020,
+      2023
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2023,
+      "source": "問題冊子",
+      "page": 5,
+      "mode": "exact",
+      "sentence": "Sam was extremely happy.",
+      "matchedForm": "extremely",
+      "ja": "サムはとても幸せでした。"
+    }
+  },
+  {
+    "id": "w90976462698083",
+    "word": "factor",
+    "meaning": "要因",
+    "years": [
+      2025
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2025,
+      "source": "問題冊子",
+      "page": 13,
+      "mode": "exact",
+      "sentence": "The research did not find uniforms to be the only factor for less physical activity.",
+      "matchedForm": "factor",
+      "ja": "この研究では、制服だけが身体活動が少なくなる要因ではないことも分かりました。"
+    }
+  },
+  {
+    "id": "w91076529942674",
+    "word": "failure",
+    "meaning": "失敗",
+    "years": [
+      2024
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2024,
+      "source": "問題冊子",
+      "page": 6,
+      "mode": "exact",
+      "sentence": "She didn’t want to see her mother’s disappointed face as she knew that the whole thing would end up a terrible failure.",
+      "matchedForm": "failure",
+      "ja": "彼女は、すべてがひどい失敗に終わると分かっていたので、母親のがっかりした顔を見たくありませんでした。"
+    }
+  },
+  {
+    "id": "w90115773232020",
+    "word": "fast",
+    "meaning": "速い／速く",
+    "years": [
+      2019,
+      2020,
+      2021,
+      2025,
+      2026
+    ],
+    "layer": "diagnostic",
+    "level": 60,
+    "example": {
+      "year": 2019,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "It’s probably faster than a taxi.",
+      "matchedForm": "faster",
+      "ja": "たぶんタクシーより速いです。"
+    }
+  },
+  {
+    "id": "w90476228442651",
+    "word": "final",
+    "meaning": "最後の、最終の",
+    "years": [
+      2021,
+      2024
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2024,
+      "source": "リスニングスクリプト",
+      "page": 3,
+      "mode": "exact",
+      "sentence": "Now, I just need to go through some final details with you.",
+      "matchedForm": "final",
+      "ja": "では、最後の細かい点をいくつか確認する必要があります。"
+    }
+  },
+  {
+    "id": "w90135067039739",
+    "word": "finish",
+    "meaning": "終える、終わる",
+    "years": [
+      2019,
+      2020,
+      2021,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "layer": "diagnostic",
+    "level": 60,
+    "example": {
+      "year": 2024,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "I have a 2-hour piano lesson in the morning at home which will finish at 11:30.",
+      "matchedForm": "finish",
+      "ja": "午前中に家で2時間のピアノレッスンがあり、それは11時30分に終わります。"
+    }
+  },
+  {
+    "id": "w90178794885946",
+    "word": "foreign",
+    "meaning": "外国の",
+    "years": [
+      2021
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2021,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "Knowing a second language makes it easier to travel and make foreign friends.",
+      "matchedForm": "foreign",
+      "ja": "第二言語を知っていると、旅行をしたり外国人の友達を作ったりしやすくなります。"
+    }
+  },
+  {
+    "id": "w90723427737795",
+    "word": "frequently",
+    "meaning": "頻繁に",
+    "years": [
+      2026
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2026,
+      "source": "リスニングスクリプト",
+      "page": 3,
+      "mode": "exact",
+      "sentence": "I still frequently look at the photos from that holiday when I need a break from everyday life and want to remember those good times.",
+      "matchedForm": "frequently",
+      "ja": "日常生活から離れて一息つきたいときや、あの楽しい時間を思い出したいとき、私は今でもその休暇の写真をよく見ます。"
+    }
+  },
+  {
+    "id": "w90102986764856",
+    "word": "front",
+    "meaning": "前、正面",
+    "years": [
+      2020,
+      2021,
+      2023,
+      2024,
+      2026
+    ],
+    "layer": "diagnostic",
+    "level": 60,
+    "example": {
+      "year": 2021,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "It takes courage for second-language learners to speak in front of others as they make mistakes.",
+      "matchedForm": "front",
+      "ja": "第二言語の学習者が間違いをしながら人前で話すには勇気が必要です。"
+    }
+  },
+  {
+    "id": "w90212026747856",
+    "word": "gender",
+    "meaning": "性別",
+    "years": [
+      2025
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2025,
+      "source": "問題冊子",
+      "page": 12,
+      "mode": "exact",
+      "sentence": "The study found a gender gap.",
+      "matchedForm": "gender",
+      "ja": "その研究では男女差が見つかりました。"
+    }
+  },
+  {
+    "id": "w90406117528930",
+    "word": "generous",
+    "meaning": "気前のよい、寛大な",
+    "years": [
+      2025
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2025,
+      "source": "問題冊子",
+      "page": 10,
+      "mode": "exact",
+      "sentence": "Dorset is very generous.",
+      "matchedForm": "generous",
+      "ja": "ドーセットはとても気前がいいです。"
+    }
+  },
+  {
+    "id": "w90685918216005",
+    "word": "give",
+    "meaning": "与える",
+    "years": [
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2026
+    ],
+    "layer": "diagnostic",
+    "level": 60,
+    "example": {
+      "year": 2020,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "The name Pacific Trash Vortex might give you a hint that it’s in the Pacific Ocean.",
+      "matchedForm": "give",
+      "ja": "Pacific Trash Vortexという名前から、それが太平洋にあると見当がつくかもしれません。"
+    }
+  },
+  {
+    "id": "w90004374519924",
+    "word": "ground",
+    "meaning": "地面、土地",
+    "years": [
+      2019,
+      2022,
+      2024,
+      2025,
+      2026
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2024,
+      "source": "リスニングスクリプト",
+      "page": 3,
+      "mode": "exact",
+      "sentence": "The restaurant, as you can see, is here on the ground floor.",
+      "matchedForm": "ground",
+      "ja": "ご覧のとおり、レストランはこちらの1階にあります。"
+    }
+  },
+  {
+    "id": "w90180146763930",
+    "word": "happen",
+    "meaning": "起こる",
+    "years": [
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "layer": "diagnostic",
+    "level": 60,
+    "example": {
+      "year": 2024,
+      "source": "問題冊子",
+      "page": 5,
+      "mode": "exact",
+      "sentence": "If such things happen, it would be difficult to concentrate on lessons.",
+      "matchedForm": "happen",
+      "ja": "そのようなことが起これば、授業に集中するのは難しいでしょう。"
+    }
+  },
+  {
+    "id": "w90545631866000",
+    "word": "hard",
+    "meaning": "難しい／一生懸命に",
+    "years": [
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "layer": "diagnostic",
+    "level": 60,
+    "example": {
+      "year": 2026,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "Yeah, that Science test was hard for me too.",
+      "matchedForm": "hard",
+      "ja": "うん、その理科のテストは私にも難しかったです。"
+    }
+  },
+  {
+    "id": "w90887998785684",
+    "word": "helpful",
+    "meaning": "役に立つ、助けになる",
+    "years": [
+      2019,
+      2021
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2019,
+      "source": "問題冊子",
+      "page": 10,
+      "mode": "exact",
+      "sentence": "“This discovery shows there are many helpful cures in nature,” Brady says.",
+      "matchedForm": "helpful",
+      "ja": "「この発見は、自然の中には役立つ治療法がたくさんあることを示しています」とブレイディは言います。"
+    }
+  },
+  {
+    "id": "w90431488727745",
+    "word": "historic",
+    "meaning": "歴史的に重要な",
+    "years": [
+      2024
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2024,
+      "source": "リスニングスクリプト",
+      "page": 3,
+      "mode": "exact",
+      "sentence": "On the 100-year anniversary of Japan’s gift to the United States, the American people decided to send another set of 3,000 dogwood trees back to Japan to remember the historic day.",
+      "matchedForm": "historic",
+      "ja": "日本からアメリカへの贈り物から100周年にあたる年、アメリカの人々はその歴史的な日を記念して、別の3,000本のハナミズキを日本へ送り返すことにしました。"
+    }
+  },
+  {
+    "id": "w90760269250632",
+    "word": "hold",
+    "meaning": "持つ、保つ、開催する",
+    "years": [
+      2019,
+      2020,
+      2023,
+      2024,
+      2025
+    ],
+    "layer": "diagnostic",
+    "level": 60,
+    "example": {
+      "year": 2019,
+      "source": "問題冊子",
+      "page": 6,
+      "mode": "exact",
+      "sentence": "“Hold it up and wish aloud,” answered Morris.",
+      "matchedForm": "hold",
+      "ja": "「それを持ち上げて、願いを声に出して言うんだ」とモリスは答えました。"
+    }
+  },
+  {
+    "id": "w90490755619592",
+    "word": "hope",
+    "meaning": "望む／希望",
+    "years": [
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2025,
+      2026
+    ],
+    "layer": "diagnostic",
+    "level": 60,
+    "example": {
+      "year": 2022,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "Well, I’ll end here, but I hope that movie is a good one.",
+      "matchedForm": "hope",
+      "ja": "ではここで終わりますが、その映画が良い作品だといいですね。"
+    }
+  },
+  {
+    "id": "w90011323720486",
+    "word": "impress",
+    "meaning": "感銘を与える",
+    "years": [
+      2020
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2020,
+      "source": "問題冊子",
+      "page": 6,
+      "mode": "completed",
+      "sentence": "I was on the swim team at school, and in order to impress her, I would swim many laps in front of her house, hoping she would look at me.",
+      "matchedForm": "impress",
+      "ja": "私は学校の水泳部にいて、彼女に良い印象を与えるため、彼女が見てくれることを期待しながら家の前を何往復も泳ぎました。",
+      "note": "本文の空所①を公式解答「impress」で補完した完成文"
+    }
+  },
+  {
+    "id": "w90472501905950",
+    "word": "inside",
+    "meaning": "内部に／内部",
+    "years": [
+      2019,
+      2021,
+      2024,
+      2025,
+      2026
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2025,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "Their cities often had rectangular buildings without inside walls.",
+      "matchedForm": "inside",
+      "ja": "彼らの都市には、内部に壁のない長方形の建物がよくありました。"
+    }
+  }
+]

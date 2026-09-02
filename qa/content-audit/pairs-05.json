@@ -1,0 +1,1636 @@
+[
+  {
+    "id": "w0261769441",
+    "word": "kid",
+    "meaning": "子ども",
+    "years": [
+      2020,
+      2025
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2025,
+      "source": "問題冊子",
+      "page": 9,
+      "mode": "exact",
+      "sentence": "I took the knife from the kid and made him lie down again.",
+      "matchedForm": "kid",
+      "ja": "私はその子どもからナイフを取り上げ、もう一度横になるようにさせました。"
+    }
+  },
+  {
+    "id": "w0776992823",
+    "word": "bird",
+    "meaning": "鳥",
+    "years": [
+      2019,
+      2023,
+      2024,
+      2025
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2023,
+      "source": "問題冊子",
+      "page": 10,
+      "mode": "exact",
+      "sentence": "They are medium-sized black and white birds from the same bird “family” as crows.",
+      "matchedForm": "birds",
+      "ja": "彼らはカラスと同じ鳥の「仲間」に属する、中くらいの大きさの白黒の鳥です。"
+    }
+  },
+  {
+    "id": "w1358646164",
+    "word": "ant",
+    "meaning": "アリ",
+    "years": [
+      2026
+    ],
+    "layer": "reference",
+    "level": 75,
+    "example": {
+      "year": 2026,
+      "source": "問題冊子",
+      "page": 12,
+      "mode": "exact",
+      "sentence": "Instead, each ant gave a little help in choosing the direction.",
+      "matchedForm": "ant",
+      "ja": "その代わり、それぞれのアリが進む方向を選ぶのに少しずつ助けました。"
+    }
+  },
+  {
+    "id": "w3073323425",
+    "word": "dress",
+    "meaning": "ドレス、服",
+    "years": [
+      2020,
+      2024,
+      2025
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2024,
+      "source": "問題冊子",
+      "page": 6,
+      "mode": "exact",
+      "sentence": "Then, slowly and carefully, she lowered the dress into the bucket.",
+      "matchedForm": "dress",
+      "ja": "それから彼女は、ゆっくり慎重にドレスをバケツの中へ沈めました。"
+    }
+  },
+  {
+    "id": "w1495606000",
+    "word": "wish",
+    "meaning": "願う／願い",
+    "years": [
+      2019,
+      2022,
+      2023,
+      2025,
+      2026
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2025,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "I just wish mountain biking wasn’t so dangerous.",
+      "matchedForm": "wish",
+      "ja": "マウンテンバイクがそんなに危険でなければいいのにと思います。"
+    }
+  },
+  {
+    "id": "w1094248838",
+    "word": "lot",
+    "meaning": "たくさん；区画",
+    "years": [
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2025,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "Today was fun, but we spent a lot of money!",
+      "matchedForm": "lot",
+      "ja": "今日は楽しかったけれど、たくさんお金を使いました。"
+    }
+  },
+  {
+    "id": "w3142606148",
+    "word": "layer",
+    "meaning": "層",
+    "years": [
+      2022
+    ],
+    "layer": "reference",
+    "level": 75,
+    "example": {
+      "year": 2022,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "Many animals live in this layer since food is easy to find.",
+      "matchedForm": "layer",
+      "ja": "食べ物を見つけやすいので、多くの動物がこの層に住んでいます。"
+    }
+  },
+  {
+    "id": "w2936934270",
+    "word": "hunt",
+    "meaning": "狩る、探し求める",
+    "years": [
+      2020,
+      2022
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2020,
+      "source": "問題冊子",
+      "page": 5,
+      "mode": "exact",
+      "sentence": "One day, the hunter’s wife was not at home, and the hunter had to go out to hunt.",
+      "matchedForm": "hunt",
+      "ja": "ある日、猟師の妻は家におらず、猟師は狩りに出かけなければなりませんでした。"
+    }
+  },
+  {
+    "id": "w2343005169",
+    "word": "uniform",
+    "meaning": "制服",
+    "years": [
+      2025
+    ],
+    "layer": "reference",
+    "level": 75,
+    "example": {
+      "year": 2025,
+      "source": "問題冊子",
+      "page": 13,
+      "mode": "exact",
+      "sentence": "Girls were much less active than boys in primary schools that had a uniform policy.",
+      "matchedForm": "uniform",
+      "ja": "制服の方針がある小学校では、女子は男子よりずっと活動的ではありませんでした。"
+    }
+  },
+  {
+    "id": "w4207287906",
+    "word": "ball",
+    "meaning": "ボール、球",
+    "years": [
+      2024
+    ],
+    "layer": "reference",
+    "level": 75,
+    "example": {
+      "year": 2024,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "I also got this rubber ball for $5, this $15 collar, and this big bone for $10.",
+      "matchedForm": "ball",
+      "ja": "この5ドルのゴムボールと、15ドルの首輪、それから10ドルの大きな骨も買いました。"
+    }
+  },
+  {
+    "id": "w0903117841",
+    "word": "dream",
+    "meaning": "夢／夢を見る",
+    "years": [
+      2026
+    ],
+    "layer": "reference",
+    "level": 75,
+    "example": {
+      "year": 2026,
+      "source": "リスニングスクリプト",
+      "page": 3,
+      "mode": "exact",
+      "sentence": "Question 1: What does the woman suggest people do after having a strange dream?",
+      "matchedForm": "dream",
+      "ja": "問1：女性は、奇妙な夢を見た後に何をするよう勧めていますか。"
+    }
+  },
+  {
+    "id": "w3291479961",
+    "word": "last",
+    "meaning": "最後の／続く",
+    "years": [
+      2019,
+      2020,
+      2022,
+      2023,
+      2025,
+      2026
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2026,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "Did you hang up the last poster for our dance performance?",
+      "matchedForm": "last",
+      "ja": "ダンス公演の最後のポスターは貼りましたか。"
+    }
+  },
+  {
+    "id": "w1002557810",
+    "word": "cannot",
+    "meaning": "〜できない",
+    "years": [
+      2019,
+      2021,
+      2022,
+      2023,
+      2024,
+      2026
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2021,
+      "source": "問題冊子",
+      "page": 9,
+      "mode": "exact",
+      "sentence": "“Shall we just tell the man that the letter cannot be delivered?”",
+      "matchedForm": "cannot",
+      "ja": "「その手紙は配達できないと、その人に伝えるだけにしようか。」"
+    }
+  },
+  {
+    "id": "w3982150189",
+    "word": "grandmother",
+    "meaning": "祖母",
+    "years": [
+      2023
+    ],
+    "layer": "reference",
+    "level": 75,
+    "example": {
+      "year": 2023,
+      "source": "問題冊子",
+      "page": 7,
+      "mode": "exact",
+      "sentence": "Then he found your grandmother on the floor and called the ambulance.",
+      "matchedForm": "grandmother",
+      "ja": "その後、彼はあなたのおばあさんが床に倒れているのを見つけ、救急車を呼びました。"
+    }
+  },
+  {
+    "id": "w1520682771",
+    "word": "trash",
+    "meaning": "ごみ",
+    "years": [
+      2020,
+      2026
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2020,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "No one knows exactly when the Pacific Trash Vortex began to form.",
+      "matchedForm": "trash",
+      "ja": "Pacific Trash Vortexがいつ形成され始めたのか、正確には誰にも分かりません。"
+    }
+  },
+  {
+    "id": "w0039872139",
+    "word": "mountain",
+    "meaning": "山",
+    "years": [
+      2019,
+      2024,
+      2025,
+      2026
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2025,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "Why did we allow him to get another mountain bike?",
+      "matchedForm": "mountain",
+      "ja": "なぜ私たちは彼がまたマウンテンバイクを手に入れるのを許したのでしょうか。"
+    }
+  },
+  {
+    "id": "w3584643645",
+    "word": "wear",
+    "meaning": "身につけている",
+    "years": [
+      2022,
+      2023,
+      2025
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2025,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "No, in the last week of the trip, it got very warm so we wore shorts and went swimming in the sea!",
+      "matchedForm": "wore",
+      "ja": "いいえ、旅行の最後の週はとても暖かくなったので、短パンをはいて海で泳ぎました。"
+    }
+  },
+  {
+    "id": "w3130268937",
+    "word": "bass",
+    "meaning": "バス（魚）／低音",
+    "years": [
+      2020
+    ],
+    "layer": "reference",
+    "level": 75,
+    "example": {
+      "year": 2020,
+      "source": "問題冊子",
+      "page": 8,
+      "mode": "exact",
+      "sentence": "He decided to give up the bass for the girl he liked.",
+      "matchedForm": "bass",
+      "ja": "彼は好きな女の子のためにバスを手放すことにしました。"
+    }
+  },
+  {
+    "id": "w1498747437",
+    "word": "canoe",
+    "meaning": "カヌー",
+    "years": [
+      2020
+    ],
+    "layer": "reference",
+    "level": 75,
+    "example": {
+      "year": 2020,
+      "source": "問題冊子",
+      "page": 6,
+      "mode": "exact",
+      "sentence": "I spent all of the following day cleaning my canoe.",
+      "matchedForm": "canoe",
+      "ja": "私は翌日一日中、カヌーを掃除して過ごしました。"
+    }
+  },
+  {
+    "id": "w2953457667",
+    "word": "boss",
+    "meaning": "上司、責任者",
+    "years": [
+      2021
+    ],
+    "layer": "reference",
+    "level": 75,
+    "example": {
+      "year": 2021,
+      "source": "問題冊子",
+      "page": 9,
+      "mode": "exact",
+      "sentence": "“Wait, we can still collect some money and help the man,” answered the boss.",
+      "matchedForm": "boss",
+      "ja": "「待って、まだ少しお金を集めて、その人を助けられるよ」と上司は答えました。"
+    }
+  },
+  {
+    "id": "w2846028568",
+    "word": "table",
+    "meaning": "テーブル、表",
+    "years": [
+      2021,
+      2022,
+      2024,
+      2026
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2022,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "The coffee table is clear.",
+      "matchedForm": "table",
+      "ja": "コーヒーテーブルの上には何もありません。"
+    }
+  },
+  {
+    "id": "w4093408720",
+    "word": "interest",
+    "meaning": "興味／興味を持たせる",
+    "years": [
+      2022,
+      2024,
+      2026
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2022,
+      "source": "問題冊子",
+      "page": 8,
+      "mode": "exact",
+      "sentence": "This was not because of her interest in hunting but because of her detestation for her neighbour, Loona Bimberton.",
+      "matchedForm": "interest",
+      "ja": "これは彼女が狩りに興味を持っていたからではなく、隣人のルーナ・ビンバートンをひどく嫌っていたからでした。"
+    }
+  },
+  {
+    "id": "w0802128096",
+    "word": "shoot",
+    "meaning": "撃つ、撮影する",
+    "years": [
+      2020,
+      2022
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2022,
+      "source": "問題冊子",
+      "page": 9,
+      "mode": "exact",
+      "sentence": "“I can’t imagine risking my life to shoot a tiger. The biggest animal I have ever hunted is a rabbit,” said another.",
+      "matchedForm": "shoot",
+      "ja": "「トラを撃つために命を危険にさらすなんて想像できない。私がこれまで狩った一番大きな動物はウサギだ」と別の人が言いました。"
+    }
+  },
+  {
+    "id": "w4228231701",
+    "word": "early",
+    "meaning": "早く、早い",
+    "years": [
+      2019,
+      2020,
+      2021,
+      2024,
+      2025
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2021,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "Can we leave fifteen minutes earlier?",
+      "matchedForm": "earlier",
+      "ja": "15分早く出発できますか。"
+    }
+  },
+  {
+    "id": "w3556179880",
+    "word": "zoo",
+    "meaning": "動物園",
+    "years": [
+      2022,
+      2025
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2022,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "We can still meet up on Sunday and go to the zoo.",
+      "matchedForm": "zoo",
+      "ja": "日曜日に会って、動物園に行くことはまだできます。"
+    }
+  },
+  {
+    "id": "w3313940131",
+    "word": "villager",
+    "meaning": "村人",
+    "years": [
+      2022
+    ],
+    "layer": "reference",
+    "level": 75,
+    "example": {
+      "year": 2022,
+      "source": "問題冊子",
+      "page": 7,
+      "mode": "exact",
+      "sentence": "The villager tried all the pairs of glasses on one by one.",
+      "matchedForm": "villager",
+      "ja": "村人は眼鏡を一つずつ全部試しました。"
+    }
+  },
+  {
+    "id": "w3327884266",
+    "word": "hunter",
+    "meaning": "狩人",
+    "years": [
+      2020
+    ],
+    "layer": "reference",
+    "level": 75,
+    "example": {
+      "year": 2020,
+      "source": "問題冊子",
+      "page": 5,
+      "mode": "exact",
+      "sentence": "It often played with the hunter’s baby and took care of him.",
+      "matchedForm": "hunter",
+      "ja": "その犬はよく猟師の赤ちゃんと遊び、世話をしていました。"
+    }
+  },
+  {
+    "id": "w0161011463",
+    "word": "baby",
+    "meaning": "赤ちゃん",
+    "years": [
+      2020,
+      2022,
+      2024
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2020,
+      "source": "問題冊子",
+      "page": 5,
+      "mode": "exact",
+      "sentence": "It often played with the hunter’s baby and took care of him.",
+      "matchedForm": "baby",
+      "ja": "その犬はよく猟師の赤ちゃんと遊び、世話をしていました。"
+    }
+  },
+  {
+    "id": "w0658217179",
+    "word": "sorry",
+    "meaning": "申し訳なく思う、残念な",
+    "years": [
+      2019,
+      2020,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2022,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "I’m sorry for leaving a voice message while you are at the movie theater.",
+      "matchedForm": "sorry",
+      "ja": "映画館にいるときに留守番電話を残してしまってごめんなさい。"
+    }
+  },
+  {
+    "id": "w3592303294",
+    "word": "party",
+    "meaning": "パーティー、一行",
+    "years": [
+      2020,
+      2022,
+      2023,
+      2024
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2024,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "I’m sorry for being late to your party.",
+      "matchedForm": "party",
+      "ja": "あなたのパーティーに遅れてごめんなさい。"
+    }
+  },
+  {
+    "id": "w4261866294",
+    "word": "draw",
+    "meaning": "描く、引く",
+    "years": [
+      2020,
+      2021,
+      2022,
+      2023
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2021,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "Can you draw nice pictures?",
+      "matchedForm": "draw",
+      "ja": "上手な絵を描けますか。"
+    }
+  },
+  {
+    "id": "w0839899206",
+    "word": "beach",
+    "meaning": "浜辺",
+    "years": [
+      2021,
+      2024,
+      2026
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2024,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "I’m also going to the beach next week and it will be too cold!",
+      "matchedForm": "beach",
+      "ja": "来週ビーチにも行く予定ですが、寒すぎるでしょう。"
+    }
+  },
+  {
+    "id": "w3605169788",
+    "word": "farm",
+    "meaning": "農場／農業をする",
+    "years": [
+      2021,
+      2025
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2025,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "Much of their farming work is done together as a group.",
+      "matchedForm": "farming",
+      "ja": "彼らの農作業の多くは、集団で一緒に行われます。"
+    }
+  },
+  {
+    "id": "w1044887174",
+    "word": "warm",
+    "meaning": "暖かい",
+    "years": [
+      2022,
+      2024,
+      2025,
+      2026
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2024,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "The temperature will be warm again from next week.",
+      "matchedForm": "warm",
+      "ja": "来週からまた暖かくなります。"
+    }
+  },
+  {
+    "id": "w3741965884",
+    "word": "coffee",
+    "meaning": "コーヒー",
+    "years": [
+      2019,
+      2021,
+      2022,
+      2025,
+      2026
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2025,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "At first, I suggested we meet at the coffee shop at 1 pm.",
+      "matchedForm": "coffee",
+      "ja": "最初、私は午後1時にコーヒーショップで会おうと提案しました。"
+    }
+  },
+  {
+    "id": "w9000000001",
+    "word": "hungry",
+    "meaning": "空腹の",
+    "years": [
+      2019,
+      2020,
+      2021,
+      2025
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2019,
+      "source": "問題冊子",
+      "page": 4,
+      "mode": "completed",
+      "sentence": "When you are hungry, you are feeling that you want to eat something.",
+      "matchedForm": "hungry",
+      "ja": "hungryとは、何かを食べたいと感じている状態です。",
+      "note": "直接語彙問題の空所を公式解答で補完"
+    }
+  },
+  {
+    "id": "w9000000002",
+    "word": "bridge",
+    "meaning": "橋",
+    "years": [
+      2019
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2019,
+      "source": "問題冊子",
+      "page": 4,
+      "mode": "completed",
+      "sentence": "A bridge is something that is built over a road or river so that people or cars can cross from one side to the other.",
+      "matchedForm": "bridge",
+      "ja": "bridgeとは、道路や川の上に造られ、人や車が一方からもう一方へ渡れるようにするものです。",
+      "note": "直接語彙問題の空所を公式解答で補完"
+    }
+  },
+  {
+    "id": "w9000000003",
+    "word": "vacation",
+    "meaning": "休暇",
+    "years": [
+      2021,
+      2023
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2021,
+      "source": "問題冊子",
+      "page": 6,
+      "mode": "completed",
+      "sentence": "A vacation is a holiday or time spent not working.",
+      "matchedForm": "vacation",
+      "ja": "vacationとは、休暇、または仕事をしないで過ごす時間のことです。",
+      "note": "直接語彙問題の空所を公式解答で補完"
+    }
+  },
+  {
+    "id": "w9000000004",
+    "word": "gym",
+    "meaning": "体育館、ジム",
+    "years": [
+      2021,
+      2022,
+      2026
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2022,
+      "source": "問題冊子",
+      "page": 6,
+      "mode": "completed",
+      "sentence": "A gym is a room or hall with equipment for doing physical exercise, for example in a school.",
+      "matchedForm": "gym",
+      "ja": "gymとは、例えば学校にあるような、運動をするための器具を備えた部屋やホールのことです。",
+      "note": "直接語彙問題の空所を公式解答で補完"
+    }
+  },
+  {
+    "id": "w9000000005",
+    "word": "ceremony",
+    "meaning": "式、式典",
+    "years": [
+      2023
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2023,
+      "source": "問題冊子",
+      "page": 4,
+      "mode": "completed",
+      "sentence": "A ceremony is a formal event that is performed on important social or religious occasions.",
+      "matchedForm": "ceremony",
+      "ja": "ceremonyとは、重要な社会的または宗教的な機会に行われる正式な行事です。",
+      "note": "直接語彙問題の空所を公式解答で補完"
+    }
+  },
+  {
+    "id": "w9000000006",
+    "word": "promise",
+    "meaning": "約束／約束する",
+    "years": [
+      2023,
+      2026
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2023,
+      "source": "問題冊子",
+      "page": 4,
+      "mode": "completed",
+      "sentence": "To promise is to tell somebody that you will surely do or not do something.",
+      "matchedForm": "promise",
+      "ja": "promiseとは、必ず何かをする、またはしないと誰かに伝えることです。",
+      "note": "直接語彙問題の空所を公式解答で補完"
+    }
+  },
+  {
+    "id": "w9000000007",
+    "word": "popular",
+    "meaning": "人気のある",
+    "years": [
+      2019,
+      2020,
+      2024,
+      2025
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2025,
+      "source": "問題冊子",
+      "page": 6,
+      "mode": "completed",
+      "sentence": "Something that is popular is enjoyed or liked by a lot of people.",
+      "matchedForm": "popular",
+      "ja": "popularなものとは、多くの人に楽しまれたり好まれたりしているものです。",
+      "note": "直接語彙問題の空所を公式解答で補完"
+    }
+  },
+  {
+    "id": "w9000000008",
+    "word": "crowded",
+    "meaning": "混雑した",
+    "years": [
+      2026
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2026,
+      "source": "問題冊子",
+      "page": 6,
+      "mode": "completed",
+      "sentence": "When a place is crowded, it means there are a lot of people or too many people in it.",
+      "matchedForm": "crowded",
+      "ja": "ある場所がcrowdedであるとは、そこに多くの人、または多すぎる人がいることを意味します。",
+      "note": "直接語彙問題の空所を公式解答で補完"
+    }
+  },
+  {
+    "id": "w9000000009",
+    "word": "garbage",
+    "meaning": "ごみ",
+    "years": [
+      2026
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2026,
+      "source": "問題冊子",
+      "page": 6,
+      "mode": "completed",
+      "sentence": "Garbage is waste material or unwanted things that you throw away.",
+      "matchedForm": "garbage",
+      "ja": "Garbageとは、捨てる廃棄物や不要な物のことです。",
+      "note": "直接語彙問題の空所を公式解答で補完"
+    }
+  },
+  {
+    "id": "w9000000010",
+    "word": "dangerous",
+    "meaning": "危険な",
+    "years": [
+      2019,
+      2022,
+      2025
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2025,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "I just wish mountain biking wasn’t so dangerous.",
+      "matchedForm": "dangerous",
+      "ja": "マウンテンバイクがそんなに危険でなければいいのにと思います。"
+    }
+  },
+  {
+    "id": "w9000000011",
+    "word": "sick",
+    "meaning": "病気の、気分が悪い",
+    "years": [
+      2019,
+      2020,
+      2022,
+      2023
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2020,
+      "source": "問題冊子",
+      "page": 7,
+      "mode": "exact",
+      "sentence": "With a sick feeling in my stomach, I saw the rod unbend.",
+      "matchedForm": "sick",
+      "ja": "胃が気持ち悪くなるような思いで、私は釣りざおが元に戻るのを見ました。"
+    }
+  },
+  {
+    "id": "w9000000012",
+    "word": "special",
+    "meaning": "特別な",
+    "years": [
+      2019,
+      2020,
+      2023,
+      2026
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2019,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "Oh yes, I saw that the supermarket has a special meat promotion today.",
+      "matchedForm": "special",
+      "ja": "ああ、そうだ。スーパーで今日は肉の特売をしているのを見ました。"
+    }
+  },
+  {
+    "id": "w9000000013",
+    "word": "education",
+    "meaning": "教育",
+    "years": [
+      2019,
+      2020
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2019,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "This was because society changed as people realized that girls also needed an education.",
+      "matchedForm": "education",
+      "ja": "これは、人々が女子にも教育が必要だと気づくにつれて社会が変化したためです。"
+    }
+  },
+  {
+    "id": "w9000000014",
+    "word": "future",
+    "meaning": "将来、未来",
+    "years": [
+      2019
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2019,
+      "source": "問題冊子",
+      "page": 10,
+      "mode": "exact",
+      "sentence": "“Most of what’s there is completely unknown, and that’s the future,” Brady said.",
+      "matchedForm": "future",
+      "ja": "「そこにあるもののほとんどは完全に未知で、それこそが未来なんです」とブレイディは言いました。"
+    }
+  },
+  {
+    "id": "w9000000015",
+    "word": "reserve",
+    "meaning": "予約する、確保する",
+    "years": [
+      2019
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2019,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "I’d like to reserve a room for tomorrow night, please.",
+      "matchedForm": "reserve",
+      "ja": "明日の夜、部屋を予約したいのですが。"
+    }
+  },
+  {
+    "id": "w9000000016",
+    "word": "historical",
+    "meaning": "歴史的な、歴史に関する",
+    "years": [
+      2019
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2019,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "We have the whole day to look around this historical town on our school trip.",
+      "matchedForm": "historical",
+      "ja": "修学旅行で、この歴史ある町を見て回るために丸一日あります。"
+    }
+  },
+  {
+    "id": "w9000000017",
+    "word": "describe",
+    "meaning": "説明する、描写する",
+    "years": [
+      2019
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2019,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "Question 2: How would you describe the dish the woman tried?",
+      "matchedForm": "describe",
+      "ja": "問2：女性が食べた料理をどのように表現しますか。"
+    }
+  },
+  {
+    "id": "w9000000018",
+    "word": "mild",
+    "meaning": "穏やかな；（味が）辛くない",
+    "years": [
+      2019
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2019,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "However, just be sure to tell them whether you prefer your food to be hot or mild.",
+      "matchedForm": "mild",
+      "ja": "ただし、辛口とマイルドのどちらが好みかを必ず伝えてください。"
+    }
+  },
+  {
+    "id": "w9000000019",
+    "word": "spicy",
+    "meaning": "辛い、香辛料のきいた",
+    "years": [
+      2019,
+      2022
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2022,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "Thai food is very spicy.",
+      "matchedForm": "spicy",
+      "ja": "タイ料理はとても辛いです。"
+    }
+  },
+  {
+    "id": "w9000000020",
+    "word": "positive",
+    "meaning": "前向きな、肯定的な",
+    "years": [
+      2019,
+      2021,
+      2022
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2021,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "However, when they improve in using the language, they become more positive about their abilities.",
+      "matchedForm": "positive",
+      "ja": "しかし、その言語を使う力が上達すると、自分の能力についてより前向きになります。"
+    }
+  },
+  {
+    "id": "w9000000021",
+    "word": "alive",
+    "meaning": "生きている",
+    "years": [
+      2019,
+      2024
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2024,
+      "source": "リスニングスクリプト",
+      "page": 3,
+      "mode": "exact",
+      "sentence": "They were given as a sign of friendship between the two countries, and although cherry trees normally live only for 60 years, some of them are still alive today.",
+      "matchedForm": "alive",
+      "ja": "それらは両国の友情のしるしとして贈られ、桜の木は普通60年ほどしか生きないにもかかわらず、その一部は今も生きています。"
+    }
+  },
+  {
+    "id": "w9000000022",
+    "word": "relieved",
+    "meaning": "ほっとした、安心した",
+    "years": [
+      2019,
+      2025
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2025,
+      "source": "問題冊子",
+      "page": 11,
+      "mode": "exact",
+      "sentence": "He was relieved that he was finally able to come home.",
+      "matchedForm": "relieved",
+      "ja": "彼はついに家に帰れるようになって、ほっとしました。"
+    }
+  },
+  {
+    "id": "w9000000023",
+    "word": "pain",
+    "meaning": "痛み",
+    "years": [
+      2019,
+      2025
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2019,
+      "source": "問題冊子",
+      "page": 7,
+      "mode": "exact",
+      "sentence": "“Badly hurt,” he said quietly, “but he is not in any pain now.”",
+      "matchedForm": "pain",
+      "ja": "「重傷です」と彼は静かに言いました。「でも今は痛みはありません。」"
+    }
+  },
+  {
+    "id": "w9000000024",
+    "word": "loss",
+    "meaning": "損失、失うこと",
+    "years": [
+      2019
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2019,
+      "source": "問題冊子",
+      "page": 7,
+      "mode": "exact",
+      "sentence": "They wish to give you money for your loss,” the visitor said.",
+      "matchedForm": "loss",
+      "ja": "「あなたの損失に対してお金を渡したいそうです」と訪問者は言いました。"
+    }
+  },
+  {
+    "id": "w9000000025",
+    "word": "reality",
+    "meaning": "現実",
+    "years": [
+      2019
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2019,
+      "source": "問題冊子",
+      "page": 8,
+      "mode": "exact",
+      "sentence": "Herbert did not believe that his father’s wish would become a reality.",
+      "matchedForm": "reality",
+      "ja": "ハーバートは父親の願いが現実になるとは信じていませんでした。"
+    }
+  },
+  {
+    "id": "w9000000026",
+    "word": "power",
+    "meaning": "力、能力",
+    "years": [
+      2019
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2019,
+      "source": "問題冊子",
+      "page": 8,
+      "mode": "exact",
+      "sentence": "He did not believe that the monkey’s paw had any special power.",
+      "matchedForm": "power",
+      "ja": "彼は猿の手に特別な力があるとは信じていませんでした。"
+    }
+  },
+  {
+    "id": "w9000000027",
+    "word": "visitor",
+    "meaning": "訪問者、客",
+    "years": [
+      2019
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2019,
+      "source": "問題冊子",
+      "page": 7,
+      "mode": "exact",
+      "sentence": "They wish to give you money for your loss,” the visitor said.",
+      "matchedForm": "visitor",
+      "ja": "「あなたの損失に対してお金を渡したいそうです」と訪問者は言いました。"
+    }
+  },
+  {
+    "id": "w9000000028",
+    "word": "belong",
+    "meaning": "所属する",
+    "years": [
+      2019
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2019,
+      "source": "問題冊子",
+      "page": 4,
+      "mode": "completed",
+      "sentence": "He asked me if I belonged to the local soccer team.",
+      "matchedForm": "belonged",
+      "ja": "彼は私が地元のサッカーチームに所属しているかどうか尋ねました。",
+      "note": "語句整序問題を公式解答の語順で完成"
+    }
+  },
+  {
+    "id": "w9000000029",
+    "word": "software",
+    "meaning": "ソフトウェア",
+    "years": [
+      2019
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2019,
+      "source": "問題冊子",
+      "page": 4,
+      "mode": "completed",
+      "sentence": "He explained to her how to use the software in as simple English as possible, but she couldn’t figure it out.",
+      "matchedForm": "software",
+      "ja": "彼はできるだけ簡単な英語でソフトウェアの使い方を彼女に説明しましたが、彼女は理解できませんでした。",
+      "note": "語句整序問題を公式解答の語順で完成"
+    }
+  },
+  {
+    "id": "w9000000030",
+    "word": "serve",
+    "meaning": "提供する；仕える",
+    "years": [
+      2019
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2019,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "I recommend “The New Punjab” as it has a great menu, is run by a famous Michelin chef and the food is served by friendly waiters!",
+      "matchedForm": "served",
+      "ja": "「The New Punjab」を勧めます。すばらしいメニューがあり、有名なミシュランのシェフが運営し、親切なウェイターが料理を出してくれるからです。"
+    }
+  },
+  {
+    "id": "w9000000031",
+    "word": "honest",
+    "meaning": "正直な",
+    "years": [
+      2019,
+      2021,
+      2026
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2021,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "Well, to be honest, I’m more interested in the computer club, but I don’t know how to program.",
+      "matchedForm": "honest",
+      "ja": "正直に言うと、私はコンピューター部のほうに興味がありますが、プログラミングの仕方が分かりません。"
+    }
+  },
+  {
+    "id": "w9000000032",
+    "word": "plastic",
+    "meaning": "プラスチック；プラスチック製の",
+    "years": [
+      2019,
+      2020,
+      2024
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2020,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "Question 1: According to the man, what percentage of the Pacific Trash Vortex is plastic?",
+      "matchedForm": "plastic",
+      "ja": "問1：男性によると、Pacific Trash Vortexの何パーセントがプラスチックですか。"
+    }
+  },
+  {
+    "id": "w9000000033",
+    "word": "worm",
+    "meaning": "ミミズ、虫",
+    "years": [
+      2019
+    ],
+    "layer": "reference",
+    "level": 75,
+    "example": {
+      "year": 2019,
+      "source": "問題冊子",
+      "page": 4,
+      "mode": "sourceOnly",
+      "sentence": null,
+      "fragment": "worm",
+      "matchedForm": "worm",
+      "ja": "ミミズ、虫",
+      "note": "発音問題の選択肢として単独出現"
+    }
+  },
+  {
+    "id": "w9000000034",
+    "word": "antibiotic",
+    "meaning": "抗生物質",
+    "years": [
+      2019
+    ],
+    "layer": "reference",
+    "level": 75,
+    "example": {
+      "year": 2019,
+      "source": "問題冊子",
+      "page": 10,
+      "mode": "exact",
+      "sentence": "In February 2018, Brady and his team announced that they discovered a new antibiotic called malacidin.",
+      "matchedForm": "antibiotic",
+      "ja": "2018年2月、ブレイディとそのチームは、マラシジンという新しい抗生物質を発見したと発表しました。"
+    }
+  },
+  {
+    "id": "w9000000035",
+    "word": "bacterium",
+    "meaning": "細菌",
+    "years": [
+      2019
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2019,
+      "source": "問題冊子",
+      "page": 11,
+      "mode": "exact",
+      "sentence": "Some antibiotics do not work for certain types of bacteria any longer.",
+      "matchedForm": "bacteria",
+      "ja": "抗生物質の中には、ある種類の細菌にはもう効かないものがあります。"
+    }
+  },
+  {
+    "id": "w9000000036",
+    "word": "resistant",
+    "meaning": "耐性のある、抵抗力のある",
+    "years": [
+      2019
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2019,
+      "source": "問題冊子",
+      "page": 10,
+      "mode": "exact",
+      "sentence": "Now, there are some bacteria which are resistant to drugs.",
+      "matchedForm": "resistant",
+      "ja": "現在、薬に耐性を持つ細菌がいます。"
+    }
+  },
+  {
+    "id": "w9000000037",
+    "word": "drug",
+    "meaning": "薬、薬剤",
+    "years": [
+      2019
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2019,
+      "source": "問題冊子",
+      "page": 11,
+      "mode": "exact",
+      "sentence": "We can make drugs stronger if we keep using them again and again.",
+      "matchedForm": "drugs",
+      "ja": "薬を何度も使い続ければ、薬をより強くすることができます。"
+    }
+  },
+  {
+    "id": "w9000000038",
+    "word": "solution",
+    "meaning": "解決策、解答",
+    "years": [
+      2019
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2019,
+      "source": "問題冊子",
+      "page": 10,
+      "mode": "exact",
+      "sentence": "Now, some scientists say that we may be able to find a solution right below our feet.",
+      "matchedForm": "solution",
+      "ja": "今では、一部の科学者は、解決策が足元のすぐ下で見つかるかもしれないと言っています。"
+    }
+  },
+  {
+    "id": "w9000000039",
+    "word": "scientific",
+    "meaning": "科学的な、科学の",
+    "years": [
+      2019,
+      2022
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2022,
+      "source": "問題冊子",
+      "page": 12,
+      "mode": "exact",
+      "sentence": "In October 2020, scientists reported a new study in the scientific journal Nature.",
+      "matchedForm": "scientific",
+      "ja": "2020年10月、科学者たちは科学誌『Nature』で新しい研究を報告しました。"
+    }
+  },
+  {
+    "id": "w9000000040",
+    "word": "laboratory",
+    "meaning": "研究室、実験室",
+    "years": [
+      2019
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2019,
+      "source": "問題冊子",
+      "page": 10,
+      "mode": "exact",
+      "sentence": "In the past, scientists tried to create antibiotics inside scientific laboratories.",
+      "matchedForm": "laboratories",
+      "ja": "かつて科学者たちは、科学研究所の中で抗生物質を作ろうとしていました。"
+    }
+  },
+  {
+    "id": "w9000000041",
+    "word": "soil",
+    "meaning": "土、土壌",
+    "years": [
+      2019
+    ],
+    "layer": "reference",
+    "level": 75,
+    "example": {
+      "year": 2019,
+      "source": "問題冊子",
+      "page": 11,
+      "mode": "exact",
+      "sentence": "For this study, Brady’s team collected soil from across the country.",
+      "matchedForm": "soil",
+      "ja": "この研究のために、ブレイディのチームは全国各地から土を集めました。"
+    }
+  },
+  {
+    "id": "w9000000042",
+    "word": "discovery",
+    "meaning": "発見",
+    "years": [
+      2019,
+      2022
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2019,
+      "source": "問題冊子",
+      "page": 10,
+      "mode": "exact",
+      "sentence": "“This discovery shows there are many helpful cures in nature,” Brady says.",
+      "matchedForm": "discovery",
+      "ja": "「この発見は、自然の中には役立つ治療法がたくさんあることを示しています」とブレイディは言います。"
+    }
+  },
+  {
+    "id": "w9000000043",
+    "word": "nature",
+    "meaning": "自然",
+    "years": [
+      2019,
+      2022
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2019,
+      "source": "問題冊子",
+      "page": 10,
+      "mode": "exact",
+      "sentence": "“This discovery shows there are many helpful cures in nature,” Brady says.",
+      "matchedForm": "nature",
+      "ja": "「この発見は、自然の中には役立つ治療法がたくさんあることを示しています」とブレイディは言います。"
+    }
+  },
+  {
+    "id": "w9000000044",
+    "word": "gene",
+    "meaning": "遺伝子",
+    "years": [
+      2019
+    ],
+    "layer": "reference",
+    "level": 75,
+    "example": {
+      "year": 2019,
+      "source": "問題冊子",
+      "page": 10,
+      "mode": "exact",
+      "sentence": "For example, Brady and his team found a special gene that could help attack bad bacteria.",
+      "matchedForm": "gene",
+      "ja": "例えば、ブレイディとそのチームは、悪い細菌を攻撃するのに役立つ特別な遺伝子を見つけました。"
+    }
+  },
+  {
+    "id": "w9000000045",
+    "word": "attack",
+    "meaning": "攻撃する／攻撃",
+    "years": [
+      2019,
+      2022
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2019,
+      "source": "問題冊子",
+      "page": 10,
+      "mode": "exact",
+      "sentence": "For example, Brady and his team found a special gene that could help attack bad bacteria.",
+      "matchedForm": "attack",
+      "ja": "例えば、ブレイディとそのチームは、悪い細菌を攻撃するのに役立つ特別な遺伝子を見つけました。"
+    }
+  }
+]

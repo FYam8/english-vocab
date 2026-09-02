@@ -1,0 +1,1667 @@
+[
+  {
+    "id": "w9000000046",
+    "word": "unknown",
+    "meaning": "未知の、知られていない",
+    "years": [
+      2019
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2019,
+      "source": "問題冊子",
+      "page": 10,
+      "mode": "exact",
+      "sentence": "“Most of what’s there is completely unknown, and that’s the future,” Brady said.",
+      "matchedForm": "unknown",
+      "ja": "「そこにあるもののほとんどは完全に未知で、それこそが未来なんです」とブレイディは言いました。"
+    }
+  },
+  {
+    "id": "w9000000047",
+    "word": "powerful",
+    "meaning": "強力な",
+    "years": [
+      2019
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2019,
+      "source": "問題冊子",
+      "page": 10,
+      "mode": "exact",
+      "sentence": "Antibiotics are a powerful medicine.",
+      "matchedForm": "powerful",
+      "ja": "抗生物質は強力な薬です。"
+    }
+  },
+  {
+    "id": "w9000000048",
+    "word": "insect",
+    "meaning": "昆虫",
+    "years": [
+      2019,
+      2022,
+      2024
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2022,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "Jaguars, leopards, and the largest number of insects live in this layer.",
+      "matchedForm": "insects",
+      "ja": "ジャガー、ヒョウ、そして最も多くの昆虫がこの層に住んでいます。"
+    }
+  },
+  {
+    "id": "w9000000049",
+    "word": "international",
+    "meaning": "国際的な",
+    "years": [
+      2019
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2019,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "We also have over one thousand students who are taught by over one hundred international teachers.",
+      "matchedForm": "international",
+      "ja": "また、1,000人を超える生徒がいて、100人を超える国際的な教師が教えています。"
+    }
+  },
+  {
+    "id": "p1882412642",
+    "word": "the following",
+    "meaning": "次の、以下の",
+    "years": [
+      2019,
+      2020,
+      2021,
+      2022,
+      2024,
+      2025,
+      2026
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2022,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "Question 2: Which of the following is true about rainforests?",
+      "matchedForm": "the following",
+      "ja": "問2：熱帯雨林について正しいものは次のうちどれですか。"
+    }
+  },
+  {
+    "id": "p2767315923",
+    "word": "which of the following",
+    "meaning": "次のうちどれ／どれが",
+    "years": [
+      2020,
+      2021,
+      2022,
+      2024,
+      2025,
+      2026
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2022,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "Question 2: Which of the following is true about rainforests?",
+      "matchedForm": "which of the following",
+      "ja": "問2：熱帯雨林について正しいものは次のうちどれですか。"
+    }
+  },
+  {
+    "id": "p2681140134",
+    "word": "probably say next",
+    "meaning": "おそらく次に何と言うか",
+    "years": [
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2023,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "Question: What will the woman probably say next?",
+      "matchedForm": "probably say next",
+      "ja": "質問：女性は次に何と言う可能性が最も高いですか。"
+    }
+  },
+  {
+    "id": "p3081921364",
+    "word": "be able to",
+    "meaning": "〜することができる",
+    "years": [
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2022,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "Man: I won’t be able to join you right away.",
+      "matchedForm": "be able to",
+      "ja": "男性：私はすぐにはあなたと一緒に行けません。"
+    }
+  },
+  {
+    "id": "p3400603282",
+    "word": "more than",
+    "meaning": "〜より多い／〜を超えて",
+    "years": [
+      2020,
+      2021,
+      2022,
+      2024,
+      2025
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2022,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "I also know you check your voicemail a lot more than you do your emails.",
+      "matchedForm": "more than",
+      "ja": "また、あなたがメールよりも留守番電話をずっと頻繁に確認することも知っています。"
+    }
+  },
+  {
+    "id": "p1882830368",
+    "word": "for example",
+    "meaning": "例えば",
+    "years": [
+      2019,
+      2020,
+      2021,
+      2022,
+      2025,
+      2026
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2026,
+      "source": "リスニングスクリプト",
+      "page": 3,
+      "mode": "exact",
+      "sentence": "For example, if you feel stressed or worried during the day, you might dream about something related to those feelings.",
+      "matchedForm": "for example",
+      "ja": "例えば、日中にストレスや不安を感じたなら、その感情に関係することを夢に見るかもしれません。"
+    }
+  },
+  {
+    "id": "p2090154527",
+    "word": "as soon as",
+    "meaning": "〜するとすぐに",
+    "years": [
+      2020,
+      2021,
+      2023,
+      2024,
+      2025
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2024,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "Woman: I need twenty minutes to walk to the burger place, so I’ll leave as soon as I’m ready.",
+      "matchedForm": "as soon as",
+      "ja": "女性：バーガー店まで歩いて20分かかるので、準備ができたらすぐに出発します。"
+    }
+  },
+  {
+    "id": "p1611091069",
+    "word": "even if",
+    "meaning": "たとえ〜でも",
+    "years": [
+      2020,
+      2021,
+      2022,
+      2023,
+      2025
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2022,
+      "source": "問題冊子",
+      "page": 8,
+      "mode": "exact",
+      "sentence": "It couldn’t jump up here even if it wanted to.",
+      "matchedForm": "even if",
+      "ja": "たとえ上がりたいと思っても、ここまで跳び上がることはできません。"
+    }
+  },
+  {
+    "id": "p2861494560",
+    "word": "so that",
+    "meaning": "〜するために／〜するように",
+    "years": [
+      2019,
+      2020,
+      2022,
+      2024,
+      2025
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2020,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "We need to reduce, reuse and recycle our trash more so that we can help to decrease the size of the Pacific Trash Vortex in order to save our oceans and marine life before it’s too late.",
+      "matchedForm": "so that",
+      "ja": "手遅れになる前に海や海洋生物を守るため、Pacific Trash Vortexの大きさを小さくできるよう、私たちはごみをもっと減らし、再使用し、リサイクルする必要があります。"
+    }
+  },
+  {
+    "id": "p2139324887",
+    "word": "up to",
+    "meaning": "最大〜まで／〜次第で",
+    "years": [
+      2021,
+      2022,
+      2023,
+      2025
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2023,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "Researchers have seen a pair of hippos yawn at each other for up to two hours before they both felt the fight was truly finished.",
+      "matchedForm": "up to",
+      "ja": "研究者たちは、2頭のカバが、けんかが本当に終わったと双方が感じるまで、最長2時間あくびをし合うのを観察したことがあります。"
+    }
+  },
+  {
+    "id": "p2248101431",
+    "word": "in order to",
+    "meaning": "〜するために",
+    "years": [
+      2020,
+      2021,
+      2022,
+      2024
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2020,
+      "source": "問題冊子",
+      "page": 10,
+      "mode": "exact",
+      "sentence": "Aimmune spent a year conducting the research in order to make sure the treatment was safe and effective.",
+      "matchedForm": "in order to",
+      "ja": "Aimmuneは、その治療が安全で効果的であることを確かめるために、1年間研究を行いました。"
+    }
+  },
+  {
+    "id": "p4055002851",
+    "word": "find out",
+    "meaning": "調べて分かる、見つけ出す",
+    "years": [
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2026,
+      "source": "問題冊子",
+      "page": 12,
+      "mode": "completed",
+      "sentence": "To find out, scientists studied how weaver ants make group decisions when working as a team.",
+      "matchedForm": "find out",
+      "ja": "それを調べるため、科学者たちはツムギアリがチームで協力するとき、どのように集団で決定するのかを研究しました。",
+      "note": "本文の空所を公式解答「decisions」で補完した完成文"
+    }
+  },
+  {
+    "id": "p3324401858",
+    "word": "next to",
+    "meaning": "〜の隣に",
+    "years": [
+      2020,
+      2023,
+      2024,
+      2026
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2026,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "Man: I also want to put my bed next to the window and put a plant on my desk.",
+      "matchedForm": "next to",
+      "ja": "男性：ベッドを窓の横に置いて、机の上に植物も置きたいです。"
+    }
+  },
+  {
+    "id": "p2612056742",
+    "word": "even though",
+    "meaning": "〜にもかかわらず",
+    "years": [
+      2019,
+      2021,
+      2024,
+      2026
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2026,
+      "source": "リスニングスクリプト",
+      "page": 3,
+      "mode": "exact",
+      "sentence": "But even though dreams are a normal part of life, we still don’t fully understand them.",
+      "matchedForm": "even though",
+      "ja": "しかし、夢は生活の普通の一部であるにもかかわらず、私たちはまだ夢を完全には理解していません。"
+    }
+  },
+  {
+    "id": "p1009379092",
+    "word": "because of",
+    "meaning": "〜のために、〜が原因で",
+    "years": [
+      2020,
+      2021,
+      2022
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2022,
+      "source": "問題冊子",
+      "page": 8,
+      "mode": "exact",
+      "sentence": "This was not because of her interest in hunting but because of her ①detestation for her neighbour, Loona Bimberton.",
+      "matchedForm": "because of",
+      "ja": "これは狩りへの興味のためではなく、隣人ルーナ・ビンバートンへの①強い嫌悪のためでした。"
+    }
+  },
+  {
+    "id": "p2580273920",
+    "word": "each other",
+    "meaning": "お互いに",
+    "years": [
+      2023,
+      2024,
+      2026
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2023,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "Researchers have seen a pair of hippos yawn at each other for up to two hours before they both felt the fight was truly finished.",
+      "matchedForm": "each other",
+      "ja": "研究者たちは、2頭のカバが、けんかが本当に終わったと双方が感じるまで、最長2時間あくびをし合うのを観察したことがあります。"
+    }
+  },
+  {
+    "id": "p3099442518",
+    "word": "help with",
+    "meaning": "〜を手伝う",
+    "years": [
+      2021,
+      2023,
+      2026
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2023,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "I need the most help with History.",
+      "matchedForm": "help with",
+      "ja": "私は歴史が一番苦手なので、最も助けが必要です。"
+    }
+  },
+  {
+    "id": "p3552208064",
+    "word": "would like to",
+    "meaning": "〜したい",
+    "years": [
+      2022,
+      2023,
+      2024
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2023,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "I would like to have the grilled fish and green vegetables.",
+      "matchedForm": "would like to",
+      "ja": "焼き魚と緑の野菜をお願いします。"
+    }
+  },
+  {
+    "id": "p1133933707",
+    "word": "as a result",
+    "meaning": "その結果",
+    "years": [
+      2020,
+      2021,
+      2022
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2020,
+      "source": "問題冊子",
+      "page": 11,
+      "mode": "sourceOnly",
+      "sentence": null,
+      "fragment": "As a result",
+      "matchedForm": "As a result",
+      "ja": "その結果",
+      "note": "過去問では接続表現の選択肢として単独出現。資料内にこの表現を含む完成英文は確認できません。"
+    }
+  },
+  {
+    "id": "p0139630762",
+    "word": "at least",
+    "meaning": "少なくとも",
+    "years": [
+      2020,
+      2022,
+      2025
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2022,
+      "source": "問題冊子",
+      "page": 9,
+      "mode": "exact",
+      "sentence": "Well, at least I now have tiger skin to take home.",
+      "matchedForm": "at least",
+      "ja": "まあ、少なくとも今は持ち帰るためのトラの毛皮があります。"
+    }
+  },
+  {
+    "id": "p0612815526",
+    "word": "at the same time",
+    "meaning": "同時に",
+    "years": [
+      2019,
+      2020,
+      2022,
+      2024
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2024,
+      "source": "リスニングスクリプト",
+      "page": 3,
+      "mode": "exact",
+      "sentence": "However, on weekends, it opens at the same time but closes two hours later.",
+      "matchedForm": "at the same time",
+      "ja": "しかし週末は、開く時間は同じですが、閉まるのは2時間遅くなります。"
+    }
+  },
+  {
+    "id": "p4236383558",
+    "word": "go back",
+    "meaning": "戻る",
+    "years": [
+      2019,
+      2023,
+      2025,
+      2026
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2023,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "Do we want to go back next year?",
+      "matchedForm": "go back",
+      "ja": "来年また戻りたいですか。"
+    }
+  },
+  {
+    "id": "p1915140140",
+    "word": "in front of",
+    "meaning": "〜の前に",
+    "years": [
+      2020,
+      2021,
+      2023,
+      2026
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2021,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "It takes courage for second-language learners to speak in front of others as they make mistakes.",
+      "matchedForm": "in front of",
+      "ja": "第二言語の学習者が間違いをしながら人前で話すには勇気が必要です。"
+    }
+  },
+  {
+    "id": "p0412859114",
+    "word": "look like",
+    "meaning": "〜のように見える",
+    "years": [
+      2021,
+      2024,
+      2025
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2025,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "Man: What does she look like?",
+      "matchedForm": "look like",
+      "ja": "男性：彼女はどんな見た目ですか。"
+    }
+  },
+  {
+    "id": "p2069972458",
+    "word": "set up",
+    "meaning": "設置する、準備する",
+    "years": [
+      2021,
+      2022,
+      2024
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2022,
+      "source": "問題冊子",
+      "page": 8,
+      "mode": "exact",
+      "sentence": "The villagers set up a hunting area with a tree where Mrs Packletide and Miss Mebbin could hide.",
+      "matchedForm": "set up",
+      "ja": "村人たちは、ミセス・パクルタイドとミス・メビンが隠れられる木を使って狩り場を用意しました。"
+    }
+  },
+  {
+    "id": "p3583642223",
+    "word": "in addition",
+    "meaning": "さらに、加えて",
+    "years": [
+      2021,
+      2022
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2021,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "In addition, people who have studied another language tend to have broader views of the world.",
+      "matchedForm": "in addition",
+      "ja": "さらに、別の言語を学んだことのある人は、世界に対してより広い見方をする傾向があります。"
+    }
+  },
+  {
+    "id": "p2928386400",
+    "word": "instead of",
+    "meaning": "〜の代わりに",
+    "years": [
+      2023,
+      2025
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2025,
+      "source": "問題冊子",
+      "page": 12,
+      "mode": "exact",
+      "sentence": "Another study in Chile showed that children were more active when they wore sport-friendly uniforms instead of traditional clothes like skirts and blazers.",
+      "matchedForm": "instead of",
+      "ja": "チリで行われた別の研究では、スカートやブレザーのような伝統的な服ではなく、運動に適した制服を着たときのほうが子どもたちは活発であることが示されました。"
+    }
+  },
+  {
+    "id": "p0431020501",
+    "word": "according to",
+    "meaning": "〜によれば、〜に従って",
+    "years": [
+      2020,
+      2025
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2020,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "Question 1: According to the man, what percentage of the Pacific Trash Vortex is plastic?",
+      "matchedForm": "according to",
+      "ja": "問1：男性によると、Pacific Trash Vortexの何パーセントがプラスチックですか。"
+    }
+  },
+  {
+    "id": "p0047704871",
+    "word": "after all",
+    "meaning": "結局、やはり",
+    "years": [
+      2019,
+      2021,
+      2022
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2022,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "It was with the blue one after all!",
+      "matchedForm": "after all",
+      "ja": "結局、それは青いものと一緒にありました。"
+    }
+  },
+  {
+    "id": "p0374612634",
+    "word": "at first",
+    "meaning": "最初は",
+    "years": [
+      2024,
+      2025
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2025,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "Man: At first, I suggested we meet at the coffee shop at 1 pm.",
+      "matchedForm": "at first",
+      "ja": "男性：最初、私は午後1時にコーヒーショップで会おうと提案しました。"
+    }
+  },
+  {
+    "id": "p4217966614",
+    "word": "by the time",
+    "meaning": "〜する時までに",
+    "years": [
+      2020,
+      2023
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2023,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "Anyway, by the time we arrived at the campsite, some bad weather had already started and we could see we weren’t going to have the dry weather we were hoping for.",
+      "matchedForm": "by the time",
+      "ja": "とにかく、キャンプ場に着いたころにはすでに天気が崩れ始めていて、期待していたような晴天にはならないと分かりました。"
+    }
+  },
+  {
+    "id": "p2870641894",
+    "word": "come back",
+    "meaning": "戻ってくる",
+    "years": [
+      2019,
+      2021,
+      2022,
+      2024,
+      2025
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2025,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "He thought about it, but then he said he could come back a little earlier from the city.",
+      "matchedForm": "come back",
+      "ja": "彼は考えた後、街から少し早く戻って来られると言いました。"
+    }
+  },
+  {
+    "id": "p3505442153",
+    "word": "come up with",
+    "meaning": "思いつく、考え出す",
+    "years": [
+      2021,
+      2023,
+      2024,
+      2025
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2021,
+      "source": "問題冊子",
+      "page": 9,
+      "mode": "exact",
+      "sentence": "Oh, I have just come up with a great idea.",
+      "matchedForm": "come up with",
+      "ja": "あ、今すごく良い考えを思いつきました。"
+    }
+  },
+  {
+    "id": "p1711110452",
+    "word": "far from",
+    "meaning": "〜から遠い／決して〜でない",
+    "years": [
+      2020,
+      2023
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2020,
+      "source": "問題冊子",
+      "page": 10,
+      "mode": "exact",
+      "sentence": "In the school cafeteria, he sits far from classmates who are eating peanut butter.",
+      "matchedForm": "far from",
+      "ja": "学校の食堂では、彼はピーナッツバターを食べているクラスメートから離れて座ります。"
+    }
+  },
+  {
+    "id": "p1202757335",
+    "word": "have trouble",
+    "meaning": "〜するのに苦労する",
+    "years": [
+      2020,
+      2022
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2020,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "I’m not good at math, so I have trouble finishing it.",
+      "matchedForm": "have trouble",
+      "ja": "私は数学が得意ではないので、終わらせるのに苦労しています。"
+    }
+  },
+  {
+    "id": "p1703618332",
+    "word": "in fact",
+    "meaning": "実際には、実は",
+    "years": [
+      2020,
+      2024
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2020,
+      "source": "問題冊子",
+      "page": 6,
+      "mode": "exact",
+      "sentence": "She didn’t seem surprised to see me—in fact, she didn’t seem to see me at all.",
+      "matchedForm": "in fact",
+      "ja": "彼女は私を見ても驚いた様子はありませんでした。実際、私の姿がまったく目に入っていないようでした。"
+    }
+  },
+  {
+    "id": "p1382632765",
+    "word": "make sure",
+    "meaning": "必ず〜する、確かめる",
+    "years": [
+      2020,
+      2025
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2020,
+      "source": "問題冊子",
+      "page": 10,
+      "mode": "exact",
+      "sentence": "Aimmune spent a year conducting the research in order to make sure the treatment was safe and effective.",
+      "matchedForm": "make sure",
+      "ja": "Aimmuneは、その治療が安全で効果的であることを確かめるために、1年間研究を行いました。"
+    }
+  },
+  {
+    "id": "p4266599700",
+    "word": "no longer",
+    "meaning": "もはや〜ない",
+    "years": [
+      2019,
+      2021,
+      2022
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2022,
+      "source": "問題冊子",
+      "page": 12,
+      "mode": "exact",
+      "sentence": "This was a sign that they were no longer paying attention.",
+      "matchedForm": "no longer",
+      "ja": "これは、彼らがもう注意を向けていないことのしるしでした。"
+    }
+  },
+  {
+    "id": "p0107729398",
+    "word": "on time",
+    "meaning": "時間どおりに",
+    "years": [
+      2020,
+      2024
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2024,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "Woman: The train was on time today, but I didn’t come by train.",
+      "matchedForm": "on time",
+      "ja": "女性：今日は電車は時間どおりでしたが、私は電車では来ませんでした。"
+    }
+  },
+  {
+    "id": "p0029128900",
+    "word": "over time",
+    "meaning": "時間の経過とともに",
+    "years": [
+      2020,
+      2022
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2020,
+      "source": "問題冊子",
+      "page": 10,
+      "mode": "exact",
+      "sentence": "Over time, the patients will be able to eat more and more amounts of peanut without having allergic reactions.",
+      "matchedForm": "over time",
+      "ja": "時間がたつにつれて、患者はアレルギー反応を起こさずに、より多くの量のピーナッツを食べられるようになります。"
+    }
+  },
+  {
+    "id": "p0224174788",
+    "word": "pick up",
+    "meaning": "拾う、受け取る、迎えに行く",
+    "years": [
+      2020,
+      2021,
+      2022,
+      2024,
+      2025,
+      2026
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2022,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "If you come over like my mom asks, we could pick up a gift for her on Friday at the shopping mall and it should be a lot of fun.",
+      "matchedForm": "pick up",
+      "ja": "母が頼んでいるように来てくれれば、金曜日にショッピングモールで母へのプレゼントを買えて、きっととても楽しいと思います。"
+    }
+  },
+  {
+    "id": "p0002567878",
+    "word": "plenty of",
+    "meaning": "たくさんの、十分な",
+    "years": [
+      2023,
+      2024
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2024,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "That gives us plenty of time to eat.",
+      "matchedForm": "plenty of",
+      "ja": "それなら食事をする時間は十分あります。"
+    }
+  },
+  {
+    "id": "p2168863232",
+    "word": "right now",
+    "meaning": "今すぐ、今まさに",
+    "years": [
+      2021,
+      2024
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2024,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "Man: That’s a relief, but I’m worried that I don’t have my warm sweater right now or my winter hat.",
+      "matchedForm": "right now",
+      "ja": "男性：それなら安心です。でも今、暖かいセーターも冬用の帽子も持っていないのが心配です。"
+    }
+  },
+  {
+    "id": "p2622332709",
+    "word": "focus on",
+    "meaning": "〜に集中する",
+    "years": [
+      2019,
+      2022,
+      2023
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2023,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "Woman: I think we should focus on Math.",
+      "matchedForm": "focus on",
+      "ja": "女性：数学に集中すべきだと思います。"
+    }
+  },
+  {
+    "id": "p2294777141",
+    "word": "be worried about",
+    "meaning": "〜を心配している",
+    "years": [
+      2023,
+      2025
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2023,
+      "source": "問題冊子",
+      "page": 7,
+      "mode": "exact",
+      "sentence": "At school, Benny couldn’t focus on his studies as he was worried about his grandmother.",
+      "matchedForm": "worried about",
+      "ja": "学校でベニーは祖母のことが心配で、勉強に集中できませんでした。"
+    }
+  },
+  {
+    "id": "p0707819517",
+    "word": "be good at",
+    "meaning": "〜が得意である",
+    "years": [
+      2020,
+      2024
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2020,
+      "source": "問題冊子",
+      "page": 6,
+      "mode": "exact",
+      "sentence": "Fishing was another thing I was good at.",
+      "matchedForm": "good at",
+      "ja": "釣りもまた、私が得意なことの一つでした。"
+    }
+  },
+  {
+    "id": "p2697375523",
+    "word": "be likely to",
+    "meaning": "〜しそうである",
+    "years": [
+      2023
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2023,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "The animal with the biggest yawn is likely to be the leader of the group.",
+      "matchedForm": "is likely to",
+      "ja": "最も大きなあくびをする動物が、群れのリーダーである可能性が高いです。"
+    }
+  },
+  {
+    "id": "p3683618857",
+    "word": "be interested in",
+    "meaning": "〜に興味がある",
+    "years": [
+      2024
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2024,
+      "source": "問題冊子",
+      "page": 11,
+      "mode": "exact",
+      "sentence": "It is important for male and young animals to be interested in other animals for a longer period of time than female and older ones.",
+      "matchedForm": "be interested in",
+      "ja": "オスや若い動物にとっては、メスや年を取った動物よりも長い時間、ほかの動物に関心を持つことが重要です。"
+    }
+  },
+  {
+    "id": "p1527231199",
+    "word": "be afraid of",
+    "meaning": "〜を恐れている",
+    "years": [
+      2022
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2022,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "I first thought that we could bring my mom to the zoo with us, but she is afraid of animals, so that wasn’t a great idea.",
+      "matchedForm": "is afraid of",
+      "ja": "最初は母も一緒に動物園へ連れて行こうと思いましたが、母は動物が怖いので、あまり良い考えではありませんでした。"
+    }
+  },
+  {
+    "id": "p3060243830",
+    "word": "be different from",
+    "meaning": "〜と異なる",
+    "years": [
+      2026
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2026,
+      "source": "問題冊子",
+      "page": 13,
+      "mode": "exact",
+      "sentence": "This is different from other ants, like longhorn crazy ants, which follow a leader.",
+      "matchedForm": "is different from",
+      "ja": "これは、リーダーについて行くlonghorn crazy antsのようなほかのアリとは違います。"
+    }
+  },
+  {
+    "id": "p3192670043",
+    "word": "be responsible for",
+    "meaning": "〜に責任がある",
+    "years": [
+      2020
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2020,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "Who is responsible for this plastic trash?",
+      "matchedForm": "is responsible for",
+      "ja": "このプラスチックごみの責任は誰にあるのでしょうか。"
+    }
+  },
+  {
+    "id": "p1910509748",
+    "word": "be famous for",
+    "meaning": "〜で有名である",
+    "years": [
+      2026
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2026,
+      "source": "問題冊子",
+      "page": 12,
+      "mode": "exact",
+      "sentence": "They live in big groups and are famous for acting as a team.",
+      "matchedForm": "are famous for",
+      "ja": "彼らは大きな群れで暮らし、チームとして行動することで有名です。"
+    }
+  },
+  {
+    "id": "p1493503907",
+    "word": "be used to",
+    "meaning": "〜するために使われる／〜に慣れている",
+    "years": [
+      2024
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2024,
+      "source": "問題冊子",
+      "page": 3,
+      "mode": "exact",
+      "sentence": "The phone in the room cannot be used to call another room directly.",
+      "matchedForm": "be used to",
+      "ja": "部屋の電話から、別の部屋へ直接電話することはできません。"
+    }
+  },
+  {
+    "id": "p1096187489",
+    "word": "be surrounded by",
+    "meaning": "〜に囲まれている",
+    "years": [
+      2025
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2025,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "From the exciting roller coasters to the musical merry-go-round, there was something magical about being surrounded by this lively atmosphere.",
+      "matchedForm": "being surrounded by",
+      "ja": "わくわくするジェットコースターから音楽の流れるメリーゴーラウンドまで、この活気ある雰囲気に囲まれていることには何か魔法のようなものがありました。"
+    }
+  },
+  {
+    "id": "p2996484604",
+    "word": "take care of",
+    "meaning": "〜の世話をする、対処する",
+    "years": [
+      2020,
+      2023
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2020,
+      "source": "問題冊子",
+      "page": 11,
+      "mode": "exact",
+      "sentence": "Brett will learn to take care of his allergy when he gets older.",
+      "matchedForm": "take care of",
+      "ja": "ブレットは大きくなれば、自分のアレルギーを管理することを学ぶでしょう。"
+    }
+  },
+  {
+    "id": "p3891949381",
+    "word": "give up",
+    "meaning": "あきらめる",
+    "years": [
+      2020
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2020,
+      "source": "問題冊子",
+      "page": 8,
+      "mode": "exact",
+      "sentence": "He decided to give up the bass for the girl he liked.",
+      "matchedForm": "give up",
+      "ja": "彼は好きな女の子のためにバスを手放すことにしました。"
+    }
+  },
+  {
+    "id": "p0125339913",
+    "word": "hang up",
+    "meaning": "掛ける、吊るす／電話を切る",
+    "years": [
+      2024,
+      2026
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2026,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "Did you hang up the last poster for our dance performance?",
+      "matchedForm": "hang up",
+      "ja": "ダンス公演の最後のポスターは貼りましたか。"
+    }
+  },
+  {
+    "id": "p0552439439",
+    "word": "rather than",
+    "meaning": "〜ではなく、〜よりむしろ",
+    "years": [
+      2025
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2025,
+      "source": "問題冊子",
+      "page": 7,
+      "mode": "exact",
+      "sentence": "Maybe we should think about how to make better use of zoos rather than closing them down.",
+      "matchedForm": "rather than",
+      "ja": "動物園を閉鎖するより、どうすればもっと有効に活用できるかを考えるべきかもしれません。"
+    }
+  },
+  {
+    "id": "p2134121930",
+    "word": "once upon a time",
+    "meaning": "昔々",
+    "years": [
+      2020
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2020,
+      "source": "問題冊子",
+      "page": 5,
+      "mode": "exact",
+      "sentence": "Once upon a time, a hunter had a very intelligent dog.",
+      "matchedForm": "Once upon a time",
+      "ja": "昔々、ある猟師がとても賢い犬を飼っていました。"
+    }
+  },
+  {
+    "id": "p1400280963",
+    "word": "have a chance to",
+    "meaning": "〜する機会がある",
+    "years": [
+      2022,
+      2024
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2022,
+      "source": "問題冊子",
+      "page": 8,
+      "mode": "exact",
+      "sentence": "The only concern that villagers had was that the tiger might die because of old age before Mrs Packletide had a chance to shoot it.",
+      "matchedForm": "had a chance to",
+      "ja": "村人たちが唯一心配していたのは、ミセス・パクルタイドが撃つ機会を得る前に、トラが老衰で死んでしまうかもしれないことでした。"
+    }
+  },
+  {
+    "id": "p0009235329",
+    "word": "most likely",
+    "meaning": "最も可能性が高い",
+    "years": [
+      2021
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2021,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "Question 1: Who is the man most likely speaking to?",
+      "matchedForm": "most likely",
+      "ja": "問1：男性は誰に話している可能性が最も高いですか。"
+    }
+  },
+  {
+    "id": "p9000000001",
+    "word": "such as",
+    "meaning": "〜のような、例えば",
+    "years": [
+      2019,
+      2020,
+      2024
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2020,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "You can also enjoy special monthly promotions on popular items each month such as buy one get one free offers or spend $50 and get $10 cashback.",
+      "matchedForm": "such as",
+      "ja": "また毎月、人気商品を対象に「1つ買うと1つ無料」や「50ドル使うと10ドルキャッシュバック」などの特別キャンペーンを楽しめます。"
+    }
+  },
+  {
+    "id": "p9000000002",
+    "word": "figure out",
+    "meaning": "理解する、解決する",
+    "years": [
+      2019,
+      2023,
+      2026
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2026,
+      "source": "リスニングスクリプト",
+      "page": 3,
+      "mode": "exact",
+      "sentence": "One theory is that dreams help us figure out our emotions.",
+      "matchedForm": "figure out",
+      "ja": "一つの理論では、夢は自分の感情を理解するのに役立つとされています。"
+    }
+  },
+  {
+    "id": "p9000000003",
+    "word": "as ... as possible",
+    "meaning": "できるだけ〜",
+    "years": [
+      2019,
+      2025
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2025,
+      "source": "問題冊子",
+      "page": 11,
+      "mode": "exact",
+      "sentence": "He was so tired that he wanted to go to bed as soon as possible.",
+      "matchedForm": "as soon as possible",
+      "ja": "彼はとても疲れていたので、できるだけ早く寝たいと思っていました。"
+    }
+  },
+  {
+    "id": "p9000000004",
+    "word": "be resistant to",
+    "meaning": "〜に耐性がある",
+    "years": [
+      2019
+    ],
+    "layer": "challenge",
+    "level": 70,
+    "example": {
+      "year": 2019,
+      "source": "問題冊子",
+      "page": 10,
+      "mode": "exact",
+      "sentence": "Now, there are some bacteria which ②are resistant to drugs.",
+      "matchedForm": "are resistant to",
+      "ja": "現在、薬に②耐性を持つ細菌がいます。"
+    }
+  },
+  {
+    "id": "p9000000005",
+    "word": "in the past",
+    "meaning": "過去に",
+    "years": [
+      2019
+    ],
+    "layer": "challenge",
+    "level": 60,
+    "example": {
+      "year": 2019,
+      "source": "問題冊子",
+      "page": 10,
+      "mode": "exact",
+      "sentence": "In the past, scientists tried to create antibiotics inside scientific laboratories.",
+      "matchedForm": "in the past",
+      "ja": "かつて科学者たちは、科学研究所の中で抗生物質を作ろうとしていました。"
+    }
+  },
+  {
+    "id": "p9000000006",
+    "word": "fight against",
+    "meaning": "〜と戦う",
+    "years": [
+      2019
+    ],
+    "layer": "challenge",
+    "level": 70,
+    "example": {
+      "year": 2019,
+      "source": "問題冊子",
+      "page": 10,
+      "mode": "exact",
+      "sentence": "It can kill several super-strong bacteria, which old antibiotics cannot fight against any more.",
+      "matchedForm": "fight against",
+      "ja": "それは、古い抗生物質ではもう効かない非常に強い細菌をいくつか殺すことができます。"
+    }
+  },
+  {
+    "id": "p9000000007",
+    "word": "show up",
+    "meaning": "現れる",
+    "years": [
+      2019,
+      2022
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2019,
+      "source": "問題冊子",
+      "page": 10,
+      "mode": "exact",
+      "sentence": "The rats got better, and the bad bacteria did not show up any longer.",
+      "matchedForm": "show up",
+      "ja": "ネズミは回復し、悪い細菌はもう現れませんでした。"
+    }
+  },
+  {
+    "id": "p9000000008",
+    "word": "any longer",
+    "meaning": "もはや〜ない",
+    "years": [
+      2019
+    ],
+    "layer": "challenge",
+    "level": 60,
+    "example": {
+      "year": 2019,
+      "source": "問題冊子",
+      "page": 10,
+      "mode": "exact",
+      "sentence": "The rats got better, and the bad bacteria did not show up any longer.",
+      "matchedForm": "any longer",
+      "ja": "ネズミは回復し、悪い細菌はもう現れませんでした。"
+    }
+  },
+  {
+    "id": "p9000000009",
+    "word": "right away",
+    "meaning": "すぐに",
+    "years": [
+      2019,
+      2022,
+      2025
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2022,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "Man: I won’t be able to join you right away.",
+      "matchedForm": "right away",
+      "ja": "男性：私はすぐにはあなたと一緒に行けません。"
+    }
+  },
+  {
+    "id": "p9000000010",
+    "word": "come true",
+    "meaning": "実現する",
+    "years": [
+      2019,
+      2023,
+      2026
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2019,
+      "source": "問題冊子",
+      "page": 6,
+      "mode": "exact",
+      "sentence": "Did your wishes come true?",
+      "matchedForm": "come true",
+      "ja": "あなたの願いはかなったのですか。"
+    }
+  },
+  {
+    "id": "p9000000011",
+    "word": "be careful",
+    "meaning": "注意する、気をつける",
+    "years": [
+      2019,
+      2020,
+      2022,
+      2023
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2019,
+      "source": "問題冊子",
+      "page": 6,
+      "mode": "exact",
+      "sentence": "But be careful what you wish for.",
+      "matchedForm": "be careful",
+      "ja": "でも、何を願うかには気をつけなさい。"
+    }
+  },
+  {
+    "id": "p9000000012",
+    "word": "be on a diet",
+    "meaning": "ダイエット中である",
+    "years": [
+      2019
+    ],
+    "layer": "challenge",
+    "level": 70,
+    "example": {
+      "year": 2019,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "She’s on a diet so let’s get her something else.",
+      "matchedForm": "on a diet",
+      "ja": "彼女はダイエット中だから、別のものを買いましょう。"
+    }
+  },
+  {
+    "id": "p9000000013",
+    "word": "grow up",
+    "meaning": "成長する、大人になる",
+    "years": [
+      2019,
+      2020,
+      2025
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2025,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "When he grows up and leaves home, you’ll feel silly for worrying about such things.",
+      "matchedForm": "grows up",
+      "ja": "彼が大人になって家を出たら、そんなことを心配していた自分がばかばかしく感じるでしょう。"
+    }
+  },
+  {
+    "id": "p9000000014",
+    "word": "keep in touch with",
+    "meaning": "〜と連絡を取り続ける",
+    "years": [
+      2019
+    ],
+    "layer": "challenge",
+    "level": 70,
+    "example": {
+      "year": 2019,
+      "source": "問題冊子",
+      "page": 11,
+      "mode": "sourceOnly",
+      "sentence": null,
+      "fragment": "keep in touch with",
+      "matchedForm": "keep in touch with",
+      "ja": "〜と連絡を取り続ける",
+      "note": "過去問では意味選択問題の選択肢として単独出現。資料内にこの表現を含む完成英文は確認できません。"
+    }
+  },
+  {
+    "id": "p9000000015",
+    "word": "hand out",
+    "meaning": "配る",
+    "years": [
+      2019
+    ],
+    "layer": "challenge",
+    "level": 70,
+    "example": {
+      "year": 2019,
+      "source": "問題冊子",
+      "page": 5,
+      "mode": "exact",
+      "sentence": "Once he handed the test papers out, he asked the students to turn them over.",
+      "matchedForm": "handed the test papers out",
+      "ja": "彼はテスト用紙を配り終えると、生徒たちに裏返すよう言いました。"
+    }
+  }
+]

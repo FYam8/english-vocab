@@ -1,0 +1,859 @@
+[
+  {
+    "id": "w90215039709918",
+    "word": "trigger",
+    "meaning": "引き起こす／きっかけ",
+    "years": [
+      2020
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2020,
+      "source": "問題冊子",
+      "page": 10,
+      "mode": "exact",
+      "sentence": "For many, a very small amount of peanut can trigger a reaction called anaphylaxis.",
+      "matchedForm": "trigger",
+      "ja": "多くの人にとって、ごく少量のピーナッツでもアナフィラキシーと呼ばれる反応を引き起こすことがあります。"
+    }
+  },
+  {
+    "id": "w90510880693116",
+    "word": "true",
+    "meaning": "本当の、正しい",
+    "years": [
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "layer": "diagnostic",
+    "level": 60,
+    "example": {
+      "year": 2020,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "Question 2: Which of the following is true about the Pacific Trash Vortex?",
+      "matchedForm": "true",
+      "ja": "問2：Pacific Trash Vortexについて正しいものは、次のうちどれですか。"
+    }
+  },
+  {
+    "id": "w90344108686606",
+    "word": "truth",
+    "meaning": "真実",
+    "years": [
+      2022
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2022,
+      "source": "問題冊子",
+      "page": 9,
+      "mode": "exact",
+      "sentence": "A few days after the party, Miss Mebbin said, “Everyone would be surprised to know the truth.”",
+      "matchedForm": "truth",
+      "ja": "パーティーから数日後、ミス・メビンは「真実を知ったら、みんな驚くでしょうね」と言いました。"
+    }
+  },
+  {
+    "id": "w90467442119463",
+    "word": "turn",
+    "meaning": "曲がる、変わる／順番",
+    "years": [
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "layer": "diagnostic",
+    "level": 60,
+    "example": {
+      "year": 2022,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "It turns out that next Saturday is my mom’s birthday.",
+      "matchedForm": "turns",
+      "ja": "実は、次の土曜日は母の誕生日なんです。"
+    }
+  },
+  {
+    "id": "w90470892996738",
+    "word": "unexpected",
+    "meaning": "予想外の",
+    "years": [
+      2023
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2023,
+      "source": "問題冊子",
+      "page": 10,
+      "mode": "exact",
+      "sentence": "Recently, Australian scientists learned something unexpected about magpies when they tried to put trackers on the birds to learn more about their habits.",
+      "matchedForm": "unexpected",
+      "ja": "最近、オーストラリアの科学者たちは、カササギの習性を詳しく知るために鳥に追跡装置を付けようとしたところ、予想外のことを知りました。"
+    }
+  },
+  {
+    "id": "w90754214357341",
+    "word": "upset",
+    "meaning": "動揺した／動揺させる",
+    "years": [
+      2020,
+      2021,
+      2025,
+      2026
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2025,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "For example, they used tree pieces to cure upset stomachs.",
+      "matchedForm": "upset",
+      "ja": "例えば、彼らは胃の不調を治すために木の一部を使いました。"
+    }
+  },
+  {
+    "id": "w90998133871698",
+    "word": "various",
+    "meaning": "さまざまな",
+    "years": [
+      2022
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2022,
+      "source": "問題冊子",
+      "page": 7,
+      "mode": "exact",
+      "sentence": "The shopkeeper showed him various pairs of glasses and a book.",
+      "matchedForm": "various",
+      "ja": "店主は彼にさまざまな眼鏡と一冊の本を見せました。"
+    }
+  },
+  {
+    "id": "w90876323731179",
+    "word": "victim",
+    "meaning": "被害者",
+    "years": [
+      2024
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2024,
+      "source": "リスニングスクリプト",
+      "page": 3,
+      "mode": "exact",
+      "sentence": "Altogether, a total of 1,000 were planted in Tokyo, 561 in the Tohoku region to remember the tsunami victims, and the rest were sent to schools and other organizations throughout the country.",
+      "matchedForm": "victims",
+      "ja": "全部で1,000本が植えられ、そのうち561本は津波犠牲者を追悼するため東北地方に植えられ、残りは全国の学校やほかの団体へ送られました。"
+    }
+  },
+  {
+    "id": "w90605112520428",
+    "word": "voluntary",
+    "meaning": "自発的な、任意の",
+    "years": [
+      2024
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2024,
+      "source": "問題冊子",
+      "page": 10,
+      "mode": "exact",
+      "sentence": "The behavior of the bees observed in the study is scientifically considered as “play” as it was voluntary and rewarding in itself.",
+      "matchedForm": "voluntary",
+      "ja": "研究で観察されたミツバチの行動は、自発的でそれ自体が報酬となるものだったため、科学的には「遊び」と考えられています。"
+    }
+  },
+  {
+    "id": "w90176170306874",
+    "word": "weight",
+    "meaning": "重さ、体重",
+    "years": [
+      2019,
+      2020
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2019,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "What about a book that teaches people how to lose weight?",
+      "matchedForm": "weight",
+      "ja": "体重の減らし方を教える本はどうですか。"
+    }
+  },
+  {
+    "id": "w90040914735292",
+    "word": "wisdom",
+    "meaning": "知恵",
+    "years": [
+      2026
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2026,
+      "source": "問題冊子",
+      "page": 12,
+      "mode": "exact",
+      "sentence": "This way of deciding is called the “wisdom of the crowd.”",
+      "matchedForm": "wisdom",
+      "ja": "この決め方は「群衆の知恵」と呼ばれています。"
+    }
+  },
+  {
+    "id": "w90376721492064",
+    "word": "within",
+    "meaning": "〜以内に、〜の中で",
+    "years": [
+      2020
+    ],
+    "layer": "challenge",
+    "level": 75,
+    "example": {
+      "year": 2020,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "We’ll then send you your membership card by post within a week.",
+      "matchedForm": "within",
+      "ja": "その後、1週間以内に会員カードを郵送します。"
+    }
+  },
+  {
+    "id": "w90627327553858",
+    "word": "world",
+    "meaning": "世界",
+    "years": [
+      2019,
+      2021,
+      2022,
+      2023,
+      2026
+    ],
+    "layer": "diagnostic",
+    "level": 60,
+    "example": {
+      "year": 2021,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "There are over two billion computers in the world right now.",
+      "matchedForm": "world",
+      "ja": "現在、世界には20億台を超えるコンピューターがあります。"
+    }
+  },
+  {
+    "id": "w90982757577715",
+    "word": "wrong",
+    "meaning": "間違った",
+    "years": [
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2024,
+      "source": "問題冊子",
+      "page": 7,
+      "mode": "exact",
+      "sentence": "Moreno picked it up and looked at it closely but couldn’t see what was wrong.",
+      "matchedForm": "wrong",
+      "ja": "モレノはそれを拾ってよく見ましたが、何が問題なのか分かりませんでした。"
+    }
+  },
+  {
+    "id": "w70964231127",
+    "word": "die",
+    "meaning": "死ぬ",
+    "years": [
+      2019,
+      2021,
+      2022,
+      2024,
+      2026
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2021,
+      "source": "問題冊子",
+      "page": 7,
+      "mode": "exact",
+      "sentence": "“If I don’t throw them back in the water, they will die.",
+      "matchedForm": "die",
+      "ja": "「もし水に戻さなければ、彼らは死んでしまう。"
+    }
+  },
+  {
+    "id": "w72494680139",
+    "word": "use",
+    "meaning": "使う、利用する",
+    "years": [
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "layer": "diagnostic",
+    "level": 60,
+    "example": {
+      "year": 2021,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "We now use computers for nearly everything and they are everywhere around us.",
+      "matchedForm": "use",
+      "ja": "今では、私たちはほぼあらゆることにコンピューターを使い、コンピューターは身の回りの至る所にあります。"
+    }
+  },
+  {
+    "id": "p71965129608",
+    "word": "on one's way home",
+    "meaning": "帰宅途中で",
+    "years": [
+      2020
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2020,
+      "source": "問題冊子",
+      "page": 4,
+      "mode": "completed",
+      "sentence": "Yesterday I saw a friend of mine on my way home and had a chat with him for more than an hour.",
+      "matchedForm": "on my way home",
+      "ja": "昨日、家に帰る途中で友人に会い、1時間以上話をしました。",
+      "note": "語句整序を公式解答に従って並べた完成文"
+    }
+  },
+  {
+    "id": "p73560013203",
+    "word": "a friend of mine",
+    "meaning": "私の友人の一人",
+    "years": [
+      2020
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2020,
+      "source": "問題冊子",
+      "page": 4,
+      "mode": "completed",
+      "sentence": "Yesterday I saw a friend of mine on my way home and had a chat with him for more than an hour.",
+      "matchedForm": "a friend of mine",
+      "ja": "昨日、家に帰る途中で友人に会い、1時間以上話をしました。",
+      "note": "語句整序を公式解答に従って並べた完成文"
+    }
+  },
+  {
+    "id": "p70971823879",
+    "word": "have a chat with",
+    "meaning": "〜とおしゃべりする",
+    "years": [
+      2020
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2020,
+      "source": "問題冊子",
+      "page": 4,
+      "mode": "completed",
+      "sentence": "Yesterday I saw a friend of mine on my way home and had a chat with him for more than an hour.",
+      "matchedForm": "had a chat with",
+      "ja": "昨日、家に帰る途中で友人に会い、1時間以上話をしました。",
+      "note": "語句整序を公式解答に従って並べた完成文"
+    }
+  },
+  {
+    "id": "p70783692192",
+    "word": "it is said that",
+    "meaning": "〜と言われている",
+    "years": [
+      2021
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2021,
+      "source": "問題冊子",
+      "page": 6,
+      "mode": "completed",
+      "sentence": "It is said that people who stay up late may catch a cold easily.",
+      "matchedForm": "It is said that",
+      "ja": "夜更かしする人は風邪をひきやすいと言われています。",
+      "note": "語句整序を公式解答に従って並べた完成文"
+    }
+  },
+  {
+    "id": "p73346321740",
+    "word": "stay up late",
+    "meaning": "夜更かしする",
+    "years": [
+      2021
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2021,
+      "source": "問題冊子",
+      "page": 6,
+      "mode": "completed",
+      "sentence": "It is said that people who stay up late may catch a cold easily.",
+      "matchedForm": "stay up late",
+      "ja": "夜更かしする人は風邪をひきやすいと言われています。",
+      "note": "語句整序を公式解答に従って並べた完成文"
+    }
+  },
+  {
+    "id": "p70140152223",
+    "word": "catch a cold",
+    "meaning": "風邪をひく",
+    "years": [
+      2021
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2021,
+      "source": "問題冊子",
+      "page": 6,
+      "mode": "completed",
+      "sentence": "It is said that people who stay up late may catch a cold easily.",
+      "matchedForm": "catch a cold",
+      "ja": "夜更かしする人は風邪をひきやすいと言われています。",
+      "note": "語句整序を公式解答に従って並べた完成文"
+    }
+  },
+  {
+    "id": "p70450073855",
+    "word": "get upset",
+    "meaning": "動揺する、取り乱す",
+    "years": [
+      2021
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2021,
+      "source": "問題冊子",
+      "page": 6,
+      "mode": "completed",
+      "sentence": "How do I stop getting upset when things don’t go my way?",
+      "matchedForm": "getting upset",
+      "ja": "物事が自分の思いどおりにいかないとき、どうすれば腹を立てずにいられますか。",
+      "note": "語句整序を公式解答に従って並べた完成文"
+    }
+  },
+  {
+    "id": "p70875778172",
+    "word": "go one's way",
+    "meaning": "自分の思い通りに進む",
+    "years": [
+      2021
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2021,
+      "source": "問題冊子",
+      "page": 6,
+      "mode": "completed",
+      "sentence": "How do I stop getting upset when things don’t go my way?",
+      "matchedForm": "go my way",
+      "ja": "物事が自分の思いどおりにいかないとき、どうすれば腹を立てずにいられますか。",
+      "note": "語句整序を公式解答に従って並べた完成文"
+    }
+  },
+  {
+    "id": "p70404846185",
+    "word": "have no idea",
+    "meaning": "全く分からない",
+    "years": [
+      2020,
+      2022
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2020,
+      "source": "問題冊子",
+      "page": 7,
+      "mode": "exact",
+      "sentence": "I said though I had no idea who that was.",
+      "matchedForm": "had no idea",
+      "ja": "私は、それが誰なのか全く分からないと言いました。"
+    }
+  },
+  {
+    "id": "p70341446103",
+    "word": "get married to",
+    "meaning": "〜と結婚する",
+    "years": [
+      2022
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2022,
+      "source": "問題冊子",
+      "page": 6,
+      "mode": "completed",
+      "sentence": "My brother will get married to the woman he has been dating for a year.",
+      "matchedForm": "get married to",
+      "ja": "私の兄は、1年間付き合っている女性と結婚します。",
+      "note": "語句整序を公式解答に従って並べた完成文"
+    }
+  },
+  {
+    "id": "p70954126998",
+    "word": "look for",
+    "meaning": "〜を探す",
+    "years": [
+      2023
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2023,
+      "source": "問題冊子",
+      "page": 4,
+      "mode": "completed",
+      "sentence": "He is looking for someone who can take care of his dog during his vacation.",
+      "matchedForm": "looking for",
+      "ja": "彼は休暇中に犬の世話をしてくれる人を探しています。",
+      "note": "語句整序を公式解答に従って並べた完成文"
+    }
+  },
+  {
+    "id": "p72824102711",
+    "word": "so ... that",
+    "meaning": "とても〜なので…",
+    "years": [
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2025
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2023,
+      "source": "問題冊子",
+      "page": 4,
+      "mode": "completed",
+      "sentence": "She studied English so hard that she can read books written in English now.",
+      "matchedForm": "so hard that",
+      "ja": "彼女はとても一生懸命英語を勉強したので、今では英語で書かれた本を読めます。",
+      "note": "語句整序を公式解答に従って並べた完成文"
+    }
+  },
+  {
+    "id": "p73192648372",
+    "word": "put effort into",
+    "meaning": "〜に努力を注ぐ",
+    "years": [
+      2024
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2024,
+      "source": "問題冊子",
+      "page": 4,
+      "mode": "completed",
+      "sentence": "Everybody put a lot of effort into preparing for the school festival.",
+      "matchedForm": "put a lot of effort into",
+      "ja": "みんな学校祭の準備に大きな努力をしました。",
+      "note": "語句整序を公式解答に従って並べた完成文"
+    }
+  },
+  {
+    "id": "p71642854780",
+    "word": "come from",
+    "meaning": "〜から来る、〜に由来する",
+    "years": [
+      2020,
+      2024,
+      2025
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2020,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "Eighty percent comes from the land and the other twenty percent comes from ships and oil platforms.",
+      "matchedForm": "comes from",
+      "ja": "80％は陸から来て、残りの20％は船や石油プラットフォームから来ます。"
+    }
+  },
+  {
+    "id": "p72736309945",
+    "word": "too good to be true",
+    "meaning": "うますぎて本当とは思えない",
+    "years": [
+      2024
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2024,
+      "source": "問題冊子",
+      "page": 4,
+      "mode": "completed",
+      "sentence": "We should find out where the information comes from as it sounds too good to be true.",
+      "matchedForm": "too good to be true",
+      "ja": "あまりにもうまい話に聞こえるので、その情報がどこから来たのか確かめるべきです。",
+      "note": "語句整序を公式解答に従って並べた完成文"
+    }
+  },
+  {
+    "id": "p71386443306",
+    "word": "hand in",
+    "meaning": "提出する",
+    "years": [
+      2025
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2025,
+      "source": "問題冊子",
+      "page": 6,
+      "mode": "completed",
+      "sentence": "Jack finished his report last week, but he couldn’t hand it in because he fell ill.",
+      "matchedForm": "hand it in",
+      "ja": "ジャックは先週レポートを終えましたが、病気になったので提出できませんでした。",
+      "note": "語句整序を公式解答に従って並べた完成文"
+    }
+  },
+  {
+    "id": "p70401289760",
+    "word": "fall ill",
+    "meaning": "病気になる",
+    "years": [
+      2025
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2025,
+      "source": "問題冊子",
+      "page": 6,
+      "mode": "completed",
+      "sentence": "Jack finished his report last week, but he couldn’t hand it in because he fell ill.",
+      "matchedForm": "fell ill",
+      "ja": "ジャックは先週レポートを終えましたが、病気になったので提出できませんでした。",
+      "note": "語句整序を公式解答に従って並べた完成文"
+    }
+  },
+  {
+    "id": "p74112865821",
+    "word": "be amazed by",
+    "meaning": "〜に驚かされる",
+    "years": [
+      2025
+    ],
+    "layer": "core",
+    "level": 70,
+    "example": {
+      "year": 2025,
+      "source": "問題冊子",
+      "page": 6,
+      "mode": "completed",
+      "sentence": "Those who attended the event were all amazed by the exciting performances.",
+      "matchedForm": "were all amazed by",
+      "ja": "その行事に参加した人はみな、すばらしい演技に驚きました。",
+      "note": "語句整序を公式解答に従って並べた完成文"
+    }
+  },
+  {
+    "id": "p73678567694",
+    "word": "be better at ... than",
+    "meaning": "〜より…が得意である",
+    "years": [
+      2026
+    ],
+    "layer": "core",
+    "level": 60,
+    "example": {
+      "year": 2026,
+      "source": "問題冊子",
+      "page": 6,
+      "mode": "completed",
+      "sentence": "Ken is better than anyone else at speaking in front of people.",
+      "matchedForm": "better than anyone else at",
+      "ja": "ケンは人前で話すことにかけては誰よりも上手です。",
+      "note": "語句整序を公式解答に従って並べた完成文"
+    }
+  },
+  {
+    "id": "w73383649284",
+    "word": "find",
+    "meaning": "見つける、分かる",
+    "years": [
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "layer": "diagnostic",
+    "level": 60,
+    "example": {
+      "year": 2022,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "Many animals live in this layer since food is easy to find.",
+      "matchedForm": "find",
+      "ja": "食べ物を見つけやすいので、多くの動物がこの層に住んでいます。"
+    }
+  },
+  {
+    "id": "w70937258619",
+    "word": "take",
+    "meaning": "取る、連れて行く、（時間が）かかる",
+    "years": [
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "layer": "diagnostic",
+    "level": 60,
+    "example": {
+      "year": 2020,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "She said she was going to take a shower after her nap.",
+      "matchedForm": "take",
+      "ja": "彼女は昼寝の後でシャワーを浴びると言っていました。"
+    }
+  },
+  {
+    "id": "w71747380960",
+    "word": "ask",
+    "meaning": "尋ねる、頼む",
+    "years": [
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "layer": "diagnostic",
+    "level": 60,
+    "example": {
+      "year": 2022,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "Question 2: Where is the man asking Emily to go next Saturday?",
+      "matchedForm": "asking",
+      "ja": "問2：男性はエミリーに、次の土曜日どこへ行こうと誘っていますか。"
+    }
+  },
+  {
+    "id": "w70143088812",
+    "word": "help",
+    "meaning": "助ける／助け、役立つ",
+    "years": [
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "layer": "diagnostic",
+    "level": 60,
+    "example": {
+      "year": 2025,
+      "source": "リスニングスクリプト",
+      "page": 2,
+      "mode": "exact",
+      "sentence": "They did this to help their buildings stay strong during earthquakes.",
+      "matchedForm": "help",
+      "ja": "彼らは地震のときに建物を強く保つために、そうしました。"
+    }
+  },
+  {
+    "id": "w73867121481",
+    "word": "study",
+    "meaning": "勉強する／研究、学習",
+    "years": [
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "layer": "diagnostic",
+    "level": 60,
+    "example": {
+      "year": 2025,
+      "source": "リスニングスクリプト",
+      "page": 1,
+      "mode": "exact",
+      "sentence": "No, I only told dad, but he still hopes I’ll study computer science in college.",
+      "matchedForm": "study",
+      "ja": "いいえ、父にしか話していません。でも父は、私が大学でコンピューター科学を学ぶことをまだ望んでいます。"
+    }
+  }
+]

@@ -1,0 +1,11 @@
+{
+  "vocabCount": 680,
+  "exampleCount": 680,
+  "pairCount": 680,
+  "yearPairs": 1918,
+  "sameYearCount": 678,
+  "fallbackCount": 1240,
+  "missingExampleCount": 0,
+  "suspiciousCount": 339,
+  "orphanExamples": 0
+}
