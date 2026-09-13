@@ -1,0 +1,65 @@
+name: Vocabulary cloud progress deploy
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - progress-sync.js
+      - tools/vocab_cloud_progress_test.js
+      - tools/apply_vocab_cloud_progress.py
+      - .github/workflows/vocab-cloud-progress.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch-test-deploy:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Syntax and cloud contract guards
+        run: |
+          node --check progress-sync.js
+          node tools/vocab_cloud_progress_test.js
+
+      - name: Apply additive loader idempotently
+        run: |
+          python3 tools/apply_vocab_cloud_progress.py
+          cp index.html /tmp/index-after-vocab-cloud.html
+          python3 tools/apply_vocab_cloud_progress.py
+          cmp index.html /tmp/index-after-vocab-cloud.html
+          echo "loader patch idempotence: PASS"
+
+      - name: Existing learner history protection
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          s=Path('index.html').read_text(encoding='utf-8')
+          assert 'const SCHEMA_VERSION=7;' in s
+          assert 'const STORAGE_KEY="waseshibu_vocab_state";' in s
+          assert 'localStorage.clear(' not in s
+          assert 'localStorage.removeItem(STORAGE_KEY)' not in s
+          assert s.count('<script src="progress-sync.js?v=vocab-cloud1"></script>') == 1
+          print('existing-user protection: PASS')
+          PY
+
+      - name: Diff hygiene
+        run: git diff --check
+
+      - name: Commit loader to main
+        run: |
+          if git diff --quiet -- index.html; then
+            echo "No index.html changes to commit"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Deploy vocabulary cloud progress sync"
+          git push origin HEAD:main
