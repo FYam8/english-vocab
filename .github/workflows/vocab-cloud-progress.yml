@@ -45,7 +45,8 @@ jobs:
           assert 'const STORAGE_KEY="waseshibu_vocab_state";' in s
           assert 'localStorage.clear(' not in s
           assert 'localStorage.removeItem(STORAGE_KEY)' not in s
-          assert s.count('<script src="progress-sync.js?v=vocab-cloud1"></script>') == 1
+          assert s.count('<script src="progress-sync.js?v=vocab-cloud2"></script>') == 1
+          assert '<script src="progress-sync.js?v=vocab-cloud1"></script>' not in s
           print('existing-user protection: PASS')
           PY
 
