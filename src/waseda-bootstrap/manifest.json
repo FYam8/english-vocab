@@ -1,0 +1,35 @@
+{
+  "format": "waseda-vocab-byte-split/v1",
+  "source": "index.html",
+  "sourceGitBlobSha": "bb77a0c54153502e25bccb1ed89ca33b29b45c83",
+  "sourceSha256": "a6e58a9321d4e739216957fcbfaa0cf7f1d1621ca0f0bb88a03507da81bf452f",
+  "assemblyOrder": [
+    "00-shell-prefix.html",
+    "10-waseda-data.js",
+    "20-legacy-runtime.js",
+    "90-shell-suffix.html"
+  ],
+  "parts": {
+    "00-shell-prefix.html": {
+      "bytes": 18920,
+      "sha256": "124bb350175c2863dc661365a875648c60590a2b09d28c9b75ff19a4a61615e1"
+    },
+    "10-waseda-data.js": {
+      "bytes": 708873,
+      "sha256": "2126f14b5b7e1cf537a3ef2671073b83852a9a83a3a17f5089b5ab416cfa5390"
+    },
+    "20-legacy-runtime.js": {
+      "bytes": 123423,
+      "sha256": "e7027a1b6448755ce41ac99227424e907b7116c3ed1114f073320d3e6e7fea35"
+    },
+    "90-shell-suffix.html": {
+      "bytes": 82,
+      "sha256": "89bfca9e9c40aa28dcbe0554737c4db5a03ecb14b9a1f23beca2ddd50fafb75c"
+    }
+  },
+  "notes": [
+    "This is a mechanical bootstrap only; no behavior or persistence semantics change.",
+    "20-legacy-runtime.js is intentionally not yet claimed to be school-neutral.",
+    "The next refactor step moves code across engine/adapter boundaries under parity tests."
+  ]
+}
