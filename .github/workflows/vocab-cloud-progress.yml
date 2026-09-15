@@ -7,6 +7,9 @@ on:
       - progress-sync.js
       - tools/vocab_cloud_progress_test.js
       - tools/apply_vocab_cloud_progress.py
+      - tools/assemble_waseda.py
+      - src/waseda-bootstrap/90-shell-suffix.html
+      - src/waseda-bootstrap/manifest.json
       - .github/workflows/vocab-cloud-progress.yml
   workflow_dispatch:
 
@@ -28,12 +31,21 @@ jobs:
           node --check progress-sync.js
           node tools/vocab_cloud_progress_test.js
 
-      - name: Apply additive loader idempotently
+      - name: Apply additive loader idempotently from the authoritative source
         run: |
           python3 tools/apply_vocab_cloud_progress.py
           cp index.html /tmp/index-after-vocab-cloud.html
+          if [ -f src/waseda-bootstrap/manifest.json ]; then
+            cp src/waseda-bootstrap/90-shell-suffix.html /tmp/suffix-after-vocab-cloud.html
+            cp src/waseda-bootstrap/manifest.json /tmp/manifest-after-vocab-cloud.json
+          fi
           python3 tools/apply_vocab_cloud_progress.py
           cmp index.html /tmp/index-after-vocab-cloud.html
+          if [ -f src/waseda-bootstrap/manifest.json ]; then
+            cmp src/waseda-bootstrap/90-shell-suffix.html /tmp/suffix-after-vocab-cloud.html
+            cmp src/waseda-bootstrap/manifest.json /tmp/manifest-after-vocab-cloud.json
+            python3 tools/assemble_waseda.py --check
+          fi
           echo "loader patch idempotence: PASS"
 
       - name: Existing learner history protection
@@ -41,8 +53,12 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
           s=Path('index.html').read_text(encoding='utf-8')
-          assert 'const SCHEMA_VERSION=7;' in s
-          assert 'const STORAGE_KEY="waseshibu_vocab_state";' in s
+          legacy_schema='const SCHEMA_VERSION=7;' in s
+          adapter_schema='schemaVersion:7' in s and 'const SCHEMA_VERSION=WASEDA_APP_CONFIG.schemaVersion;' in s
+          legacy_storage='const STORAGE_KEY="waseshibu_vocab_state";' in s
+          adapter_storage='storageKey:"waseshibu_vocab_state"' in s and 'const STORAGE_KEY=WASEDA_APP_CONFIG.storageKey;' in s
+          assert legacy_schema or adapter_schema
+          assert legacy_storage or adapter_storage
           assert 'localStorage.clear(' not in s
           assert 'localStorage.removeItem(STORAGE_KEY)' not in s
           assert s.count('<script src="progress-sync.js?v=vocab-cloud2"></script>') == 1
@@ -53,14 +69,23 @@ jobs:
       - name: Diff hygiene
         run: git diff --check
 
-      - name: Commit loader to main
+      - name: Commit loader without bypassing split sources
         run: |
-          if git diff --quiet -- index.html; then
-            echo "No index.html changes to commit"
+          if [ -f src/waseda-bootstrap/manifest.json ]; then
+            CHANGED="$(git status --porcelain -- index.html src/waseda-bootstrap/90-shell-suffix.html src/waseda-bootstrap/manifest.json)"
+          else
+            CHANGED="$(git status --porcelain -- index.html)"
+          fi
+          if [ -z "$CHANGED" ]; then
+            echo "No vocabulary cloud loader changes to commit"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add index.html
+          if [ -f src/waseda-bootstrap/manifest.json ]; then
+            git add index.html src/waseda-bootstrap/90-shell-suffix.html src/waseda-bootstrap/manifest.json
+          else
+            git add index.html
+          fi
           git commit -m "Deploy vocabulary cloud progress sync"
           git push origin HEAD:main

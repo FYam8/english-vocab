@@ -1,0 +1,198 @@
+name: Waseda common-engine compatibility gate
+
+on:
+  push:
+    branches:
+      - refactor/waseda-common-engine-v1
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  WASEDA_PRODUCTION_BASELINE_SHA: 531d505c19a86eaa2c8bbc4b25179de8089ab585
+  WASEDA_PRODUCTION_DATA_VERSION: 2019-2026-v7.6-memory-curve-scheduler
+
+jobs:
+  existing-user-parity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Stop if Waseda production baseline moved
+        run: |
+          git fetch origin main --quiet
+          ACTUAL_MAIN_SHA="$(git rev-parse origin/main)"
+          echo "expected main: ${WASEDA_PRODUCTION_BASELINE_SHA}"
+          echo "actual main:   ${ACTUAL_MAIN_SHA}"
+          if [ "${ACTUAL_MAIN_SHA}" != "${WASEDA_PRODUCTION_BASELINE_SHA}" ]; then
+            echo "Waseda main changed after this refactor baseline was captured."
+            echo "Rebase and explicitly re-baseline only after reviewing the new production changes."
+            exit 1
+          fi
+
+      - name: Require deterministic Waseda source assembly
+        run: |
+          python3 tools/assemble_waseda.py --check
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('src/waseda-bootstrap/15-waseda-persistence.js').read_text(encoding='utf-8')
+          assert 'schemaVersion:7' in p
+          assert 'storageKey:"waseshibu_vocab_state"' in p
+          assert 'const SCHEMA_VERSION=WASEDA_APP_CONFIG.schemaVersion;' in p
+          assert 'const STORAGE_KEY=WASEDA_APP_CONFIG.storageKey;' in p
+          print('Waseda persistence adapter seed: REQUIRED CONTRACT PRESENT')
+          PY
+
+      - name: Source ownership safety gate
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          cloud_patch=Path('tools/apply_vocab_cloud_progress.py').read_text(encoding='utf-8')
+          cloud_flow=Path('.github/workflows/vocab-cloud-progress.yml').read_text(encoding='utf-8')
+          v75=Path('tools/apply_v75_patch.py').read_text(encoding='utf-8')
+          v76=Path('tools/apply_v76_memory_scheduler.py').read_text(encoding='utf-8')
+          assert 'SOURCE_MANIFEST' in cloud_patch and 'SOURCE_SUFFIX' in cloud_patch
+          assert "assemble_waseda.py" in cloud_patch
+          assert 'src/waseda-bootstrap/90-shell-suffix.html' in cloud_flow
+          assert 'src/waseda-bootstrap/manifest.json' in cloud_flow
+          assert 'Refusing legacy v7.5 direct index patch' in v75
+          assert 'Refusing legacy v7.6 direct index patch' in v76
+          print('source ownership guards: PASS')
+          PY
+
+      - name: Existing-user protection static gate
+        run: |
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+          s = Path('index.html').read_text(encoding='utf-8')
+          assert 'waseshibu_vocab_state' in s
+          assert 'SCHEMA_VERSION' in s
+          assert 'STORAGE_KEY' in s
+          assert 'waseshibu_vocab_active_session_v1' in s
+          assert 'localStorage.clear(' not in s
+          assert 'localStorage.removeItem(STORAGE_KEY)' not in s
+          assert 'const VOCAB=' in s
+          assert '<script src="progress-sync.js?v=vocab-cloud2"></script>' in s
+          assert os.environ['WASEDA_PRODUCTION_DATA_VERSION'] in s
+          assert '/* V76_MEMORY_CURVE_SCHEDULER_START */' in s
+          assert '/* V76_MEMORY_CURVE_SCHEDULER_END */' in s
+          assert 'memoryModel' in s
+          print('existing-user compatibility invariants: PASS')
+          PY
+
+      - name: Protect and validate Waseda cloud adapter
+        run: |
+          git diff --exit-code "${WASEDA_PRODUCTION_BASELINE_SHA}"...HEAD -- progress-sync.js
+          node --check progress-sync.js
+          node tools/vocab_cloud_progress_test.js
+
+      - name: Assemble production browser regression tests
+        run: |
+          cat tools/v75_browser_test.part*.mjs > /tmp/v75_browser_test.mjs
+          cp tools/v75_content_browser_test.mjs /tmp/v75_content_browser_test.mjs
+          cp tools/v76_memory_browser_test.mjs /tmp/v76_memory_browser_test.mjs
+          cp tools/common_engine_persistence_contract_test.mjs /tmp/common_engine_persistence_contract_test.mjs
+          cp tools/common_engine_legacy_migration_test.mjs /tmp/common_engine_legacy_migration_test.mjs
+          cp tools/common_engine_baseline_parity_test.mjs /tmp/common_engine_baseline_parity_test.mjs
+          cp tools/common_engine_cloud_integration_test.mjs /tmp/common_engine_cloud_integration_test.mjs
+          sed -i "s/2019-2026-v7.5-user-test-remediation/${WASEDA_PRODUCTION_DATA_VERSION}/g" /tmp/v75_browser_test.mjs /tmp/v75_content_browser_test.mjs
+          node --check /tmp/v75_browser_test.mjs
+          node --check /tmp/v75_content_browser_test.mjs
+          node --check /tmp/v76_memory_browser_test.mjs
+          node --check /tmp/common_engine_persistence_contract_test.mjs
+          node --check /tmp/common_engine_legacy_migration_test.mjs
+          node --check /tmp/common_engine_baseline_parity_test.mjs
+          node --check /tmp/common_engine_cloud_integration_test.mjs
+
+      - name: Prepare isolated current, baseline, and cloud browser QA sites
+        run: |
+          mkdir -p /tmp/common-engine-qa-site /tmp/common-engine-baseline-site /tmp/common-engine-cloud-site
+          cp index.html /tmp/common-engine-qa-site/index.html
+          cp index.html /tmp/common-engine-cloud-site/index.html
+          cp progress-sync.js /tmp/common-engine-cloud-site/progress-sync.js
+          git show "${WASEDA_PRODUCTION_BASELINE_SHA}:index.html" > /tmp/common-engine-baseline-site/index.html
+          for site in /tmp/common-engine-qa-site /tmp/common-engine-baseline-site; do
+            cat > "$site/progress-sync.js" <<'JS'
+          /* CI-only no-op cloud adapter.
+             The real production progress-sync.js is protected byte-for-byte and
+             validated separately above; local browser parity must not call production APIs. */
+          JS
+          done
+
+      - name: Install Playwright Chromium
+        run: |
+          cd /tmp
+          npm init -y >/dev/null 2>&1
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps chromium
+
+      - name: Start isolated current, baseline, and cloud app servers
+        run: |
+          cd /tmp/common-engine-qa-site
+          python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/common-engine-http.log 2>&1 &
+          echo $! >/tmp/common-engine-http.pid
+          cd /tmp/common-engine-baseline-site
+          python3 -m http.server 4174 --bind 127.0.0.1 >/tmp/common-engine-baseline-http.log 2>&1 &
+          echo $! >/tmp/common-engine-baseline-http.pid
+          cd /tmp/common-engine-cloud-site
+          python3 -m http.server 4175 --bind 127.0.0.1 >/tmp/common-engine-cloud-http.log 2>&1 &
+          echo $! >/tmp/common-engine-cloud-http.pid
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:4173/index.html >/dev/null && curl -fsS http://127.0.0.1:4174/index.html >/dev/null && curl -fsS http://127.0.0.1:4175/index.html >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/common-engine-http.log
+          cat /tmp/common-engine-baseline-http.log
+          cat /tmp/common-engine-cloud-http.log
+          exit 1
+
+      - name: Existing user parity pass 1
+        env:
+          NODE_PATH: /tmp/node_modules
+          V75_TEST_URL: http://127.0.0.1:4173/index.html
+          V75_PASS: COMMON-ENGINE-PASS-1
+          V76_TEST_URL: http://127.0.0.1:4173/index.html
+          V76_PASS: COMMON-ENGINE-PASS-1
+          COMMON_ENGINE_TEST_URL: http://127.0.0.1:4173/index.html
+          COMMON_ENGINE_BASELINE_URL: http://127.0.0.1:4174/index.html
+          COMMON_ENGINE_CLOUD_TEST_URL: http://127.0.0.1:4175/index.html
+          COMMON_ENGINE_PASS: COMMON-ENGINE-PASS-1
+        run: |
+          node /tmp/v75_browser_test.mjs
+          node /tmp/v75_content_browser_test.mjs
+          node /tmp/v76_memory_browser_test.mjs
+          node /tmp/common_engine_persistence_contract_test.mjs
+          node /tmp/common_engine_legacy_migration_test.mjs
+          node /tmp/common_engine_baseline_parity_test.mjs
+          node /tmp/common_engine_cloud_integration_test.mjs
+
+      - name: Existing user parity pass 2
+        env:
+          NODE_PATH: /tmp/node_modules
+          V75_TEST_URL: http://127.0.0.1:4173/index.html
+          V75_PASS: COMMON-ENGINE-PASS-2
+          V76_TEST_URL: http://127.0.0.1:4173/index.html
+          V76_PASS: COMMON-ENGINE-PASS-2
+          COMMON_ENGINE_TEST_URL: http://127.0.0.1:4173/index.html
+          COMMON_ENGINE_BASELINE_URL: http://127.0.0.1:4174/index.html
+          COMMON_ENGINE_CLOUD_TEST_URL: http://127.0.0.1:4175/index.html
+          COMMON_ENGINE_PASS: COMMON-ENGINE-PASS-2
+        run: |
+          node /tmp/v75_browser_test.mjs
+          node /tmp/v75_content_browser_test.mjs
+          node /tmp/v76_memory_browser_test.mjs
+          node /tmp/common_engine_persistence_contract_test.mjs
+          node /tmp/common_engine_legacy_migration_test.mjs
+          node /tmp/common_engine_baseline_parity_test.mjs
+          node /tmp/common_engine_cloud_integration_test.mjs
+
+      - name: Final diff hygiene
+        run: git diff --check
