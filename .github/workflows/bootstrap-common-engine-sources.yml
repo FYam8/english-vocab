@@ -2,20 +2,12 @@ name: Bootstrap byte-exact Waseda engine sources
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - refactor/waseda-common-engine-v1
-    paths:
-      - tools/bootstrap_waseda_sources.py
-      - tools/assemble_waseda.py
-      - .github/workflows/bootstrap-common-engine-sources.yml
 
 permissions:
   contents: write
 
 jobs:
   bootstrap:
-    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
