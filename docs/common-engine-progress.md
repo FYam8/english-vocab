@@ -11,9 +11,9 @@ Completed on the refactor branch.
 
 ## Checkpoint B — first Waseda-only adapter boundary
 
-In validation.
+Validated on the refactor branch.
 
-The production persistence constants were moved behind an explicit Waseda configuration object while preserving their exact runtime values:
+The production persistence constants now sit behind an explicit Waseda configuration object while preserving their exact runtime values:
 
 ```js
 const WASEDA_APP_CONFIG=Object.freeze({schemaVersion:7,storageKey:"waseshibu_vocab_state"});
@@ -23,4 +23,6 @@ const STORAGE_KEY=WASEDA_APP_CONFIG.storageKey;
 
 This is intentionally a very small first semantic refactor. It does not change the schema number, localStorage key, vocabulary IDs, learning state format, scheduler behavior, public URL, or cloud adapter.
 
-The change is not eligible for `main` until the generated artifact passes the complete existing-user parity, v7.6 memory-curve, persistence-contract, and cloud-contract gates twice. `progress-sync.js` remains Waseda-only and unchanged.
+Validation completed with deterministic source assembly, the existing-user static gates, unchanged `progress-sync.js`, the cloud-contract guard, the adapted browser/content regression suite, the v7.6 memory-curve suite, and the dedicated persistence-contract suite. Both parity passes completed successfully.
+
+The refactor remains draft-only and is not eligible for `main` yet. The next phase is to move direct persistence I/O and Waseda-specific migration policy behind the adapter without changing the stored state contract.
