@@ -11,7 +11,9 @@ OUT = ROOT / "src" / "waseda-bootstrap"
 BASELINE_BLOB_SHA = "bb77a0c54153502e25bccb1ed89ca33b29b45c83"
 
 DATA_START = b"const VOCAB="
-RUNTIME_START = b"const SCHEMA_VERSION=7;"
+PERSISTENCE_START = b"const SCHEMA_VERSION=7;"
+ENGINE_CANDIDATE_START = b"const MASTER_LABEL="
+COMPAT_START = b"/* V75_USER_TEST_REMEDIATION_START */"
 SUFFIX_START = b"\n</script>\n<script src=\"progress-sync.js?v=vocab-cloud2\"></script>"
 
 
@@ -37,13 +39,17 @@ def main() -> None:
         )
 
     data_at = raw.index(DATA_START)
-    runtime_at = raw.index(RUNTIME_START, data_at)
-    suffix_at = raw.index(SUFFIX_START, runtime_at)
+    persistence_at = raw.index(PERSISTENCE_START, data_at)
+    engine_at = raw.index(ENGINE_CANDIDATE_START, persistence_at)
+    compat_at = raw.index(COMPAT_START, engine_at)
+    suffix_at = raw.index(SUFFIX_START, compat_at)
 
     parts = {
         "00-shell-prefix.html": raw[:data_at],
-        "10-waseda-data.js": raw[data_at:runtime_at],
-        "20-legacy-runtime.js": raw[runtime_at:suffix_at],
+        "10-waseda-data.js": raw[data_at:persistence_at],
+        "15-waseda-persistence.js": raw[persistence_at:engine_at],
+        "20-engine-candidate.js": raw[engine_at:compat_at],
+        "30-compat-runtime.js": raw[compat_at:suffix_at],
         "90-shell-suffix.html": raw[suffix_at:],
     }
 
@@ -52,6 +58,10 @@ def main() -> None:
         raise SystemExit("Mechanical split is not byte-exact; refusing to write sources")
 
     OUT.mkdir(parents=True, exist_ok=True)
+    keep = set(parts) | {"manifest.json"}
+    for path in OUT.iterdir():
+        if path.is_file() and path.name not in keep:
+            path.unlink()
     for name, content in parts.items():
         (OUT / name).write_bytes(content)
 
@@ -65,10 +75,17 @@ def main() -> None:
             name: {"bytes": len(content), "sha256": sha256(content)}
             for name, content in parts.items()
         },
+        "boundaries": {
+            "wasedaData": "10-waseda-data.js",
+            "wasedaPersistenceAdapterSeed": "15-waseda-persistence.js",
+            "engineCandidate": "20-engine-candidate.js",
+            "compatibilityRuntime": "30-compat-runtime.js",
+        },
         "notes": [
-            "This is a mechanical bootstrap only; no behavior or persistence semantics change.",
-            "20-legacy-runtime.js is intentionally not yet claimed to be school-neutral.",
-            "The next refactor step moves code across engine/adapter boundaries under parity tests.",
+            "This remains a byte-exact mechanical split; browser behavior and persistence semantics are unchanged.",
+            "15-waseda-persistence.js is the first explicit Waseda-only adapter seed because it owns the production schema and localStorage namespace.",
+            "20-engine-candidate.js is only a candidate boundary and is not yet claimed to be fully school-neutral.",
+            "30-compat-runtime.js contains the existing v7.5/v7.6 compatibility/runtime overrides and will be decomposed only under parity tests.",
         ],
     }
     (OUT / "manifest.json").write_text(
