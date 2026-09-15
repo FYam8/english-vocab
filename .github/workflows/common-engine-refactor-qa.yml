@@ -34,6 +34,16 @@ jobs:
             exit 1
           fi
 
+      - name: Require deterministic byte-exact Waseda source assembly
+        run: |
+          python3 tools/assemble_waseda.py --check
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('src/waseda-bootstrap/15-waseda-persistence.js').read_text(encoding='utf-8')
+          assert p == 'const SCHEMA_VERSION=7;\nconst STORAGE_KEY="waseshibu_vocab_state";\n'
+          print('Waseda persistence adapter seed: EXACT')
+          PY
+
       - name: Existing-user protection static gate
         run: |
           python3 - <<'PY'
