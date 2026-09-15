@@ -20,6 +20,10 @@ The current Waseda production behavior is the source of truth. This refactor mus
 
 The baseline remains the compatibility target until the refactor is merged. A compatibility test that expects the older v7.5 data version is stale and must be adapted to the v7.6 production baseline; old v7.5 fixtures remain useful only where they intentionally test upgrade/import compatibility.
 
+### Baseline drift rule
+
+The compatibility branch is valid only while Waseda production `main` still points to the reviewed baseline commit above. CI must stop if `main` moves. If production changes for any reason while this refactor is in progress, do not silently continue and do not merely update the expected SHA: review the intervening production commits, rebase the refactor, rerun the full compatibility suite, and explicitly establish a new baseline.
+
 ## First-refactor delivery shape
 
 The first production engine refactor changes **source structure and internal boundaries**, not the browser delivery model.
@@ -47,25 +51,33 @@ This avoids creating new cache/load-order/partial-deploy failure modes for curre
    - Keep production URL and persistence contract unchanged.
    - Keep the first production artifact runtime-equivalent to the current single-page delivery shape.
 
-3. **Parity validation**
+3. **Parity validation before merge**
    - Run the production v7.5 browser/content regression suite adapted to the v7.6 data-version baseline twice.
    - Run the v7.6 memory-curve regression suite twice.
    - Verify old localStorage fixtures still load and continue learning.
    - Verify no destructive storage operations are introduced.
    - Verify Waseda dataset/content is unchanged unless a separate content change is explicitly approved.
    - Verify the Waseda cloud adapter is byte-for-byte unchanged from the production baseline during this boundary refactor.
+   - Validate the cloud adapter contract separately from local browser QA; local parity tests must not call the production progress API.
    - Verify the generated production artifact is reproducible/idempotent once the source split is introduced.
 
 4. **Merge the refactor to Waseda production**
-   - Only after all parity gates pass twice.
+   - Only after all pre-merge parity gates pass twice.
    - This merge changes implementation structure, not learner-visible behavior or persistence semantics.
 
-5. **Extract the common engine**
-   - Only after Waseda production is successfully running on the internal engine boundary.
+5. **Post-deploy Waseda verification**
+   - Treat deployment success as a separate gate from merge/CI success.
+   - Verify the actual public Waseda URL after deployment using an existing-user local-state fixture in an isolated browser profile.
+   - Confirm the fixture is not reset or rewritten on load, fixed vocabulary IDs remain addressable, the app can continue a study interaction, and the production version/branding are correct.
+   - Do not generate real learner/cloud records during smoke testing; isolate or mock the progress API while separately checking the unchanged production cloud adapter contract.
+   - If live verification fails, revert the refactor merge. Because persistence identifiers and schema are deliberately unchanged, rollback must not require deleting or transforming learner history.
+
+6. **Extract the common engine**
+   - Only after Waseda production has passed the post-deploy verification and is successfully running on the internal engine boundary.
    - Extract only school-neutral code to the shared engine artifact/repository.
    - Do not extract Waseda storage identifiers, cloud sync, branding, source metadata, or Waseda dataset.
 
-6. **Adopt from Rikkyo**
+7. **Adopt from Rikkyo**
    - Rikkyo consumes the extracted engine with its own adapter, dataset, stable IDs, persistence namespace, and release policy.
 
 ## Non-negotiable Waseda compatibility invariants
@@ -109,4 +121,4 @@ The initial engine refactor must preserve all of the following:
 
 ## Release rule
 
-The branch `refactor/waseda-common-engine-v1` is a compatibility refactor branch. It must not be merged to `main` until the existing-user protection gate, the adapted browser/content suite, and the v7.6 memory-curve suite all pass twice against the refactored build.
+The branch `refactor/waseda-common-engine-v1` is a compatibility refactor branch. It must not be merged to `main` until the production baseline has not drifted and the existing-user protection gate, the adapted browser/content suite, and the v7.6 memory-curve suite all pass twice against the refactored build. The shared engine must not be extracted for Rikkyo until the merged Waseda build also passes the separate post-deploy verification on the real public URL.
