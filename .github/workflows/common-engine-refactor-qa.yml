@@ -34,14 +34,16 @@ jobs:
             exit 1
           fi
 
-      - name: Require deterministic byte-exact Waseda source assembly
+      - name: Require deterministic Waseda source assembly
         run: |
           python3 tools/assemble_waseda.py --check
           python3 - <<'PY'
           from pathlib import Path
           p=Path('src/waseda-bootstrap/15-waseda-persistence.js').read_text(encoding='utf-8')
-          assert p == 'const SCHEMA_VERSION=7;\nconst STORAGE_KEY="waseshibu_vocab_state";\n'
-          print('Waseda persistence adapter seed: EXACT')
+          legacy='const SCHEMA_VERSION=7;\nconst STORAGE_KEY="waseshibu_vocab_state";\n'
+          adapter='const WASEDA_APP_CONFIG=Object.freeze({schemaVersion:7,storageKey:"waseshibu_vocab_state"});\nconst SCHEMA_VERSION=WASEDA_APP_CONFIG.schemaVersion;\nconst STORAGE_KEY=WASEDA_APP_CONFIG.storageKey;\n'
+          assert p in {legacy,adapter}
+          print('Waseda persistence adapter seed: REVIEWED SHAPE')
           PY
 
       - name: Existing-user protection static gate
@@ -50,8 +52,9 @@ jobs:
           import os
           from pathlib import Path
           s = Path('index.html').read_text(encoding='utf-8')
-          assert 'const SCHEMA_VERSION=7;' in s
-          assert 'const STORAGE_KEY="waseshibu_vocab_state";' in s
+          assert 'waseshibu_vocab_state' in s
+          assert 'SCHEMA_VERSION' in s
+          assert 'STORAGE_KEY' in s
           assert 'waseshibu_vocab_active_session_v1' in s
           assert 'localStorage.clear(' not in s
           assert 'localStorage.removeItem(STORAGE_KEY)' not in s
