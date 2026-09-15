@@ -101,22 +101,27 @@ jobs:
           cp tools/v76_memory_browser_test.mjs /tmp/v76_memory_browser_test.mjs
           cp tools/common_engine_persistence_contract_test.mjs /tmp/common_engine_persistence_contract_test.mjs
           cp tools/common_engine_legacy_migration_test.mjs /tmp/common_engine_legacy_migration_test.mjs
+          cp tools/common_engine_baseline_parity_test.mjs /tmp/common_engine_baseline_parity_test.mjs
           sed -i "s/2019-2026-v7.5-user-test-remediation/${WASEDA_PRODUCTION_DATA_VERSION}/g" /tmp/v75_browser_test.mjs /tmp/v75_content_browser_test.mjs
           node --check /tmp/v75_browser_test.mjs
           node --check /tmp/v75_content_browser_test.mjs
           node --check /tmp/v76_memory_browser_test.mjs
           node --check /tmp/common_engine_persistence_contract_test.mjs
           node --check /tmp/common_engine_legacy_migration_test.mjs
+          node --check /tmp/common_engine_baseline_parity_test.mjs
 
-      - name: Prepare isolated browser QA site
+      - name: Prepare isolated current and baseline browser QA sites
         run: |
-          mkdir -p /tmp/common-engine-qa-site
+          mkdir -p /tmp/common-engine-qa-site /tmp/common-engine-baseline-site
           cp index.html /tmp/common-engine-qa-site/index.html
-          cat > /tmp/common-engine-qa-site/progress-sync.js <<'JS'
+          git show "${WASEDA_PRODUCTION_BASELINE_SHA}:index.html" > /tmp/common-engine-baseline-site/index.html
+          for site in /tmp/common-engine-qa-site /tmp/common-engine-baseline-site; do
+            cat > "$site/progress-sync.js" <<'JS'
           /* CI-only no-op cloud adapter.
              The real production progress-sync.js is protected byte-for-byte and
              validated separately above; local browser parity must not call production APIs. */
           JS
+          done
 
       - name: Install Playwright Chromium
         run: |
@@ -125,16 +130,20 @@ jobs:
           npm install --no-save playwright@1.55.0
           npx playwright install --with-deps chromium
 
-      - name: Start isolated local app server
+      - name: Start isolated current and baseline app servers
         run: |
           cd /tmp/common-engine-qa-site
           python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/common-engine-http.log 2>&1 &
           echo $! >/tmp/common-engine-http.pid
+          cd /tmp/common-engine-baseline-site
+          python3 -m http.server 4174 --bind 127.0.0.1 >/tmp/common-engine-baseline-http.log 2>&1 &
+          echo $! >/tmp/common-engine-baseline-http.pid
           for i in {1..30}; do
-            if curl -fsS http://127.0.0.1:4173/index.html >/dev/null; then exit 0; fi
+            if curl -fsS http://127.0.0.1:4173/index.html >/dev/null && curl -fsS http://127.0.0.1:4174/index.html >/dev/null; then exit 0; fi
             sleep 1
           done
           cat /tmp/common-engine-http.log
+          cat /tmp/common-engine-baseline-http.log
           exit 1
 
       - name: Existing user parity pass 1
@@ -145,6 +154,7 @@ jobs:
           V76_TEST_URL: http://127.0.0.1:4173/index.html
           V76_PASS: COMMON-ENGINE-PASS-1
           COMMON_ENGINE_TEST_URL: http://127.0.0.1:4173/index.html
+          COMMON_ENGINE_BASELINE_URL: http://127.0.0.1:4174/index.html
           COMMON_ENGINE_PASS: COMMON-ENGINE-PASS-1
         run: |
           node /tmp/v75_browser_test.mjs
@@ -152,6 +162,7 @@ jobs:
           node /tmp/v76_memory_browser_test.mjs
           node /tmp/common_engine_persistence_contract_test.mjs
           node /tmp/common_engine_legacy_migration_test.mjs
+          node /tmp/common_engine_baseline_parity_test.mjs
 
       - name: Existing user parity pass 2
         env:
@@ -161,6 +172,7 @@ jobs:
           V76_TEST_URL: http://127.0.0.1:4173/index.html
           V76_PASS: COMMON-ENGINE-PASS-2
           COMMON_ENGINE_TEST_URL: http://127.0.0.1:4173/index.html
+          COMMON_ENGINE_BASELINE_URL: http://127.0.0.1:4174/index.html
           COMMON_ENGINE_PASS: COMMON-ENGINE-PASS-2
         run: |
           node /tmp/v75_browser_test.mjs
@@ -168,6 +180,7 @@ jobs:
           node /tmp/v76_memory_browser_test.mjs
           node /tmp/common_engine_persistence_contract_test.mjs
           node /tmp/common_engine_legacy_migration_test.mjs
+          node /tmp/common_engine_baseline_parity_test.mjs
 
       - name: Final diff hygiene
         run: git diff --check
