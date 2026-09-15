@@ -37,9 +37,11 @@ jobs:
           print('existing-user compatibility invariants: PASS')
           PY
 
-      - name: Protect Waseda cloud adapter during engine-boundary refactor
+      - name: Protect and validate Waseda cloud adapter
         run: |
           git diff --exit-code 531d505c19a86eaa2c8bbc4b25179de8089ab585...HEAD -- progress-sync.js
+          node --check progress-sync.js
+          node tools/vocab_cloud_progress_test.js
 
       - name: Assemble production browser regression tests
         run: |
@@ -51,6 +53,16 @@ jobs:
           node --check /tmp/v75_content_browser_test.mjs
           node --check /tmp/v76_memory_browser_test.mjs
 
+      - name: Prepare isolated browser QA site
+        run: |
+          mkdir -p /tmp/common-engine-qa-site
+          cp index.html /tmp/common-engine-qa-site/index.html
+          cat > /tmp/common-engine-qa-site/progress-sync.js <<'JS'
+          /* CI-only no-op cloud adapter.
+             The real production progress-sync.js is protected byte-for-byte and
+             validated separately above; local browser parity must not call production APIs. */
+          JS
+
       - name: Install Playwright Chromium
         run: |
           cd /tmp
@@ -58,8 +70,9 @@ jobs:
           npm install --no-save playwright@1.55.0
           npx playwright install --with-deps chromium
 
-      - name: Start local app server
+      - name: Start isolated local app server
         run: |
+          cd /tmp/common-engine-qa-site
           python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/common-engine-http.log 2>&1 &
           echo $! >/tmp/common-engine-http.pid
           for i in {1..30}; do
