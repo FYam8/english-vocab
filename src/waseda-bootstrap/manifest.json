@@ -6,7 +6,9 @@
   "assemblyOrder": [
     "00-shell-prefix.html",
     "10-waseda-data.js",
-    "20-legacy-runtime.js",
+    "15-waseda-persistence.js",
+    "20-engine-candidate.js",
+    "30-compat-runtime.js",
     "90-shell-suffix.html"
   ],
   "parts": {
@@ -18,18 +20,33 @@
       "bytes": 708873,
       "sha256": "2126f14b5b7e1cf537a3ef2671073b83852a9a83a3a17f5089b5ab416cfa5390"
     },
-    "20-legacy-runtime.js": {
-      "bytes": 123423,
-      "sha256": "e7027a1b6448755ce41ac99227424e907b7116c3ed1114f073320d3e6e7fea35"
+    "15-waseda-persistence.js": {
+      "bytes": 67,
+      "sha256": "8e5d7e5cb1a5290ef71709b30beda89b27b7442f6c6ce42d872e7b81dc17ea96"
+    },
+    "20-engine-candidate.js": {
+      "bytes": 47960,
+      "sha256": "83cd7c20755225b298b5dfd8ce421f42f2aeaeba33be9b5d19fb54f15095cddd"
+    },
+    "30-compat-runtime.js": {
+      "bytes": 75396,
+      "sha256": "5e875d4c2720cab57ac4669c0193d1c3b8526379d82900fdaf9901179d0655da"
     },
     "90-shell-suffix.html": {
       "bytes": 82,
       "sha256": "89bfca9e9c40aa28dcbe0554737c4db5a03ecb14b9a1f23beca2ddd50fafb75c"
     }
   },
+  "boundaries": {
+    "wasedaData": "10-waseda-data.js",
+    "wasedaPersistenceAdapterSeed": "15-waseda-persistence.js",
+    "engineCandidate": "20-engine-candidate.js",
+    "compatibilityRuntime": "30-compat-runtime.js"
+  },
   "notes": [
-    "This is a mechanical bootstrap only; no behavior or persistence semantics change.",
-    "20-legacy-runtime.js is intentionally not yet claimed to be school-neutral.",
-    "The next refactor step moves code across engine/adapter boundaries under parity tests."
+    "This remains a byte-exact mechanical split; browser behavior and persistence semantics are unchanged.",
+    "15-waseda-persistence.js is the first explicit Waseda-only adapter seed because it owns the production schema and localStorage namespace.",
+    "20-engine-candidate.js is only a candidate boundary and is not yet claimed to be fully school-neutral.",
+    "30-compat-runtime.js contains the existing v7.5/v7.6 compatibility/runtime overrides and will be decomposed only under parity tests."
   ]
 }
