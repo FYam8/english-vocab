@@ -30,8 +30,12 @@ await page.route(`${API}/**`, async (route) => {
   await route.fulfill({
     status: 200,
     contentType: 'application/json',
-    headers: { 'access-control-allow-origin': '*' },
-    body: JSON.stringify(payload)
+    headers: {
+      'access-control-allow-origin': '*',
+      'access-control-allow-methods': 'GET,POST,PUT,OPTIONS',
+      'access-control-allow-headers': 'authorization,content-type'
+    },
+    body: req.method() === 'OPTIONS' ? '' : JSON.stringify(payload)
   });
 });
 
@@ -62,20 +66,21 @@ try {
 
   const deadline = Date.now() + 8000;
   while (Date.now() < deadline) {
-    const paths = new Set(calls.map((x) => x.path));
+    const paths = new Set(calls.filter((x) => x.method !== 'OPTIONS').map((x) => x.path));
     if (['/v1/register-anonymous', '/v1/control', '/v1/progress/snapshot', '/v1/events/batch'].every((p) => paths.has(p))) break;
     await new Promise((resolve) => setTimeout(resolve, 100));
   }
 
-  const paths = new Set(calls.map((x) => x.path));
+  const actualCalls = calls.filter((x) => x.method !== 'OPTIONS');
+  const paths = new Set(actualCalls.map((x) => x.path));
   for (const p of ['/v1/register-anonymous', '/v1/control', '/v1/progress/snapshot', '/v1/events/batch']) {
     assert.ok(paths.has(p), `real Waseda cloud adapter did not reach mocked ${p}`);
   }
-  const register = calls.find((x) => x.path === '/v1/register-anonymous');
+  const register = actualCalls.find((x) => x.path === '/v1/register-anonymous');
   assert.equal(register.method, 'POST');
-  const snapshot = calls.find((x) => x.path === '/v1/progress/snapshot');
+  const snapshot = actualCalls.find((x) => x.path === '/v1/progress/snapshot');
   assert.equal(snapshot.method, 'PUT');
-  const batch = calls.find((x) => x.path === '/v1/events/batch');
+  const batch = actualCalls.find((x) => x.path === '/v1/events/batch');
   assert.equal(batch.method, 'POST');
   const batchBody = JSON.parse(batch.body || '{}');
   assert.ok(Array.isArray(batchBody.events) && batchBody.events.length > 0, 'cloud adapter queued no events from learner state');
