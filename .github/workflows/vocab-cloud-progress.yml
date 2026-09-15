@@ -41,8 +41,9 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
           s=Path('index.html').read_text(encoding='utf-8')
-          assert 'const SCHEMA_VERSION=7;' in s
-          assert 'const STORAGE_KEY="waseshibu_vocab_state";' in s
+          old='const SCHEMA_VERSION=7;\nconst STORAGE_KEY="waseshibu_vocab_state";'
+          adapter='const WASEDA_APP_CONFIG=Object.freeze({schemaVersion:7,storageKey:"waseshibu_vocab_state"});\nconst SCHEMA_VERSION=WASEDA_APP_CONFIG.schemaVersion;\nconst STORAGE_KEY=WASEDA_APP_CONFIG.storageKey;'
+          assert old in s or adapter in s
           assert 'localStorage.clear(' not in s
           assert 'localStorage.removeItem(STORAGE_KEY)' not in s
           assert s.count('<script src="progress-sync.js?v=vocab-cloud2"></script>') == 1
