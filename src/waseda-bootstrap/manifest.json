@@ -1,8 +1,6 @@
 {
-  "format": "waseda-vocab-byte-split/v1",
+  "format": "waseda-vocab-source-assembly/v2",
   "source": "index.html",
-  "sourceGitBlobSha": "bb77a0c54153502e25bccb1ed89ca33b29b45c83",
-  "sourceSha256": "a6e58a9321d4e739216957fcbfaa0cf7f1d1621ca0f0bb88a03507da81bf452f",
   "assemblyOrder": [
     "00-shell-prefix.html",
     "10-waseda-data.js",
@@ -48,5 +46,8 @@
     "15-waseda-persistence.js is the first explicit Waseda-only adapter seed because it owns the production schema and localStorage namespace.",
     "20-engine-candidate.js is only a candidate boundary and is not yet claimed to be fully school-neutral.",
     "30-compat-runtime.js contains the existing v7.5/v7.6 compatibility/runtime overrides and will be decomposed only under parity tests."
-  ]
+  ],
+  "baselineSourceGitBlobSha": "bb77a0c54153502e25bccb1ed89ca33b29b45c83",
+  "baselineSourceSha256": "a6e58a9321d4e739216957fcbfaa0cf7f1d1621ca0f0bb88a03507da81bf452f",
+  "artifactSha256": "a6e58a9321d4e739216957fcbfaa0cf7f1d1621ca0f0bb88a03507da81bf452f"
 }
