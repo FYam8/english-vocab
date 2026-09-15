@@ -20,6 +20,19 @@ The current Waseda production behavior is the source of truth. This refactor mus
 
 The baseline remains the compatibility target until the refactor is merged. A compatibility test that expects the older v7.5 data version is stale and must be adapted to the v7.6 production baseline; old v7.5 fixtures remain useful only where they intentionally test upgrade/import compatibility.
 
+## First-refactor delivery shape
+
+The first production engine refactor changes **source structure and internal boundaries**, not the browser delivery model.
+
+- Keep the Waseda production page self-contained for the app UI/engine code, except for the already-existing `progress-sync.js` loader.
+- Do not introduce a new cross-repository, CDN, dynamic-import, or runtime package dependency in this first refactor.
+- Split engine / Waseda adapter / Waseda data at source/build time, then deterministically assemble the production `index.html` so browser load ordering remains equivalent to the current app.
+- Keep only one editable source of truth for each code/data section. The generated `index.html` must not become an independently hand-maintained second implementation.
+- The assembly step must be idempotent, and CI must fail if rebuilding changes a supposedly up-to-date production artifact.
+- `progress-sync.js` stays external exactly as it is today and is not absorbed into the engine bundle.
+
+This avoids creating new cache/load-order/partial-deploy failure modes for current Waseda learners while still making the production implementation internally engine-based.
+
 ## Refactor order
 
 1. **Boundary first, no behavior change**
@@ -32,6 +45,7 @@ The baseline remains the compatibility target until the refactor is merged. A co
    - Keep Waseda-specific configuration/data behind a Waseda adapter.
    - Keep `progress-sync.js` Waseda-only and outside the common engine.
    - Keep production URL and persistence contract unchanged.
+   - Keep the first production artifact runtime-equivalent to the current single-page delivery shape.
 
 3. **Parity validation**
    - Run the production v7.5 browser/content regression suite adapted to the v7.6 data-version baseline twice.
@@ -40,6 +54,7 @@ The baseline remains the compatibility target until the refactor is merged. A co
    - Verify no destructive storage operations are introduced.
    - Verify Waseda dataset/content is unchanged unless a separate content change is explicitly approved.
    - Verify the Waseda cloud adapter is byte-for-byte unchanged from the production baseline during this boundary refactor.
+   - Verify the generated production artifact is reproducible/idempotent once the source split is introduced.
 
 4. **Merge the refactor to Waseda production**
    - Only after all parity gates pass twice.
