@@ -41,7 +41,7 @@ jobs:
 
       - name: Commit mechanical source split to refactor branch
         run: |
-          if git diff --quiet -- src/waseda-bootstrap; then
+          if [ -z "$(git status --porcelain -- src/waseda-bootstrap)" ]; then
             echo "Bootstrap sources already up to date"
             exit 0
           fi
