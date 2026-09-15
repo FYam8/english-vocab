@@ -65,10 +65,12 @@ jobs:
           cat tools/v75_browser_test.part*.mjs > /tmp/v75_browser_test.mjs
           cp tools/v75_content_browser_test.mjs /tmp/v75_content_browser_test.mjs
           cp tools/v76_memory_browser_test.mjs /tmp/v76_memory_browser_test.mjs
+          cp tools/common_engine_persistence_contract_test.mjs /tmp/common_engine_persistence_contract_test.mjs
           sed -i "s/2019-2026-v7.5-user-test-remediation/${WASEDA_PRODUCTION_DATA_VERSION}/g" /tmp/v75_browser_test.mjs /tmp/v75_content_browser_test.mjs
           node --check /tmp/v75_browser_test.mjs
           node --check /tmp/v75_content_browser_test.mjs
           node --check /tmp/v76_memory_browser_test.mjs
+          node --check /tmp/common_engine_persistence_contract_test.mjs
 
       - name: Prepare isolated browser QA site
         run: |
@@ -106,10 +108,13 @@ jobs:
           V75_PASS: COMMON-ENGINE-PASS-1
           V76_TEST_URL: http://127.0.0.1:4173/index.html
           V76_PASS: COMMON-ENGINE-PASS-1
+          COMMON_ENGINE_TEST_URL: http://127.0.0.1:4173/index.html
+          COMMON_ENGINE_PASS: COMMON-ENGINE-PASS-1
         run: |
           node /tmp/v75_browser_test.mjs
           node /tmp/v75_content_browser_test.mjs
           node /tmp/v76_memory_browser_test.mjs
+          node /tmp/common_engine_persistence_contract_test.mjs
 
       - name: Existing user parity pass 2
         env:
@@ -118,10 +123,13 @@ jobs:
           V75_PASS: COMMON-ENGINE-PASS-2
           V76_TEST_URL: http://127.0.0.1:4173/index.html
           V76_PASS: COMMON-ENGINE-PASS-2
+          COMMON_ENGINE_TEST_URL: http://127.0.0.1:4173/index.html
+          COMMON_ENGINE_PASS: COMMON-ENGINE-PASS-2
         run: |
           node /tmp/v75_browser_test.mjs
           node /tmp/v75_content_browser_test.mjs
           node /tmp/v76_memory_browser_test.mjs
+          node /tmp/common_engine_persistence_contract_test.mjs
 
       - name: Final diff hygiene
         run: git diff --check
