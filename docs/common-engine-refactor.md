@@ -11,12 +11,14 @@ The current Waseda production behavior is the source of truth. This refactor mus
 - Repository: `FYam8/english-vocab`
 - Baseline branch: `main`
 - Baseline commit: `531d505c19a86eaa2c8bbc4b25179de8089ab585`
+- Baseline data version: `2019-2026-v7.6-memory-curve-scheduler`
 - Existing storage schema contract: `SCHEMA_VERSION=7`
 - Existing local state key: `waseshibu_vocab_state`
 - Existing active-session key: `waseshibu_vocab_active_session_v1`
 - Existing cloud adapter: `progress-sync.js`
+- Existing memory-curve behavior: v7.6 lazy `memoryModel`, target-retention rules, lapse/retry scheduling and exam-date UI
 
-The baseline remains the compatibility target until the refactor is merged.
+The baseline remains the compatibility target until the refactor is merged. A compatibility test that expects the older v7.5 data version is stale and must be adapted to the v7.6 production baseline; old v7.5 fixtures remain useful only where they intentionally test upgrade/import compatibility.
 
 ## Refactor order
 
@@ -32,13 +34,15 @@ The baseline remains the compatibility target until the refactor is merged.
    - Keep production URL and persistence contract unchanged.
 
 3. **Parity validation**
-   - Run existing browser/content QA twice.
+   - Run the production v7.5 browser/content regression suite adapted to the v7.6 data-version baseline twice.
+   - Run the v7.6 memory-curve regression suite twice.
    - Verify old localStorage fixtures still load and continue learning.
    - Verify no destructive storage operations are introduced.
    - Verify Waseda dataset/content is unchanged unless a separate content change is explicitly approved.
+   - Verify the Waseda cloud adapter is byte-for-byte unchanged from the production baseline during this boundary refactor.
 
 4. **Merge the refactor to Waseda production**
-   - Only after parity gates pass.
+   - Only after all parity gates pass twice.
    - This merge changes implementation structure, not learner-visible behavior or persistence semantics.
 
 5. **Extract the common engine**
@@ -57,6 +61,7 @@ The initial engine refactor must preserve all of the following:
 - Same `SCHEMA_VERSION=7` until a separately reviewed storage migration is intentionally introduced.
 - Same `waseshibu_vocab_state` localStorage key.
 - Same `waseshibu_vocab_active_session_v1` active-session key.
+- Same production data semantics as v7.6, including lazy memory-model initialization and scheduler behavior.
 - No `localStorage.clear()`.
 - No `localStorage.removeItem(STORAGE_KEY)`.
 - Existing fixed vocabulary IDs remain unchanged.
@@ -89,4 +94,4 @@ The initial engine refactor must preserve all of the following:
 
 ## Release rule
 
-The branch `refactor/waseda-common-engine-v1` is a compatibility refactor branch. It must not be merged to `main` until the existing-user protection gate and two-pass browser/content QA pass against the refactored build.
+The branch `refactor/waseda-common-engine-v1` is a compatibility refactor branch. It must not be merged to `main` until the existing-user protection gate, the adapted browser/content suite, and the v7.6 memory-curve suite all pass twice against the refactored build.
