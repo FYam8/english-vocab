@@ -1,0 +1,84 @@
+name: Waseda common-engine compatibility gate
+
+on:
+  push:
+    branches:
+      - refactor/waseda-common-engine-v1
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  existing-user-parity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Existing-user protection static gate
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          s = Path('index.html').read_text(encoding='utf-8')
+          assert 'const SCHEMA_VERSION=7;' in s
+          assert 'const STORAGE_KEY="waseshibu_vocab_state";' in s
+          assert 'waseshibu_vocab_active_session_v1' in s
+          assert 'localStorage.clear(' not in s
+          assert 'localStorage.removeItem(STORAGE_KEY)' not in s
+          assert 'const VOCAB=' in s
+          assert '<script src="progress-sync.js?v=vocab-cloud2"></script>' in s
+          print('existing-user compatibility invariants: PASS')
+          PY
+
+      - name: Protect Waseda cloud adapter during engine-boundary refactor
+        run: |
+          git diff --exit-code 531d505c19a86eaa2c8bbc4b25179de8089ab585...HEAD -- progress-sync.js
+
+      - name: Assemble existing browser regression tests
+        run: |
+          cat tools/v75_browser_test.part*.mjs > /tmp/v75_browser_test.mjs
+          cp tools/v75_content_browser_test.mjs /tmp/v75_content_browser_test.mjs
+          node --check /tmp/v75_browser_test.mjs
+          node --check /tmp/v75_content_browser_test.mjs
+
+      - name: Install Playwright Chromium
+        run: |
+          cd /tmp
+          npm init -y >/dev/null 2>&1
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps chromium
+
+      - name: Start local app server
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/common-engine-http.log 2>&1 &
+          echo $! >/tmp/common-engine-http.pid
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:4173/index.html >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/common-engine-http.log
+          exit 1
+
+      - name: Existing user parity pass 1
+        env:
+          NODE_PATH: /tmp/node_modules
+          V75_TEST_URL: http://127.0.0.1:4173/index.html
+          V75_PASS: COMMON-ENGINE-PASS-1
+        run: |
+          node /tmp/v75_browser_test.mjs
+          node /tmp/v75_content_browser_test.mjs
+
+      - name: Existing user parity pass 2
+        env:
+          NODE_PATH: /tmp/node_modules
+          V75_TEST_URL: http://127.0.0.1:4173/index.html
+          V75_PASS: COMMON-ENGINE-PASS-2
+        run: |
+          node /tmp/v75_browser_test.mjs
+          node /tmp/v75_content_browser_test.mjs
+
+      - name: Final diff hygiene
+        run: git diff --check
