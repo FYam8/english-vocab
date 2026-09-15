@@ -9,6 +9,10 @@ on:
 permissions:
   contents: read
 
+env:
+  WASEDA_PRODUCTION_BASELINE_SHA: 531d505c19a86eaa2c8bbc4b25179de8089ab585
+  WASEDA_PRODUCTION_DATA_VERSION: 2019-2026-v7.6-memory-curve-scheduler
+
 jobs:
   existing-user-parity:
     runs-on: ubuntu-latest
@@ -18,9 +22,22 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Stop if Waseda production baseline moved
+        run: |
+          git fetch origin main --quiet
+          ACTUAL_MAIN_SHA="$(git rev-parse origin/main)"
+          echo "expected main: ${WASEDA_PRODUCTION_BASELINE_SHA}"
+          echo "actual main:   ${ACTUAL_MAIN_SHA}"
+          if [ "${ACTUAL_MAIN_SHA}" != "${WASEDA_PRODUCTION_BASELINE_SHA}" ]; then
+            echo "Waseda main changed after this refactor baseline was captured."
+            echo "Rebase and explicitly re-baseline only after reviewing the new production changes."
+            exit 1
+          fi
+
       - name: Existing-user protection static gate
         run: |
           python3 - <<'PY'
+          import os
           from pathlib import Path
           s = Path('index.html').read_text(encoding='utf-8')
           assert 'const SCHEMA_VERSION=7;' in s
@@ -30,7 +47,7 @@ jobs:
           assert 'localStorage.removeItem(STORAGE_KEY)' not in s
           assert 'const VOCAB=' in s
           assert '<script src="progress-sync.js?v=vocab-cloud2"></script>' in s
-          assert '2019-2026-v7.6-memory-curve-scheduler' in s
+          assert os.environ['WASEDA_PRODUCTION_DATA_VERSION'] in s
           assert '/* V76_MEMORY_CURVE_SCHEDULER_START */' in s
           assert '/* V76_MEMORY_CURVE_SCHEDULER_END */' in s
           assert 'memoryModel' in s
@@ -39,7 +56,7 @@ jobs:
 
       - name: Protect and validate Waseda cloud adapter
         run: |
-          git diff --exit-code 531d505c19a86eaa2c8bbc4b25179de8089ab585...HEAD -- progress-sync.js
+          git diff --exit-code "${WASEDA_PRODUCTION_BASELINE_SHA}"...HEAD -- progress-sync.js
           node --check progress-sync.js
           node tools/vocab_cloud_progress_test.js
 
@@ -48,7 +65,7 @@ jobs:
           cat tools/v75_browser_test.part*.mjs > /tmp/v75_browser_test.mjs
           cp tools/v75_content_browser_test.mjs /tmp/v75_content_browser_test.mjs
           cp tools/v76_memory_browser_test.mjs /tmp/v76_memory_browser_test.mjs
-          sed -i 's/2019-2026-v7.5-user-test-remediation/2019-2026-v7.6-memory-curve-scheduler/g' /tmp/v75_browser_test.mjs /tmp/v75_content_browser_test.mjs
+          sed -i "s/2019-2026-v7.5-user-test-remediation/${WASEDA_PRODUCTION_DATA_VERSION}/g" /tmp/v75_browser_test.mjs /tmp/v75_content_browser_test.mjs
           node --check /tmp/v75_browser_test.mjs
           node --check /tmp/v75_content_browser_test.mjs
           node --check /tmp/v76_memory_browser_test.mjs
