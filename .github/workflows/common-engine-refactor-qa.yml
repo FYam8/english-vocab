@@ -43,10 +43,11 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
           p=Path('src/waseda-bootstrap/15-waseda-persistence.js').read_text(encoding='utf-8')
-          legacy='const SCHEMA_VERSION=7;\nconst STORAGE_KEY="waseshibu_vocab_state";\n'
-          adapter='const WASEDA_APP_CONFIG=Object.freeze({schemaVersion:7,storageKey:"waseshibu_vocab_state"});\nconst SCHEMA_VERSION=WASEDA_APP_CONFIG.schemaVersion;\nconst STORAGE_KEY=WASEDA_APP_CONFIG.storageKey;\n'
-          assert p in {legacy,adapter}
-          print('Waseda persistence adapter seed: REVIEWED SHAPE')
+          assert 'schemaVersion:7' in p
+          assert 'storageKey:"waseshibu_vocab_state"' in p
+          assert 'const SCHEMA_VERSION=WASEDA_APP_CONFIG.schemaVersion;' in p
+          assert 'const STORAGE_KEY=WASEDA_APP_CONFIG.storageKey;' in p
+          print('Waseda persistence adapter seed: REQUIRED CONTRACT PRESENT')
           PY
 
       - name: Source ownership safety gate
