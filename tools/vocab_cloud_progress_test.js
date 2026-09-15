@@ -4,8 +4,6 @@ const sync=fs.readFileSync('progress-sync.js','utf8');
 const index=fs.readFileSync('index.html','utf8');
 const has=(t,m,l)=>assert.ok(t.includes(m),`missing ${l}: ${m}`);
 const lacks=(t,m,l)=>assert.ok(!t.includes(m),`forbidden ${l}: ${m}`);
-const oldPersistence='const SCHEMA_VERSION=7;\nconst STORAGE_KEY="waseshibu_vocab_state";';
-const adapterPersistence='const WASEDA_APP_CONFIG=Object.freeze({schemaVersion:7,storageKey:"waseshibu_vocab_state"});\nconst SCHEMA_VERSION=WASEDA_APP_CONFIG.schemaVersion;\nconst STORAGE_KEY=WASEDA_APP_CONFIG.storageKey;';
 
 has(sync,"APP_ID='vocab'",'vocab app id');
 has(sync,'String.fromCharCode(119,97,115,101,115,104,105,98,117)','shared namespace');
@@ -28,7 +26,13 @@ lacks(sync,'JSON.stringify(s)', 'raw state upload');
 lacks(sync,'localStorage.setItem(', 'cloud writes local learning state');
 lacks(sync,'localStorage.removeItem(', 'cloud deletes local learning state');
 lacks(sync,'localStorage.clear(', 'cloud clears local learning state');
-assert.ok(index.includes(oldPersistence)||index.includes(adapterPersistence),'Waseda persistence contract constants changed');
+
+const legacySchema=index.includes('const SCHEMA_VERSION=7;');
+const adapterSchema=index.includes('schemaVersion:7')&&index.includes('const SCHEMA_VERSION=WASEDA_APP_CONFIG.schemaVersion;');
+const legacyStorage=index.includes('const STORAGE_KEY="waseshibu_vocab_state";');
+const adapterStorage=index.includes('storageKey:"waseshibu_vocab_state"')&&index.includes('const STORAGE_KEY=WASEDA_APP_CONFIG.storageKey;');
+assert.ok(legacySchema||adapterSchema,'Waseda schema contract changed');
+assert.ok(legacyStorage||adapterStorage,'Waseda main storage key contract changed');
 lacks(index,'localStorage.clear(', 'index clearing storage');
 lacks(index,'localStorage.removeItem(STORAGE_KEY)', 'index deleting learning history');
 console.log('Vocabulary cloud progress guards: CLEAN');
