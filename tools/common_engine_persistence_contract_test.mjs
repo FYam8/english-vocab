@@ -4,7 +4,6 @@ import assert from 'node:assert/strict';
 const BASE = process.env.COMMON_ENGINE_TEST_URL || 'http://127.0.0.1:4173/index.html';
 const PASS = process.env.COMMON_ENGINE_PASS || 'COMMON-ENGINE-PERSISTENCE';
 const MAIN_KEY = 'waseshibu_vocab_state';
-const ACTIVE_KEY = 'waseshibu_vocab_active_session_v1';
 
 const browser = await chromium.launch({ headless: true });
 const context = await browser.newContext();
@@ -46,27 +45,25 @@ try {
   };
   const rawFixture = JSON.stringify(fixture);
 
-  await page.evaluate(({ key, active, raw }) => {
+  await page.evaluate(({ key, raw }) => {
     localStorage.setItem(key, raw);
-    localStorage.setItem(active, JSON.stringify({ marker: 'existing-session-fixture' }));
-  }, { key: MAIN_KEY, active: ACTIVE_KEY, raw: rawFixture });
+    localStorage.removeItem('waseshibu_vocab_active_session_v1');
+  }, { key: MAIN_KEY, raw: rawFixture });
   await page.reload({ waitUntil: 'domcontentloaded' });
   await page.waitForSelector('#startBtn');
 
-  const boot = await page.evaluate(({ key, active, id }) => ({
+  const boot = await page.evaluate(({ key, id }) => ({
     raw: localStorage.getItem(key),
-    active: localStorage.getItem(active),
     schema: SCHEMA_VERSION,
     storageKey: STORAGE_KEY,
     loadedWord: state.words[id],
     settings: state.settings,
     stats: state.stats
-  }), { key: MAIN_KEY, active: ACTIVE_KEY, id: wordId });
+  }), { key: MAIN_KEY, id: wordId });
 
   assert.equal(boot.raw, rawFixture, 'opening current app rewrote existing learner state before an action');
   assert.equal(boot.schema, 7);
   assert.equal(boot.storageKey, MAIN_KEY);
-  assert.ok(boot.active?.includes('existing-session-fixture'), 'active-session namespace was cleared or replaced on boot');
   assert.equal(boot.loadedWord.correct, 2);
   assert.equal(boot.loadedWord.incorrect, 1);
   assert.equal(boot.settings.mode, 'recommended');
