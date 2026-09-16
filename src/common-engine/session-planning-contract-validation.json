@@ -75,16 +75,16 @@
     "rikkyoRuntimeUnchanged": true,
     "validatedGroup": "challenge-score-base-policy-adapter"
   },
-  "allowThirdPlanningAdapterGroupIntroduction": false,
-  "thirdProposedGroup": "challenge-session-composition-policy-adapter",
+  "allowThirdPlanningAdapterGroupIntroduction": true,
+  "thirdApprovedGroup": "challenge-session-composition-policy-adapter",
   "thirdContractPath": "src/common-engine/challenge-session-composition-contract.json",
-  "thirdContractStatus": "contract-definition-only-awaiting-green-validation",
-  "thirdProposedGroupScope": [
+  "thirdContractStatus": "validated-contract-runtime-mutation-limited-to-approved-methods",
+  "thirdApprovedGroupScope": [
     "challenge-layer classification and exact challenge/foundation composition ratios",
     "foundation layer/state eligibility predicates while preserving layer -> year -> getProgress -> state evaluation order",
     "required challenge count and foundation exception cap calculations"
   ],
-  "thirdProposedGroupMustPreserve": [
+  "thirdApprovedGroupMustPreserve": [
     "challenge predicate (studyLayer||core)===challenge",
     "desired=requested||challenge.length",
     "required challenge count Math.ceil(desired*0.8)",
@@ -100,10 +100,21 @@
     "foundation reason attachment only to exceptions",
     "all retry gaps, due-retry precedence, unlimited queue behavior, persistence and cloud contracts"
   ],
+  "thirdPlanningAdapterApprovalValidation": {
+    "validatedHead": "f65efc3de9a51cae4c22478eca27ca52a5bec777",
+    "branchTwoPass": "success",
+    "syntheticMergeTwoPass": "success",
+    "branchOwnership": "success",
+    "syntheticMergeOwnership": "success",
+    "assemble": "success",
+    "productionMainUnchanged": true,
+    "rikkyoRuntimeUnchanged": true,
+    "approvedGroup": "challenge-session-composition-policy-adapter"
+  },
   "forbidden": [
-    "moving Waseda priority/mastery/challenge score constants into the common engine",
-    "changing challenge session composition before the third contract is green",
+    "moving Waseda challenge composition policy into the common engine",
     "moving getProgress ahead of foundation layer/year exclusion checks",
+    "changing buildSessionPlan generic behavior in the third group",
     "changing foundation-reason strings or precedence",
     "changing retry gaps, due-retry precedence or unlimited queue order",
     "mutating FYam8/rikkyo-uk-vocab",
