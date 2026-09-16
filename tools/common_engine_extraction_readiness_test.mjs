@@ -12,6 +12,12 @@ assert.ok(Array.isArray(readiness.promotedSchoolNeutralHelpers));
 assert.ok(Array.isArray(readiness.policyInjectionRequired) && readiness.policyInjectionRequired.length > 0);
 assert.ok(Array.isArray(readiness.blockedTokensForReadyHelpers));
 assert.ok(['pending', 'promoted'].includes(readiness.firstPromotionStatus));
+const validation = readiness.promotionValidation || {};
+assert.equal(validation.requireExactBranchHead, true, 'helper promotion must require exact branch-head validation');
+assert.equal(validation.requireSyntheticMerge, true, 'helper promotion must require synthetic-merge validation');
+assert.equal(validation.requireTwoPassCompatibility, true, 'helper promotion must require two-pass compatibility');
+assert.equal(validation.requireOwnershipGuard, true, 'helper promotion must require ownership guard');
+assert.equal(validation.allowNextPromotionBeforeGreen, false, 'next helper promotion must remain blocked before all gates are green');
 
 function functionBlock(source, symbol) {
   const marker = `function ${symbol}(`;
