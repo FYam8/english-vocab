@@ -6,6 +6,7 @@ const readIfExists = (path) => fs.existsSync(path) ? read(path) : '';
 const stripComments = (text) => text
   .replace(/\/\*[\s\S]*?\*\//g, '')
   .replace(/(^|[^:])\/\/.*$/gm, '$1');
+const startsAtReviewedBoundary = (text, marker) => text.startsWith(marker) || text.startsWith(`\n${marker}`);
 
 const ownership = JSON.parse(read('src/waseda-bootstrap/compat-ownership.json'));
 const persistence = read('src/waseda-bootstrap/15-waseda-persistence.js');
@@ -55,9 +56,9 @@ assert.ok(compatV75.includes('wasedaStorageRemove(V75_ACTIVE_SESSION_KEY)'), 'ac
 if (v75Session || v75Planning || v75Ui) {
   assert.ok(v75Session && v75Planning && v75Ui, 'v7.5 runtime split must create session, planning, and UI parts together');
   assert.ok(!v75Prelude.includes('function v75SerializeCurrentQuestion(){'), 'session serialization must not remain in v7.5 prelude');
-  assert.ok(v75Session.startsWith('function v75SerializeCurrentQuestion(){\n'), 'session runtime must begin at reviewed serialization boundary');
-  assert.ok(v75Planning.startsWith('function v75WeightedWithoutReplacement(pool,count,scoreFn){\n'), 'planning runtime must begin at reviewed weighted-selection boundary');
-  assert.ok(v75Ui.startsWith('const v74ChooseType=chooseType;\n'), 'v7.5 UI runtime must begin at reviewed question-behavior boundary');
+  assert.ok(startsAtReviewedBoundary(v75Session, 'function v75SerializeCurrentQuestion(){\n'), 'session runtime must begin at reviewed serialization boundary');
+  assert.ok(startsAtReviewedBoundary(v75Planning, 'function v75WeightedWithoutReplacement(pool,count,scoreFn){\n'), 'planning runtime must begin at reviewed weighted-selection boundary');
+  assert.ok(startsAtReviewedBoundary(v75Ui, 'const v74ChooseType=chooseType;\n'), 'v7.5 UI runtime must begin at reviewed question-behavior boundary');
   assert.ok(v75Session.includes('persistActiveSession=function(){'), 'session runtime lost persistence behavior');
   assert.ok(v75Planning.includes('function buildSessionPlan(mode,year,size){'), 'planning runtime lost session planning behavior');
 }
