@@ -6,6 +6,7 @@ const contract = JSON.parse(read('src/common-engine/policy-contract.json'));
 const readiness = JSON.parse(read('src/waseda-bootstrap/engine-extraction-readiness.json'));
 const engine = read('src/waseda-bootstrap/20-engine-candidate.js');
 const planning = read('src/waseda-bootstrap/32-session-planning-runtime.js');
+const policyPath = 'src/waseda-bootstrap/34-waseda-memory-policy.js';
 const memory = read('src/waseda-bootstrap/35-v76-memory-runtime.js');
 const integration = read('src/waseda-bootstrap/36-v76-engine-integration.js');
 const persistence = read('src/waseda-bootstrap/15-waseda-persistence.js');
@@ -45,12 +46,32 @@ assert.equal(waseda.memorySchedulerPolicy.missIntervalMinutes, 15);
 assert.equal(waseda.memorySchedulerPolicy.mustRemainBehaviorallyIdenticalDuringAdapterIntroduction, true);
 
 assert.ok(memory.includes('function v76TargetRetention(v,p){'));
-assert.ok(memory.includes('if(s&&w)return .93;'));
-assert.ok(memory.includes('if(s||w)return .92;'));
-assert.ok(memory.includes('return .90;'));
 assert.ok(memory.includes('function v76ReviewIntervalDays(v,p,model){'));
-assert.ok(memory.includes('v76Clamp(v76IntervalForTarget(model.stabilityDays,v76TargetRetention(v,p)),.75,60)'));
 assert.ok(memory.includes('function v76UpdateMemoryAfterOutcome(v,p,pending,ctx){'));
+
+if (fs.existsSync(policyPath)) {
+  const policy = read(policyPath);
+  assert.ok(policy.includes('const WASEDA_MEMORY_POLICY=Object.freeze({'));
+  assert.ok(policy.includes('if(s&&w)return .93;'));
+  assert.ok(policy.includes('if(s||w)return .92;'));
+  assert.ok(policy.includes('return .90;'));
+  assert.ok(policy.includes('v76Clamp(v76IntervalForTarget(model.stabilityDays,WASEDA_MEMORY_POLICY.targetRetention(v,p)),.75,60)'));
+  assert.ok(policy.includes('retryCorrectIntervalDays:1'));
+  assert.ok(policy.includes('missIntervalMinutes:15'));
+  assert.ok(memory.includes('return WASEDA_MEMORY_POLICY.targetRetention(v,p);'));
+  assert.ok(memory.includes('return WASEDA_MEMORY_POLICY.reviewIntervalDays(v,p,model);'));
+  assert.ok(memory.includes('if(WASEDA_MEMORY_POLICY.isDiagnosticFirstPass(v,p,ctx.attemptsBefore)){'));
+  assert.ok(memory.includes('pending.isRetry?WASEDA_MEMORY_POLICY.retryCorrectIntervalDays:v76ReviewIntervalDays(v,p,m)'));
+  assert.ok(!memory.includes('if(s&&w)return .93;'));
+  assert.ok(!memory.includes('if(s||w)return .92;'));
+  assert.ok(!memory.includes('v76Clamp(v76IntervalForTarget(model.stabilityDays,v76TargetRetention(v,p)),.75,60)'));
+} else {
+  assert.ok(memory.includes('if(s&&w)return .93;'));
+  assert.ok(memory.includes('if(s||w)return .92;'));
+  assert.ok(memory.includes('return .90;'));
+  assert.ok(memory.includes('v76Clamp(v76IntervalForTarget(model.stabilityDays,v76TargetRetention(v,p)),.75,60)'));
+}
+
 assert.ok(integration.includes('schedulerScore=function(v,mode){'));
 assert.ok(integration.includes('const days=v76ExamDaysLeft();'));
 assert.ok(integration.includes('if(v.priority==="S")extra+=80*urgency;'));
@@ -89,8 +110,8 @@ for (const forbidden of ['waseshibu_', 'rikkyo-uk-vocab', 'direct localStorage a
 
 assert.ok(persistence.includes('storageKey:"waseshibu_vocab_state"'));
 assert.ok(persistence.includes('activeSessionKey:"waseshibu_vocab_active_session_v1"'));
-assert.ok(!engine.includes('function v76TargetRetention('), 'policy-coupled target retention must not be promoted before adapter wiring');
-assert.ok(!engine.includes('function v76UpdateMemoryAfterOutcome('), 'policy-coupled memory update must not be promoted before adapter wiring');
+assert.ok(!engine.includes('function v76TargetRetention('), 'policy-coupled target retention must not be promoted into the common engine');
+assert.ok(!engine.includes('function v76UpdateMemoryAfterOutcome('), 'policy-coupled memory update must not be promoted into the common engine');
 assert.equal(contract.gates.runtimeWiringAllowedBeforeContractGreen, false);
 assert.equal(contract.gates.requireWasedaProductionMainUnchanged, true);
 
