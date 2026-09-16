@@ -29,6 +29,23 @@ def write_manifest(manifest: dict) -> None:
     MANIFEST.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
+def reviewed_cut(raw: bytes, anchor: bytes) -> int:
+    """Cut before the single separator newline when the reviewed source has a blank line.
+
+    This keeps the previous source part from ending with an extra blank line (git diff --check)
+    while preserving the concatenated byte stream exactly. The separator newline becomes the
+    first byte of the next part.
+    """
+    i = raw.index(anchor)
+    if i >= 2 and raw[i - 2:i] == b"\n\n":
+        return i - 1
+    return i
+
+
+def starts_at_reviewed_boundary(part: bytes, anchor: bytes) -> bool:
+    return part.startswith(anchor) or part.startswith(b"\n" + anchor)
+
+
 def validate_split() -> None:
     if not SESSION.is_file() or not PLANNING.is_file() or not UI.is_file():
         raise SystemExit("v7.5 compatibility split is partial")
@@ -38,12 +55,14 @@ def validate_split() -> None:
     ui = UI.read_bytes()
     if SESSION_ANCHOR in prelude or PLANNING_ANCHOR in prelude or UI_ANCHOR in prelude:
         raise SystemExit("v7.5 prelude still contains a moved runtime boundary")
-    if not session.startswith(SESSION_ANCHOR):
+    if not starts_at_reviewed_boundary(session, SESSION_ANCHOR):
         raise SystemExit("31-waseda-session-runtime.js boundary is invalid")
-    if not planning.startswith(PLANNING_ANCHOR):
+    if not starts_at_reviewed_boundary(planning, PLANNING_ANCHOR):
         raise SystemExit("32-session-planning-runtime.js boundary is invalid")
-    if not ui.startswith(UI_ANCHOR):
+    if not starts_at_reviewed_boundary(ui, UI_ANCHOR):
         raise SystemExit("33-v75-ui-runtime.js boundary is invalid")
+    if prelude.endswith(b"\n\n") or session.endswith(b"\n\n") or planning.endswith(b"\n\n"):
+        raise SystemExit("split source part ends with an extra blank line")
     if PLANNING_ANCHOR in session or UI_ANCHOR in session:
         raise SystemExit("session runtime overlaps a later v7.5 boundary")
     if UI_ANCHOR in planning:
@@ -75,11 +94,17 @@ def split_once() -> None:
         if raw.count(anchor) != 1:
             raise SystemExit(f"Reviewed v7.5 {label} split anchor is not unique")
 
-    session_i = raw.index(SESSION_ANCHOR)
-    planning_i = raw.index(PLANNING_ANCHOR)
-    ui_i = raw.index(UI_ANCHOR)
-    if not (0 < session_i < planning_i < ui_i < len(raw)):
+    session_anchor_i = raw.index(SESSION_ANCHOR)
+    planning_anchor_i = raw.index(PLANNING_ANCHOR)
+    ui_anchor_i = raw.index(UI_ANCHOR)
+    if not (0 < session_anchor_i < planning_anchor_i < ui_anchor_i < len(raw)):
         raise SystemExit("Reviewed v7.5 split anchors are not in the expected order")
+
+    session_i = reviewed_cut(raw, SESSION_ANCHOR)
+    planning_i = reviewed_cut(raw, PLANNING_ANCHOR)
+    ui_i = reviewed_cut(raw, UI_ANCHOR)
+    if not (0 < session_i < planning_i < ui_i < len(raw)):
+        raise SystemExit("Reviewed v7.5 split cuts are not in the expected order")
 
     prelude = raw[:session_i]
     session = raw[session_i:planning_i]
