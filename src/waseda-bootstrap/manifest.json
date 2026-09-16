@@ -44,12 +44,12 @@
       "sha256": "2dae656f8f66ee87ff942f019615dd5663e7e5d60d31aa5ca53ac594054f217f"
     },
     "31a-waseda-planning-policy.js": {
-      "bytes": 840,
-      "sha256": "9b32fbedd3e05240bc396a3adf69c9fdcdccca4d41a2dc8272cdf23ff9970ce0"
+      "bytes": 1292,
+      "sha256": "8454888bd32a6adf31e91c74c8ef2b42358270996781811168056ed65354e23a"
     },
     "32-session-planning-runtime.js": {
-      "bytes": 4565,
-      "sha256": "16826452848b5082bbbd99f984d657ed8f18b3c7077465e4b05d3aaed96630e0"
+      "bytes": 4210,
+      "sha256": "95de45dda76840a597c9176b9d016ccfde63d22616fbaa63e01a1f10d5239b6a"
     },
     "33-v75-ui-runtime.js": {
       "bytes": 45060,
@@ -94,7 +94,8 @@
     "memorySchedulerWasedaUiV76": "37-v76-waseda-ui-runtime.js",
     "wasedaMemoryPolicyV76": "34-waseda-memory-policy.js",
     "wasedaMemoryScoringPolicyV76": "34-waseda-memory-policy.js",
-    "wasedaPlanningPolicyV75": "31a-waseda-planning-policy.js"
+    "wasedaPlanningPolicyV75": "31a-waseda-planning-policy.js",
+    "wasedaChallengeScorePolicyV75": "31a-waseda-planning-policy.js"
   },
   "notes": [
     "This remains a byte-exact mechanical split; browser behavior and persistence semantics are unchanged.",
@@ -105,9 +106,10 @@
     "35/36/37 are a byte-preserving decomposition of the reviewed v7.6 block into scheduler core, engine integration overrides, and Waseda UI/settings integration. No scheduler semantics are changed by this split.",
     "34-waseda-memory-policy.js owns the current Waseda target-retention, review-interval, diagnostic-first-pass and retry/miss interval policy. 35-v76-memory-runtime.js delegates to it without changing learner persistence or scheduler outputs.",
     "34-waseda-memory-policy.js also owns the exact current v7.6 review-gap, exam-urgency and challenge-memory scoring formulas. 36-v76-engine-integration.js delegates to those Waseda-only methods while preserving base score calculation and evaluation order.",
-    "31a-waseda-planning-policy.js owns the exact Waseda v7.5 foundation-reason precedence and Japanese learner-facing copy. 32-session-planning-runtime.js delegates only v75FoundationReason to it; challenge scoring, session composition, retry spacing and queue order are unchanged."
+    "31a-waseda-planning-policy.js owns the exact Waseda v7.5 foundation-reason precedence and Japanese learner-facing copy. 32-session-planning-runtime.js delegates only v75FoundationReason to it; challenge scoring, session composition, retry spacing and queue order are unchanged.",
+    "31a-waseda-planning-policy.js also owns the exact Waseda v7.5 challenge base-score formula. 32-session-planning-runtime.js delegates only v75ChallengeScore to it; challenge-session composition, retry spacing and queue order are unchanged, and the later v7.6 memory boost remains in 36-v76-engine-integration.js."
   ],
   "baselineSourceGitBlobSha": "bb77a0c54153502e25bccb1ed89ca33b29b45c83",
   "baselineSourceSha256": "a6e58a9321d4e739216957fcbfaa0cf7f1d1621ca0f0bb88a03507da81bf452f",
-  "artifactSha256": "3cbd1e048d40ae59b4b8e2ac4ed6922b75a93b765bbe250001ecc2833d6447c0"
+  "artifactSha256": "16655e85045d1b83e2caea23ed4a0a6aafe8af50e86f199ecab6506b5268206d"
 }

@@ -1,12 +1,7 @@
 
 function v75ChallengeScore(v){
   const p=getProgress(v.id),t=now();
-  let score=(PRIORITY_SCORE[v.priority]||0)+(v.yearCount||0)*8+Math.sqrt(effectiveFrequency(v))*4+[80,110,65,25,4][p.mastery];
-  if(p.nextReview&&new Date(p.nextReview).getTime()<=t)score+=115;
-  if(p.recentMistakeUntil&&new Date(p.recentMistakeUntil).getTime()>t)score+=80;
-  if(isWeakProgress(p))score+=95;
-  if(p.mastery===4&&!(p.nextReview&&new Date(p.nextReview).getTime()<=t))score*=.12;
-  return score;
+  return WASEDA_PLANNING_POLICY.challengeScore(v,p,t);
 }
 function v75FoundationReason(v){
   const p=getProgress(v.id),t=now();
