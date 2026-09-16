@@ -11,6 +11,8 @@
     "32-session-planning-runtime.js",
     "33-v75-ui-runtime.js",
     "35-v76-memory-runtime.js",
+    "36-v76-engine-integration.js",
+    "37-v76-waseda-ui-runtime.js",
     "40-runtime-bootstrap-tail.js",
     "90-shell-suffix.html"
   ],
@@ -48,8 +50,16 @@
       "sha256": "e18d032d012ed8d6aa25524b80c10c438b6de371c6919b3c842cd9ea10fe5d9c"
     },
     "35-v76-memory-runtime.js": {
-      "bytes": 11108,
-      "sha256": "f2908fa42b047347647b6092334ca9a5aa59f10b48e49b189afad5338a3f8c8e"
+      "bytes": 5399,
+      "sha256": "ad820bcb97d761dc164a966246b0027877131aed589c7b7528504c08ae322b59"
+    },
+    "36-v76-engine-integration.js": {
+      "bytes": 3021,
+      "sha256": "b7a0451b48097f5b07906fcbb47fb45ffb821176d75a9015f6a191abb1a82ff0"
+    },
+    "37-v76-waseda-ui-runtime.js": {
+      "bytes": 2688,
+      "sha256": "8f79826041b60445c99be3555b5dc1d13f439581866ed3b184bb9b82f33b004e"
     },
     "40-runtime-bootstrap-tail.js": {
       "bytes": 100,
@@ -64,19 +74,22 @@
     "wasedaData": "10-waseda-data.js",
     "wasedaPersistenceAdapterSeed": "15-waseda-persistence.js",
     "engineCandidate": "20-engine-candidate.js",
-    "memorySchedulerV76": "35-v76-memory-runtime.js",
     "runtimeBootstrapTail": "40-runtime-bootstrap-tail.js",
     "compatibilityRuntimeV75Prelude": "30-compat-runtime.js",
     "wasedaSessionRuntimeV75": "31-waseda-session-runtime.js",
     "sessionPlanningRuntimeV75": "32-session-planning-runtime.js",
-    "uiRuntimeV75": "33-v75-ui-runtime.js"
+    "uiRuntimeV75": "33-v75-ui-runtime.js",
+    "memorySchedulerCoreV76": "35-v76-memory-runtime.js",
+    "memorySchedulerIntegrationV76": "36-v76-engine-integration.js",
+    "memorySchedulerWasedaUiV76": "37-v76-waseda-ui-runtime.js"
   },
   "notes": [
     "This remains a byte-exact mechanical split; browser behavior and persistence semantics are unchanged.",
     "15-waseda-persistence.js is the first explicit Waseda-only adapter seed because it owns the production schema and localStorage namespace.",
     "20-engine-candidate.js is only a candidate boundary and is not yet claimed to be fully school-neutral.",
     "30/35/40 are a byte-preserving mechanical decomposition of the reviewed compatibility runtime: v7.5 compatibility, v7.6 memory scheduler, then bootstrap tail. No runtime semantics are changed by this split.",
-    "30/31/32/33 are a byte-preserving decomposition of the reviewed v7.5 compatibility runtime into prelude, Waseda session state, session planning, and UI/question behavior. Ownership is descriptive only; runtime order is unchanged."
+    "30/31/32/33 are a byte-preserving decomposition of the reviewed v7.5 compatibility runtime into prelude, Waseda session state, session planning, and UI/question behavior. Ownership is descriptive only; runtime order is unchanged.",
+    "35/36/37 are a byte-preserving decomposition of the reviewed v7.6 block into scheduler core, engine integration overrides, and Waseda UI/settings integration. No scheduler semantics are changed by this split."
   ],
   "baselineSourceGitBlobSha": "bb77a0c54153502e25bccb1ed89ca33b29b45c83",
   "baselineSourceSha256": "a6e58a9321d4e739216957fcbfaa0cf7f1d1621ca0f0bb88a03507da81bf452f",
