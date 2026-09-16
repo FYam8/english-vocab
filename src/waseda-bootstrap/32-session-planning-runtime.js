@@ -9,30 +9,28 @@ function v75FoundationReason(v){
 }
 function buildChallengeSessionPlan(year,requested){
   const y=year==="all"?null:Number(year),t=now();
-  const challenge=VOCAB.filter(v=>(v.studyLayer||"core")==="challenge"&&(!y||v.years.includes(y)));
+  const challenge=VOCAB.filter(v=>WASEDA_PLANNING_POLICY.isChallengeEntity(v)&&(!y||v.years.includes(y)));
   if(!challenge.length)return {baseQueueIds:[],actualSessionSize:0,challengeCount:0,baseReasons:{}};
   const desired=requested||challenge.length;
-  const required=Math.ceil(desired*.8);
+  const required=WASEDA_PLANNING_POLICY.requiredChallengeCount(desired);
   if(challenge.length<required){
     const n=Math.min(desired,challenge.length);
     const picked=v75WeightedWithoutReplacement(challenge,n,v75ChallengeScore);
     return {baseQueueIds:picked.map(v=>v.id),actualSessionSize:picked.length,challengeCount:picked.length,baseReasons:{}};
   }
   const nonChallenge=VOCAB.filter(v=>{
-    const layer=v.studyLayer||"core";if(layer==="reference"||layer==="challenge")return false;
+    if(!WASEDA_PLANNING_POLICY.isFoundationLayerEligible(v))return false;
     if(y&&!v.years.includes(y))return false;
     const p=getProgress(v.id);
-    const due=p.nextReview&&new Date(p.nextReview).getTime()<=t;
-    const recent=p.recentMistakeUntil&&new Date(p.recentMistakeUntil).getTime()>t;
-    return isWeakProgress(p)||due||recent;
+    return WASEDA_PLANNING_POLICY.isFoundationStateEligible(p,t);
   });
-  const exceptionCap=Math.floor(desired*.2);
+  const exceptionCap=WASEDA_PLANNING_POLICY.foundationExceptionCap(desired);
   const exceptions=v75WeightedWithoutReplacement(nonChallenge,Math.min(exceptionCap,nonChallenge.length),v=>schedulerScore(v,"recommended"));
   const challengeN=Math.min(challenge.length,desired-exceptions.length);
   const challengePicked=v75WeightedWithoutReplacement(challenge,challengeN,v75ChallengeScore);
   const combined=shuffle([...challengePicked,...exceptions]).slice(0,desired);
   const baseReasons={};exceptions.forEach(v=>baseReasons[v.id]=v75FoundationReason(v));
-  return {baseQueueIds:combined.map(v=>v.id),actualSessionSize:combined.length,challengeCount:combined.filter(v=>(v.studyLayer||"core")==="challenge").length,baseReasons};
+  return {baseQueueIds:combined.map(v=>v.id),actualSessionSize:combined.length,challengeCount:combined.filter(v=>WASEDA_PLANNING_POLICY.isChallengeEntity(v)).length,baseReasons};
 }
 function buildSessionPlan(mode,year,size){
   const pool=filterPool(mode,year);

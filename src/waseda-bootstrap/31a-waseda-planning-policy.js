@@ -17,5 +17,17 @@ const WASEDA_PLANNING_POLICY=Object.freeze({
     if(isWeakProgress(p))score+=95;
     if(p.mastery===4&&!(p.nextReview&&new Date(p.nextReview).getTime()<=t))score*=.12;
     return score;
-  }
+  },
+  isChallengeEntity(v){return (v.studyLayer||"core")==="challenge"},
+  isFoundationLayerEligible(v){
+    const layer=v.studyLayer||"core";
+    return layer!=="reference"&&layer!=="challenge";
+  },
+  isFoundationStateEligible(p,t){
+    const due=p.nextReview&&new Date(p.nextReview).getTime()<=t;
+    const recent=p.recentMistakeUntil&&new Date(p.recentMistakeUntil).getTime()>t;
+    return isWeakProgress(p)||due||recent;
+  },
+  requiredChallengeCount(desired){return Math.ceil(desired*.8)},
+  foundationExceptionCap(desired){return Math.floor(desired*.2)}
 });
