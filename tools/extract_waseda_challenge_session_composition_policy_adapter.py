@@ -11,56 +11,9 @@ PLANNING = SRC / "32-session-planning-runtime.js"
 MANIFEST = SRC / "manifest.json"
 VALIDATION = COMMON / "session-planning-contract-validation.json"
 CONTRACT = COMMON / "challenge-session-composition-contract.json"
-
 POLICY_NAME = "31a-waseda-planning-policy.js"
 
-OLD_POLICY = '''/*
- * Waseda-only session planning policy adapter.
- * First reviewed group: foundation-reason precedence and exact learner-facing copy.
- * Do not move these strings or Waseda-specific predicates into the common engine.
- */
-const WASEDA_PLANNING_POLICY=Object.freeze({
-  foundationReason(v,p,t){
-    if(isWeakProgress(p))return "挑戦前の基礎確認：最近の正誤履歴で苦手判定となっている重要語です。";
-    if(p.recentMistakeUntil&&new Date(p.recentMistakeUntil).getTime()>t)return "挑戦前の基礎確認：最近間違えた重要語のため再確認します。";
-    if(p.nextReview&&new Date(p.nextReview).getTime()<=t)return "挑戦前の基礎確認：復習期限を迎えた重要語です。";
-    return "挑戦前の基礎確認：75点挑戦を支える基礎語を再確認します。";
-  },
-  challengeScore(v,p,t){
-    let score=(PRIORITY_SCORE[v.priority]||0)+(v.yearCount||0)*8+Math.sqrt(effectiveFrequency(v))*4+[80,110,65,25,4][p.mastery];
-    if(p.nextReview&&new Date(p.nextReview).getTime()<=t)score+=115;
-    if(p.recentMistakeUntil&&new Date(p.recentMistakeUntil).getTime()>t)score+=80;
-    if(isWeakProgress(p))score+=95;
-    if(p.mastery===4&&!(p.nextReview&&new Date(p.nextReview).getTime()<=t))score*=.12;
-    return score;
-  }
-});
-'''
-
-NEW_POLICY = '''/*
- * Waseda-only session planning policy adapter.
- * Reviewed groups:
- * - foundation-reason precedence and exact learner-facing copy
- * - challenge-score base policy
- * - challenge-session composition policy
- * Do not move Waseda-specific strings, weights, ratios, thresholds, or predicates into the common engine.
- */
-const WASEDA_PLANNING_POLICY=Object.freeze({
-  foundationReason(v,p,t){
-    if(isWeakProgress(p))return "挑戦前の基礎確認：最近の正誤履歴で苦手判定となっている重要語です。";
-    if(p.recentMistakeUntil&&new Date(p.recentMistakeUntil).getTime()>t)return "挑戦前の基礎確認：最近間違えた重要語のため再確認します。";
-    if(p.nextReview&&new Date(p.nextReview).getTime()<=t)return "挑戦前の基礎確認：復習期限を迎えた重要語です。";
-    return "挑戦前の基礎確認：75点挑戦を支える基礎語を再確認します。";
-  },
-  challengeScore(v,p,t){
-    let score=(PRIORITY_SCORE[v.priority]||0)+(v.yearCount||0)*8+Math.sqrt(effectiveFrequency(v))*4+[80,110,65,25,4][p.mastery];
-    if(p.nextReview&&new Date(p.nextReview).getTime()<=t)score+=115;
-    if(p.recentMistakeUntil&&new Date(p.recentMistakeUntil).getTime()>t)score+=80;
-    if(isWeakProgress(p))score+=95;
-    if(p.mastery===4&&!(p.nextReview&&new Date(p.nextReview).getTime()<=t))score*=.12;
-    return score;
-  },
-  isChallengeEntity(v){return (v.studyLayer||"core")==="challenge"},
+POLICY_INSERT = '''  isChallengeEntity(v){return (v.studyLayer||"core")==="challenge"},
   isFoundationLayerEligible(v){
     const layer=v.studyLayer||"core";
     return layer!=="reference"&&layer!=="challenge";
@@ -72,64 +25,38 @@ const WASEDA_PLANNING_POLICY=Object.freeze({
   },
   requiredChallengeCount(desired){return Math.ceil(desired*.8)},
   foundationExceptionCap(desired){return Math.floor(desired*.2)}
-});
 '''
 
-OLD_BLOCK = '''function buildChallengeSessionPlan(year,requested){
-  const y=year==="all"?null:Number(year),t=now();
-  const challenge=VOCAB.filter(v=>(v.studyLayer||"core")==="challenge"&&(!y||v.years.includes(y)));
-  if(!challenge.length)return {baseQueueIds:[],actualSessionSize:0,challengeCount:0,baseReasons:{}};
-  const desired=requested||challenge.length;
-  const required=Math.ceil(desired*.8);
-  if(challenge.length<required){
-    const n=Math.min(desired,challenge.length);
-    const picked=v75WeightedWithoutReplacement(challenge,n,v75ChallengeScore);
-    return {baseQueueIds:picked.map(v=>v.id),actualSessionSize:picked.length,challengeCount:picked.length,baseReasons:{}};
-  }
-  const nonChallenge=VOCAB.filter(v=>{
-    const layer=v.studyLayer||"core";if(layer==="reference"||layer==="challenge")return false;
-    if(y&&!v.years.includes(y))return false;
-    const p=getProgress(v.id);
-    const due=p.nextReview&&new Date(p.nextReview).getTime()<=t;
-    const recent=p.recentMistakeUntil&&new Date(p.recentMistakeUntil).getTime()>t;
-    return isWeakProgress(p)||due||recent;
-  });
-  const exceptionCap=Math.floor(desired*.2);
-  const exceptions=v75WeightedWithoutReplacement(nonChallenge,Math.min(exceptionCap,nonChallenge.length),v=>schedulerScore(v,"recommended"));
-  const challengeN=Math.min(challenge.length,desired-exceptions.length);
-  const challengePicked=v75WeightedWithoutReplacement(challenge,challengeN,v75ChallengeScore);
-  const combined=shuffle([...challengePicked,...exceptions]).slice(0,desired);
-  const baseReasons={};exceptions.forEach(v=>baseReasons[v.id]=v75FoundationReason(v));
-  return {baseQueueIds:combined.map(v=>v.id),actualSessionSize:combined.length,challengeCount:combined.filter(v=>(v.studyLayer||"core")==="challenge").length,baseReasons};
-}
-'''
-
-NEW_BLOCK = '''function buildChallengeSessionPlan(year,requested){
-  const y=year==="all"?null:Number(year),t=now();
-  const challenge=VOCAB.filter(v=>WASEDA_PLANNING_POLICY.isChallengeEntity(v)&&(!y||v.years.includes(y)));
-  if(!challenge.length)return {baseQueueIds:[],actualSessionSize:0,challengeCount:0,baseReasons:{}};
-  const desired=requested||challenge.length;
-  const required=WASEDA_PLANNING_POLICY.requiredChallengeCount(desired);
-  if(challenge.length<required){
-    const n=Math.min(desired,challenge.length);
-    const picked=v75WeightedWithoutReplacement(challenge,n,v75ChallengeScore);
-    return {baseQueueIds:picked.map(v=>v.id),actualSessionSize:picked.length,challengeCount:picked.length,baseReasons:{}};
-  }
-  const nonChallenge=VOCAB.filter(v=>{
-    if(!WASEDA_PLANNING_POLICY.isFoundationLayerEligible(v))return false;
-    if(y&&!v.years.includes(y))return false;
-    const p=getProgress(v.id);
-    return WASEDA_PLANNING_POLICY.isFoundationStateEligible(p,t);
-  });
-  const exceptionCap=WASEDA_PLANNING_POLICY.foundationExceptionCap(desired);
-  const exceptions=v75WeightedWithoutReplacement(nonChallenge,Math.min(exceptionCap,nonChallenge.length),v=>schedulerScore(v,"recommended"));
-  const challengeN=Math.min(challenge.length,desired-exceptions.length);
-  const challengePicked=v75WeightedWithoutReplacement(challenge,challengeN,v75ChallengeScore);
-  const combined=shuffle([...challengePicked,...exceptions]).slice(0,desired);
-  const baseReasons={};exceptions.forEach(v=>baseReasons[v.id]=v75FoundationReason(v));
-  return {baseQueueIds:combined.map(v=>v.id),actualSessionSize:combined.length,challengeCount:combined.filter(v=>WASEDA_PLANNING_POLICY.isChallengeEntity(v)).length,baseReasons};
-}
-'''
+REPLACEMENTS = [
+    (
+        '  const challenge=VOCAB.filter(v=>(v.studyLayer||"core")==="challenge"&&(!y||v.years.includes(y)));',
+        '  const challenge=VOCAB.filter(v=>WASEDA_PLANNING_POLICY.isChallengeEntity(v)&&(!y||v.years.includes(y)));',
+    ),
+    (
+        '  const required=Math.ceil(desired*.8);',
+        '  const required=WASEDA_PLANNING_POLICY.requiredChallengeCount(desired);',
+    ),
+    (
+        '    const layer=v.studyLayer||"core";if(layer==="reference"||layer==="challenge")return false;\n'
+        '    if(y&&!v.years.includes(y))return false;\n'
+        '    const p=getProgress(v.id);\n'
+        '    const due=p.nextReview&&new Date(p.nextReview).getTime()<=t;\n'
+        '    const recent=p.recentMistakeUntil&&new Date(p.recentMistakeUntil).getTime()>t;\n'
+        '    return isWeakProgress(p)||due||recent;',
+        '    if(!WASEDA_PLANNING_POLICY.isFoundationLayerEligible(v))return false;\n'
+        '    if(y&&!v.years.includes(y))return false;\n'
+        '    const p=getProgress(v.id);\n'
+        '    return WASEDA_PLANNING_POLICY.isFoundationStateEligible(p,t);',
+    ),
+    (
+        '  const exceptionCap=Math.floor(desired*.2);',
+        '  const exceptionCap=WASEDA_PLANNING_POLICY.foundationExceptionCap(desired);',
+    ),
+    (
+        'challengeCount:combined.filter(v=>(v.studyLayer||"core")==="challenge").length',
+        'challengeCount:combined.filter(v=>WASEDA_PLANNING_POLICY.isChallengeEntity(v)).length',
+    ),
+]
 
 
 def load_json(path: Path) -> dict:
@@ -167,22 +94,25 @@ def require_approval() -> None:
 
 def validate_applied(policy: str, planning: str, manifest: dict) -> None:
     for token in [
-        "isChallengeEntity(v){return (v.studyLayer||\"core\")==\"challenge\"}",
-        "isFoundationLayerEligible(v){",
-        "return layer!==\"reference\"&&layer!==\"challenge\";",
-        "isFoundationStateEligible(p,t){",
-        "return isWeakProgress(p)||due||recent;",
-        "requiredChallengeCount(desired){return Math.ceil(desired*.8)}",
-        "foundationExceptionCap(desired){return Math.floor(desired*.2)}",
+        'isChallengeEntity(v){return (v.studyLayer||"core")==="challenge"}',
+        'isFoundationLayerEligible(v){',
+        'return layer!=="reference"&&layer!=="challenge";',
+        'isFoundationStateEligible(p,t){',
+        'return isWeakProgress(p)||due||recent;',
+        'requiredChallengeCount(desired){return Math.ceil(desired*.8)}',
+        'foundationExceptionCap(desired){return Math.floor(desired*.2)}',
     ]:
         if token not in policy:
             raise SystemExit(f"Waseda challenge-session policy token missing: {token}")
-    if NEW_BLOCK not in planning:
-        raise SystemExit("buildChallengeSessionPlan does not match the approved adapter transform")
-    if OLD_BLOCK in planning:
-        raise SystemExit("legacy challenge-session composition remains in planning runtime")
+    for old, new in REPLACEMENTS:
+        if new not in planning:
+            raise SystemExit(f"approved planning delegation missing: {new}")
+        if old in planning:
+            raise SystemExit(f"legacy planning policy remains duplicated: {old}")
 
-    block = planning[planning.index("function buildChallengeSessionPlan(year,requested){"):planning.index("function buildSessionPlan(mode,year,size){")]
+    start = planning.index("function buildChallengeSessionPlan(year,requested){")
+    end = planning.index("function buildSessionPlan(mode,year,size){")
+    block = planning[start:end]
     layer_i = block.index("if(!WASEDA_PLANNING_POLICY.isFoundationLayerEligible(v))return false;")
     year_i = block.index('if(y&&!v.years.includes(y))return false;')
     progress_i = block.index("const p=getProgress(v.id);")
@@ -219,13 +149,21 @@ def main() -> None:
         print("Waseda challenge-session composition adapter: ALREADY APPLIED")
         return
 
-    if policy != OLD_POLICY:
-        raise SystemExit("Waseda planning policy changed outside the reviewed third-group baseline")
-    if planning.count(OLD_BLOCK) != 1:
-        raise SystemExit(f"expected exactly one reviewed buildChallengeSessionPlan block, found {planning.count(OLD_BLOCK)}")
+    if "challengeScore(v,p,t){" not in policy or "foundationReason(v,p,t){" not in policy:
+        raise SystemExit("reviewed Waseda planning policy baseline is missing")
+    if policy.count("\n});\n") != 1:
+        raise SystemExit("Waseda planning policy object boundary is ambiguous")
+    for old, new in REPLACEMENTS:
+        if planning.count(old) != 1:
+            raise SystemExit(f"reviewed planning source mismatch for: {old}")
+        if new in planning:
+            raise SystemExit(f"planning delegation already partially present: {new}")
 
-    POLICY.write_text(NEW_POLICY, encoding="utf-8")
-    PLANNING.write_text(planning.replace(OLD_BLOCK, NEW_BLOCK, 1), encoding="utf-8")
+    policy = policy.replace("\n});\n", ",\n" + POLICY_INSERT + "});\n", 1)
+    for old, new in REPLACEMENTS:
+        planning = planning.replace(old, new, 1)
+    POLICY.write_text(policy, encoding="utf-8")
+    PLANNING.write_text(planning, encoding="utf-8")
 
     boundaries = dict(manifest.get("boundaries", {}))
     boundaries["wasedaPlanningChallengeCompositionPolicyV75"] = POLICY_NAME
@@ -240,7 +178,7 @@ def main() -> None:
     manifest["notes"] = notes
     write_json(MANIFEST, manifest)
 
-    validate_applied(NEW_POLICY, PLANNING.read_text(encoding="utf-8"), manifest)
+    validate_applied(policy, planning, manifest)
     print("Waseda challenge-session composition adapter: PASS")
 
 
