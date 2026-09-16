@@ -3,12 +3,6 @@
   "purpose": "Record which mechanically separated helpers are safe to promote into the canonical engine now, which require policy injection first, and which remain Waseda-owned. This classification does not itself change runtime behavior.",
   "readySchoolNeutralHelpers": [
     {
-      "symbol": "v76IntervalForTarget",
-      "source": "35-v76-memory-runtime.js",
-      "target": "20-engine-candidate.js",
-      "reason": "Pure interval calculation from stability and target retention."
-    },
-    {
       "symbol": "v76LapseStability",
       "source": "35-v76-memory-runtime.js",
       "target": "20-engine-candidate.js",
@@ -35,6 +29,13 @@
       "previousSource": "35-v76-memory-runtime.js",
       "target": "20-engine-candidate.js",
       "reason": "Pure mapping from mastery level to an initial stability value; still version-named, so promotion may precede later neutral naming.",
+      "promotionType": "definition-move-only; name and function body unchanged"
+    },
+    {
+      "symbol": "v76IntervalForTarget",
+      "previousSource": "35-v76-memory-runtime.js",
+      "target": "20-engine-candidate.js",
+      "reason": "Pure interval calculation from stability and target retention.",
       "promotionType": "definition-move-only; name and function body unchanged"
     }
   ],
@@ -139,7 +140,7 @@
     "syntheticMergeOwnership": "success"
   },
   "fourthPromotion": "v76IntervalForTarget",
-  "fourthPromotionStatus": "pending",
+  "fourthPromotionStatus": "promoted",
   "promotionValidation": {
     "requireExactBranchHead": true,
     "requireSyntheticMerge": true,

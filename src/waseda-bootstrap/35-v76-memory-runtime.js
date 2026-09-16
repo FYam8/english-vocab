@@ -67,11 +67,6 @@ function v76TargetRetention(v,p){
   if(s||w)return .92;
   return .90;
 }
-function v76IntervalForTarget(stabilityDays,targetRetention){
-  const s=Math.max(.05,Number(stabilityDays)||.05);
-  const t=v76Clamp(targetRetention,.80,.97);
-  return s*Math.log(t)/Math.log(.9);
-}
 function v76ExamDaysLeft(){
   const raw=state&&state.settings&&state.settings.examDate;
   if(!raw)return null;

@@ -576,6 +576,11 @@ function weightedChoice(items,weights){
 }
 function v76Clamp(x,lo,hi){return Math.max(lo,Math.min(hi,Number(x)))}
 function v76SeedStability(mastery){const i=Math.max(0,Math.min(4,Math.round(Number(mastery)||0)));return [0.75,1.5,4,14,30][i]}
+function v76IntervalForTarget(stabilityDays,targetRetention){
+  const s=Math.max(.05,Number(stabilityDays)||.05);
+  const t=v76Clamp(targetRetention,.80,.97);
+  return s*Math.log(t)/Math.log(.9);
+}
 function v75WeightedWithoutReplacement(pool,count,scoreFn){
   const remaining=[...pool],out=[];
   while(remaining.length&&out.length<count){
@@ -2322,11 +2327,6 @@ function v76TargetRetention(v,p){
   if(s&&w)return .93;
   if(s||w)return .92;
   return .90;
-}
-function v76IntervalForTarget(stabilityDays,targetRetention){
-  const s=Math.max(.05,Number(stabilityDays)||.05);
-  const t=v76Clamp(targetRetention,.80,.97);
-  return s*Math.log(t)/Math.log(.9);
 }
 function v76ExamDaysLeft(){
   const raw=state&&state.settings&&state.settings.examDate;
