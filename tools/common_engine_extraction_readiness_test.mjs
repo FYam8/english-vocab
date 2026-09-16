@@ -12,6 +12,7 @@ assert.ok(Array.isArray(readiness.promotedSchoolNeutralHelpers));
 assert.ok(Array.isArray(readiness.policyInjectionRequired) && readiness.policyInjectionRequired.length > 0);
 assert.ok(Array.isArray(readiness.blockedTokensForReadyHelpers));
 assert.ok(['pending', 'promoted'].includes(readiness.firstPromotionStatus));
+assert.ok(['pending', 'promoted'].includes(readiness.secondPromotionStatus));
 const validation = readiness.promotionValidation || {};
 assert.equal(validation.requireExactBranchHead, true, 'helper promotion must require exact branch-head validation');
 assert.equal(validation.requireSyntheticMerge, true, 'helper promotion must require synthetic-merge validation');
@@ -128,6 +129,30 @@ if (readiness.firstPromotionStatus === 'pending') {
     assert.ok(!block.includes(forbidden), `promoted first helper unexpectedly depends on Waseda policy: ${forbidden}`);
   }
   assert.ok(!read(`${ROOT}/${promoted.previousSource}`).includes(`function ${promoted.symbol}(`), 'promoted first helper remains duplicated in policy source');
+}
+
+const firstValidation = readiness.firstPromotionValidation || {};
+assert.match(String(firstValidation.validatedHead || ''), /^[0-9a-f]{40}$/, 'first promotion must record the exact validated head');
+for (const key of ['branchTwoPass', 'syntheticMergeTwoPass', 'branchOwnership', 'syntheticMergeOwnership']) {
+  assert.equal(firstValidation[key], 'success', `first promotion validation incomplete: ${key}`);
+}
+
+assert.equal(readiness.secondPromotion, 'v76Clamp', 'second promotion changed without explicit review');
+if (readiness.secondPromotionStatus === 'pending') {
+  const second = readiness.readySchoolNeutralHelpers.find((x) => x.symbol === readiness.secondPromotion);
+  assert.ok(second, 'pending secondPromotion must remain classified as ready');
+  assert.equal(second.source, '35-v76-memory-runtime.js');
+  assert.equal(second.target, '20-engine-candidate.js');
+  const block = functionBlock(read(`${ROOT}/${second.source}`), second.symbol);
+  assertSchoolNeutral(block, second.symbol);
+  assert.ok(!read(`${ROOT}/${second.target}`).includes(`function ${second.symbol}(`), 'pending second promotion already moved');
+} else {
+  const promoted = readiness.promotedSchoolNeutralHelpers.find((x) => x.symbol === readiness.secondPromotion);
+  assert.ok(promoted, 'promoted secondPromotion must be recorded');
+  assert.equal(promoted.previousSource, '35-v76-memory-runtime.js');
+  assert.equal(promoted.target, '20-engine-candidate.js');
+  assertSchoolNeutral(functionBlock(read(`${ROOT}/${promoted.target}`), promoted.symbol), promoted.symbol);
+  assert.ok(!read(`${ROOT}/${promoted.previousSource}`).includes(`function ${promoted.symbol}(`), 'promoted second helper remains duplicated in v7.6 source');
 }
 
 console.log('Common-engine extraction readiness classification: PASS');
