@@ -11,6 +11,7 @@
   "approvedRuntimeBoundary": "memory-scheduler-policy-adapter",
   "approvalScope": "Introduce only the Waseda adapter boundary while preserving exact Waseda scheduler outputs and persistence; do not mutate Rikkyo or production main.",
   "allowWasedaAdapterIntroduction": true,
+  "allowWasedaScoringAdapterIntroduction": true,
   "allowRikkyoRuntimeMutation": false,
   "allowProductionMainMutation": false,
   "allowSharedRuntimeArtifactRelease": false,
@@ -23,5 +24,16 @@
     "artifactSha256": "520e3f324f25f9d5f07e348eb618f2b62fa6bddc2f890e33704b5ac9719a07a5",
     "productionMainUnchanged": true,
     "rikkyoRuntimeUnchanged": true
+  },
+  "wasedaMemoryScoringPolicyContractValidation": {
+    "validatedHead": "2141d56b248e745540d16e3ccaa56eca9968c5c8",
+    "branchTwoPass": "success",
+    "syntheticMergeTwoPass": "success",
+    "branchOwnership": "success",
+    "syntheticMergeOwnership": "success",
+    "artifactSha256BeforeScoringAdapter": "520e3f324f25f9d5f07e348eb618f2b62fa6bddc2f890e33704b5ac9719a07a5",
+    "productionMainUnchanged": true,
+    "rikkyoRuntimeUnchanged": true,
+    "approvedBoundary": "memory-priority-scoring-policy-adapter"
   }
 }
