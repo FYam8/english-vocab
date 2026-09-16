@@ -1,0 +1,39 @@
+name: Waseda compatibility ownership guard
+
+on:
+  push:
+    branches:
+      - refactor/waseda-common-engine-v1
+    paths:
+      - src/waseda-bootstrap/compat-ownership.json
+      - src/waseda-bootstrap/15-waseda-persistence.js
+      - src/waseda-bootstrap/20-engine-candidate.js
+      - src/waseda-bootstrap/30-compat-runtime.js
+      - tools/common_engine_compat_ownership_test.mjs
+      - .github/workflows/compat-ownership-guard.yml
+  pull_request:
+    branches:
+      - main
+    paths:
+      - src/waseda-bootstrap/compat-ownership.json
+      - src/waseda-bootstrap/15-waseda-persistence.js
+      - src/waseda-bootstrap/20-engine-candidate.js
+      - src/waseda-bootstrap/30-compat-runtime.js
+      - tools/common_engine_compat_ownership_test.mjs
+      - .github/workflows/compat-ownership-guard.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ownership:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Syntax check ownership guard
+        run: node --check tools/common_engine_compat_ownership_test.mjs
+      - name: Enforce Waseda/common ownership boundary
+        run: node tools/common_engine_compat_ownership_test.mjs
+      - name: Diff hygiene
+        run: git diff --check
