@@ -7,6 +7,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src" / "waseda-bootstrap"
 PRELUDE = SRC / "30-compat-runtime.js"
 SESSION = SRC / "31-waseda-session-runtime.js"
+PLANNING_POLICY = SRC / "31a-waseda-planning-policy.js"
 PLANNING = SRC / "32-session-planning-runtime.js"
 UI = SRC / "33-v75-ui-runtime.js"
 MANIFEST = SRC / "manifest.json"
@@ -14,6 +15,7 @@ READINESS = SRC / "engine-extraction-readiness.json"
 
 PRELUDE_NAME = "30-compat-runtime.js"
 SESSION_NAME = "31-waseda-session-runtime.js"
+PLANNING_POLICY_NAME = "31a-waseda-planning-policy.js"
 PLANNING_NAME = "32-session-planning-runtime.js"
 UI_NAME = "33-v75-ui-runtime.js"
 
@@ -88,13 +90,22 @@ def validate_split() -> None:
 
     manifest = load_manifest()
     order = manifest.get("assemblyOrder", [])
-    expected = [PRELUDE_NAME, SESSION_NAME, PLANNING_NAME, UI_NAME]
+    expected = [PRELUDE_NAME, SESSION_NAME]
+    if PLANNING_POLICY.is_file():
+        expected.append(PLANNING_POLICY_NAME)
+    expected.extend([PLANNING_NAME, UI_NAME])
     try:
         i = order.index(PRELUDE_NAME)
     except ValueError as exc:
         raise SystemExit("30-compat-runtime.js missing from assembly order") from exc
-    if order[i:i + 4] != expected:
-        raise SystemExit("v7.5 split assembly order is not canonical")
+    if order[i:i + len(expected)] != expected:
+        raise SystemExit("v7.5 split assembly order is not canonical for the current adapter state")
+    if PLANNING_POLICY.is_file():
+        policy = PLANNING_POLICY.read_text(encoding="utf-8")
+        if "const WASEDA_PLANNING_POLICY=Object.freeze({" not in policy:
+            raise SystemExit("Waseda planning-policy adapter file is present but invalid")
+        if manifest.get("boundaries", {}).get("wasedaPlanningPolicyV75") != PLANNING_POLICY_NAME:
+            raise SystemExit("Waseda planning-policy adapter is not recorded in source manifest")
 
 
 def split_once() -> None:
