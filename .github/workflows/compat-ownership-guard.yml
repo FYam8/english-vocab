@@ -55,5 +55,24 @@ jobs:
         run: node tools/common_engine_compat_ownership_test.mjs
       - name: Enforce extraction readiness classification
         run: node tools/common_engine_extraction_readiness_test.mjs
+      - name: Pin completed pure-helper extraction
+        run: |
+          node - <<'JS'
+          const fs=require('node:fs');
+          const assert=require('node:assert/strict');
+          const r=JSON.parse(fs.readFileSync('src/waseda-bootstrap/engine-extraction-readiness.json','utf8'));
+          assert.equal(r.fifthPromotion,'v76LapseStability');
+          assert.equal(r.fifthPromotionStatus,'promoted');
+          assert.equal(r.readySchoolNeutralHelpers.length,0);
+          const p=r.promotedSchoolNeutralHelpers.map(x=>x.symbol);
+          assert.deepEqual(p,[
+            'v75WeightedWithoutReplacement',
+            'v76Clamp',
+            'v76SeedStability',
+            'v76IntervalForTarget',
+            'v76LapseStability'
+          ]);
+          console.log('pure-helper extraction exact-head checkpoint: PASS');
+          JS
       - name: Diff hygiene
         run: git diff --check
