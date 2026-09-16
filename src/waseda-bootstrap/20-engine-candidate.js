@@ -190,6 +190,7 @@ function weightedChoice(items,weights){
  for(let i=0;i<items.length;i++){r-=weights[i];if(r<=0)return items[i]}
  return items[items.length-1];
 }
+function v76Clamp(x,lo,hi){return Math.max(lo,Math.min(hi,Number(x)))}
 function v75WeightedWithoutReplacement(pool,count,scoreFn){
   const remaining=[...pool],out=[];
   while(remaining.length&&out.length<count){

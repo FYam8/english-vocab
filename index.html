@@ -574,6 +574,7 @@ function weightedChoice(items,weights){
  for(let i=0;i<items.length;i++){r-=weights[i];if(r<=0)return items[i]}
  return items[items.length-1];
 }
+function v76Clamp(x,lo,hi){return Math.max(lo,Math.min(hi,Number(x)))}
 function v75WeightedWithoutReplacement(pool,count,scoreFn){
   const remaining=[...pool],out=[];
   while(remaining.length&&out.length<count){
@@ -2266,7 +2267,6 @@ const V76_MINUTE_MS=60000;
 META.dataVersion=V76_DATA_VERSION;
 state.dataVersion=V76_DATA_VERSION;
 
-function v76Clamp(x,lo,hi){return Math.max(lo,Math.min(hi,Number(x)))}
 function v76StrongRecallType(type){return ["reverse","audio","cloze"].includes(type)}
 function v76SeedStability(mastery){const i=Math.max(0,Math.min(4,Math.round(Number(mastery)||0)));return [0.75,1.5,4,14,30][i]}
 function v76ExistingScheduledDays(p){
