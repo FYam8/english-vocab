@@ -62,13 +62,12 @@
     "rikkyoRuntimeUnchanged": true,
     "approvedGroup": "challenge-score-base-policy-adapter"
   },
-  "secondPlanningAdapterRuntimeValidation": {
-    "runtimeTransformHead": "261c1ae713810578b523cbcf7fb53239d9b3b027",
+  "secondPlanningAdapterCandidate": {
+    "runtimeHead": "261c1ae713810578b523cbcf7fb53239d9b3b027",
     "artifactSha256": "16655e85045d1b83e2caea23ed4a0a6aafe8af50e86f199ecab6506b5268206d",
-    "status": "pending-exact-head-branch-and-synthetic-merge-qa",
-    "productionMainUnchanged": true,
-    "rikkyoRuntimeUnchanged": true,
-    "validatedGroup": "challenge-score-base-policy-adapter"
+    "status": "awaiting-exact-head-validation",
+    "productionMainMustRemain": "531d505c19a86eaa2c8bbc4b25179de8089ab585",
+    "rikkyoRuntimeMustRemain": "06eb47656bf0066af5cfe2072a53cfcdd42e5232"
   },
   "forbidden": [
     "moving Waseda priority/mastery/challenge score constants into the common engine",

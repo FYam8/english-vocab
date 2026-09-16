@@ -52,6 +52,13 @@ assert.equal(second.productionMainUnchanged, true);
 assert.equal(second.rikkyoRuntimeUnchanged, true);
 assert.equal(second.approvedGroup, 'challenge-score-base-policy-adapter');
 
+const candidate = validation.secondPlanningAdapterCandidate || {};
+assert.equal(candidate.runtimeHead, '261c1ae713810578b523cbcf7fb53239d9b3b027');
+assert.equal(candidate.artifactSha256, '16655e85045d1b83e2caea23ed4a0a6aafe8af50e86f199ecab6506b5268206d');
+assert.equal(candidate.status, 'awaiting-exact-head-validation');
+assert.equal(candidate.productionMainMustRemain, validation.wasedaProductionBaseline);
+assert.equal(candidate.rikkyoRuntimeMustRemain, validation.rikkyoAuditedBaseline);
+
 for (const forbidden of [
   'moving Waseda priority/mastery/challenge score constants into the common engine',
   'changing challenge session composition in the second group',
