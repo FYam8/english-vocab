@@ -33,6 +33,11 @@ const legacyStorage=index.includes('const STORAGE_KEY="waseshibu_vocab_state";')
 const adapterStorage=index.includes('storageKey:"waseshibu_vocab_state"')&&index.includes('const STORAGE_KEY=WASEDA_APP_CONFIG.storageKey;');
 assert.ok(legacySchema||adapterSchema,'Waseda schema contract changed');
 assert.ok(legacyStorage||adapterStorage,'Waseda main storage key contract changed');
+if(adapterSchema||adapterStorage){
+  has(index,'activeSessionKey:"waseshibu_vocab_active_session_v1"','active-session storage key');
+  has(index,'activeSessionFormatVersion:1','active-session format version');
+}
 lacks(index,'localStorage.clear(', 'index clearing storage');
-lacks(index,'localStorage.removeItem(STORAGE_KEY)', 'index deleting learning history');
+lacks(index,'localStorage.removeItem(STORAGE_KEY)', 'index deleting learning history directly');
+lacks(index,'wasedaStorageRemove(STORAGE_KEY)', 'adapter deleting learning history');
 console.log('Vocabulary cloud progress guards: CLEAN');
