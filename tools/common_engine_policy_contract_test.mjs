@@ -69,13 +69,37 @@ assert.ok(!memory.includes('if(s||w)return .92;'));
 assert.ok(!memory.includes('v76Clamp(v76IntervalForTarget(model.stabilityDays,v76TargetRetention(v,p)),.75,60)'));
 
 assert.ok(integration.includes('schedulerScore=function(v,mode){'));
-assert.ok(integration.includes('if(r<target)extra+=(target-r)*900+90;'));
 assert.ok(integration.includes('const days=v76ExamDaysLeft();'));
-assert.ok(integration.includes('if(days!=null&&days>=0&&days<=30){'));
-assert.ok(integration.includes('if(v.priority==="S")extra+=80*urgency;'));
-assert.ok(integration.includes('if(isWeakProgress(p))extra+=100*urgency;'));
-assert.ok(integration.includes('extra+=Math.max(0,target-r)*300*urgency;'));
-assert.ok(integration.includes('if(r<target)score+=(target-r)*700+70;'));
+const scoringAdapterApplied = policy.includes('applyReviewUrgencyExtra(extra,v,p,m){');
+if (scoringAdapterApplied) {
+  for (const token of [
+    'applyReviewUrgencyExtra(extra,v,p,m){',
+    'if(r<target)extra+=(target-r)*900+90;',
+    'applyExamUrgencyExtra(extra,v,p,m,days){',
+    'if(v.priority==="S")extra+=80*urgency;',
+    'if(isWeakProgress(p))extra+=100*urgency;',
+    'extra+=Math.max(0,target-r)*300*urgency;',
+    'applyChallengeMemoryScore(score,v,p,m){',
+    'if(r<target)score+=(target-r)*700+70;'
+  ]) assert.ok(policy.includes(token), `Waseda scoring policy formula missing: ${token}`);
+  assert.ok(integration.includes('extra=WASEDA_MEMORY_POLICY.applyReviewUrgencyExtra(extra,v,p,m);'));
+  assert.ok(integration.includes('extra=WASEDA_MEMORY_POLICY.applyExamUrgencyExtra(extra,v,p,m,days);'));
+  assert.ok(integration.includes('score=WASEDA_MEMORY_POLICY.applyChallengeMemoryScore(score,v,p,m);'));
+  for (const token of [
+    'if(r<target)extra+=(target-r)*900+90;',
+    'if(v.priority==="S")extra+=80*urgency;',
+    'if(isWeakProgress(p))extra+=100*urgency;',
+    'extra+=Math.max(0,target-r)*300*urgency;',
+    'if(r<target)score+=(target-r)*700+70;'
+  ]) assert.ok(!integration.includes(token), `Waseda scoring policy remains duplicated in integration: ${token}`);
+} else {
+  assert.ok(integration.includes('if(r<target)extra+=(target-r)*900+90;'));
+  assert.ok(integration.includes('if(days!=null&&days>=0&&days<=30){'));
+  assert.ok(integration.includes('if(v.priority==="S")extra+=80*urgency;'));
+  assert.ok(integration.includes('if(isWeakProgress(p))extra+=100*urgency;'));
+  assert.ok(integration.includes('extra+=Math.max(0,target-r)*300*urgency;'));
+  assert.ok(integration.includes('if(r<target)score+=(target-r)*700+70;'));
+}
 
 for (const symbol of ['v75ChallengeScore', 'v75FoundationReason', 'buildChallengeSessionPlan', 'buildSessionPlan', 'v75DueRetry', 'v75PickUnlimitedBase', 'v75NextSessionItem']) {
   assert.ok(planning.includes(symbol), `Waseda planning policy moved before adapter contract: ${symbol}`);
