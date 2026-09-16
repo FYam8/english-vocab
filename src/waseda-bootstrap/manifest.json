@@ -7,6 +7,8 @@
     "15-waseda-persistence.js",
     "20-engine-candidate.js",
     "30-compat-runtime.js",
+    "35-v76-memory-runtime.js",
+    "40-runtime-bootstrap-tail.js",
     "90-shell-suffix.html"
   ],
   "parts": {
@@ -27,8 +29,16 @@
       "sha256": "a8f6a9a739bda99cee006fccfafde631ce5c320785a2b2dc3aa2d937594e3935"
     },
     "30-compat-runtime.js": {
-      "bytes": 75426,
-      "sha256": "a4f49e56b358a88879da381becae782682db11e5018b552efcac32152a037d98"
+      "bytes": 64218,
+      "sha256": "5d7d3b36177bcd2e6be7e8b679b981c14c8db15136ece0a0f5deda440cb247e2"
+    },
+    "35-v76-memory-runtime.js": {
+      "bytes": 11108,
+      "sha256": "f2908fa42b047347647b6092334ca9a5aa59f10b48e49b189afad5338a3f8c8e"
+    },
+    "40-runtime-bootstrap-tail.js": {
+      "bytes": 100,
+      "sha256": "c75daac3527b417e35721f974b3407f8fd99521c11943ec089868d2ac3cb99f0"
     },
     "90-shell-suffix.html": {
       "bytes": 82,
@@ -39,13 +49,16 @@
     "wasedaData": "10-waseda-data.js",
     "wasedaPersistenceAdapterSeed": "15-waseda-persistence.js",
     "engineCandidate": "20-engine-candidate.js",
-    "compatibilityRuntime": "30-compat-runtime.js"
+    "compatibilityRuntimeV75": "30-compat-runtime.js",
+    "memorySchedulerV76": "35-v76-memory-runtime.js",
+    "runtimeBootstrapTail": "40-runtime-bootstrap-tail.js"
   },
   "notes": [
     "This remains a byte-exact mechanical split; browser behavior and persistence semantics are unchanged.",
     "15-waseda-persistence.js is the first explicit Waseda-only adapter seed because it owns the production schema and localStorage namespace.",
     "20-engine-candidate.js is only a candidate boundary and is not yet claimed to be fully school-neutral.",
-    "30-compat-runtime.js contains the existing v7.5/v7.6 compatibility/runtime overrides and will be decomposed only under parity tests."
+    "30-compat-runtime.js contains the existing v7.5/v7.6 compatibility/runtime overrides and will be decomposed only under parity tests.",
+    "30/35/40 are a byte-preserving mechanical decomposition of the reviewed compatibility runtime: v7.5 compatibility, v7.6 memory scheduler, then bootstrap tail. No runtime semantics are changed by this split."
   ],
   "baselineSourceGitBlobSha": "bb77a0c54153502e25bccb1ed89ca33b29b45c83",
   "baselineSourceSha256": "a6e58a9321d4e739216957fcbfaa0cf7f1d1621ca0f0bb88a03507da81bf452f",
