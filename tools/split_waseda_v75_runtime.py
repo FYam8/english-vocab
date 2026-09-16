@@ -10,6 +10,7 @@ SESSION = SRC / "31-waseda-session-runtime.js"
 PLANNING = SRC / "32-session-planning-runtime.js"
 UI = SRC / "33-v75-ui-runtime.js"
 MANIFEST = SRC / "manifest.json"
+READINESS = SRC / "engine-extraction-readiness.json"
 
 PRELUDE_NAME = "30-compat-runtime.js"
 SESSION_NAME = "31-waseda-session-runtime.js"
@@ -18,11 +19,27 @@ UI_NAME = "33-v75-ui-runtime.js"
 
 SESSION_ANCHOR = b"function v75SerializeCurrentQuestion(){\n"
 PLANNING_ANCHOR = b"function v75WeightedWithoutReplacement(pool,count,scoreFn){\n"
+PROMOTED_PLANNING_ANCHOR = b"function v75ChallengeScore(v){\n"
 UI_ANCHOR = b"const v74ChooseType=chooseType;\n"
 
 
 def load_manifest() -> dict:
     return json.loads(MANIFEST.read_text(encoding="utf-8"))
+
+
+def load_readiness() -> dict:
+    if not READINESS.is_file():
+        return {}
+    return json.loads(READINESS.read_text(encoding="utf-8"))
+
+
+def current_planning_anchor(planning: bytes | None = None) -> bytes:
+    data = load_readiness()
+    if data.get("firstPromotionStatus") == "promoted":
+        return PROMOTED_PLANNING_ANCHOR
+    if planning is not None and PLANNING_ANCHOR not in planning and PROMOTED_PLANNING_ANCHOR in planning:
+        return PROMOTED_PLANNING_ANCHOR
+    return PLANNING_ANCHOR
 
 
 def write_manifest(manifest: dict) -> None:
@@ -53,17 +70,18 @@ def validate_split() -> None:
     session = SESSION.read_bytes()
     planning = PLANNING.read_bytes()
     ui = UI.read_bytes()
-    if SESSION_ANCHOR in prelude or PLANNING_ANCHOR in prelude or UI_ANCHOR in prelude:
+    planning_anchor = current_planning_anchor(planning)
+    if SESSION_ANCHOR in prelude or PLANNING_ANCHOR in prelude or PROMOTED_PLANNING_ANCHOR in prelude or UI_ANCHOR in prelude:
         raise SystemExit("v7.5 prelude still contains a moved runtime boundary")
     if not starts_at_reviewed_boundary(session, SESSION_ANCHOR):
         raise SystemExit("31-waseda-session-runtime.js boundary is invalid")
-    if not starts_at_reviewed_boundary(planning, PLANNING_ANCHOR):
-        raise SystemExit("32-session-planning-runtime.js boundary is invalid")
+    if not starts_at_reviewed_boundary(planning, planning_anchor):
+        raise SystemExit("32-session-planning-runtime.js boundary is invalid for the current promotion state")
     if not starts_at_reviewed_boundary(ui, UI_ANCHOR):
         raise SystemExit("33-v75-ui-runtime.js boundary is invalid")
     if prelude.endswith(b"\n\n") or session.endswith(b"\n\n") or planning.endswith(b"\n\n"):
         raise SystemExit("split source part ends with an extra blank line")
-    if PLANNING_ANCHOR in session or UI_ANCHOR in session:
+    if PLANNING_ANCHOR in session or PROMOTED_PLANNING_ANCHOR in session or UI_ANCHOR in session:
         raise SystemExit("session runtime overlaps a later v7.5 boundary")
     if UI_ANCHOR in planning:
         raise SystemExit("planning runtime overlaps the v7.5 UI boundary")
@@ -86,22 +104,23 @@ def split_once() -> None:
         return
 
     raw = PRELUDE.read_bytes()
+    planning_anchor = PLANNING_ANCHOR if PLANNING_ANCHOR in raw else PROMOTED_PLANNING_ANCHOR
     for label, anchor in [
         ("session", SESSION_ANCHOR),
-        ("planning", PLANNING_ANCHOR),
+        ("planning", planning_anchor),
         ("ui", UI_ANCHOR),
     ]:
         if raw.count(anchor) != 1:
             raise SystemExit(f"Reviewed v7.5 {label} split anchor is not unique")
 
     session_anchor_i = raw.index(SESSION_ANCHOR)
-    planning_anchor_i = raw.index(PLANNING_ANCHOR)
+    planning_anchor_i = raw.index(planning_anchor)
     ui_anchor_i = raw.index(UI_ANCHOR)
     if not (0 < session_anchor_i < planning_anchor_i < ui_anchor_i < len(raw)):
         raise SystemExit("Reviewed v7.5 split anchors are not in the expected order")
 
     session_i = reviewed_cut(raw, SESSION_ANCHOR)
-    planning_i = reviewed_cut(raw, PLANNING_ANCHOR)
+    planning_i = reviewed_cut(raw, planning_anchor)
     ui_i = reviewed_cut(raw, UI_ANCHOR)
     if not (0 < session_i < planning_i < ui_i < len(raw)):
         raise SystemExit("Reviewed v7.5 split cuts are not in the expected order")
