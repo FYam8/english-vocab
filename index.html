@@ -297,49 +297,8 @@ const STORAGE_KEY=WASEDA_APP_CONFIG.storageKey;
 function wasedaStorageGet(key){return localStorage.getItem(key)}
 function wasedaStorageSet(key,value){localStorage.setItem(key,value)}
 function wasedaStorageRemove(key){localStorage.removeItem(key)}
-const MASTER_LABEL=["未学習","学習中","安定","覚えた","定着"];
-const MODE_OPTIONS=[
- ["recommended","おすすめ"],["60","60点突破"],["70","70点安定"],["diagnostic","基礎診断"],["75","75点挑戦"],
- ["unlearned","未学習"],["weak","苦手"],["review","復習"],["frequent","年度横断・頻出"],["random","ランダム"]
-];
-const LAYER_LABEL={core:"通常学習",diagnostic:"基礎診断",challenge:"75点挑戦",reference:"参照のみ"};
-const LAYER_SCORE={core:70,diagnostic:55,challenge:10,reference:0};
-const PRIORITY_SCORE={S:90,A:48,B:24,C:8};
-const LEVEL_SCORE={60:50,70:24,75:8};
-const CATEGORY_JP={listening:"Listening",language:"語彙・文法",writing:"英作文・要約",reading:"Reading",question:"設問・選択肢"};
-const SAFE_CONFUSIONS=[
- ["increase","decrease","reduce","improve"],["remember","forget","realize","notice"],
- ["decide","suggest","allow","prevent"],["receive","offer","carry","return"],
- ["cause","result","reason","purpose"],["likely","possible","impossible","necessary"],
- ["healthy","harmful","serious","active"],["finally","suddenly","eventually","recently"],
- ["accept","avoid","consider","prefer"],["worry","concern","surprise","disappoint"],
- ["communicate","explain","mention","reply"],["environment","climate","atmosphere","condition"],
- ["support","protect","prevent","harm"]
-];
-const VOCAB_BY_ID=new Map(VOCAB.map(v=>[v.id,v]));
-const VOCAB_BY_WORD=new Map(VOCAB.map(v=>[v.word,v]));
-function effectiveFrequency(v){return Number.isFinite(Number(v&&v.surfaceFrequency))?Number(v.surfaceFrequency):Number(v&&v.frequency)||0}
-function yearsText(xs){return Array.isArray(xs)&&xs.length?xs.join(", "):"—"}
-function evidenceBadge(v){return v&&v.auditStatus&&v.auditStatus!=="provisional"?"精査済み":"暫定"}
 
-let state=loadState();
-let currentView="learn";
-let session=null;
-let currentQuestion=null;
-let questionResolved=false;
-let voices=[];
-let toastTimer=null;
-
-function $(id){return document.getElementById(id)}
-function now(){return Date.now()}
-function localDayKey(d=new Date()){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
-function defaultProgress(){return {mastery:0,correct:0,incorrect:0,streak:0,lastStudied:null,nextReview:null,recentMistakeUntil:null,lastRating:null,evidence:0,recentResults:[]}}
-function defaultState(){return {
- schemaVersion:SCHEMA_VERSION,dataVersion:META.dataVersion,words:{},
- stats:{todayKey:localDayKey(),todayCount:0,totalAnswers:0,totalSessions:0},
- settings:{mode:"recommended",sessionSize:20,year:"all",accent:"auto",voiceURI:"",theme:"auto"}
-}}
-function migrate(raw){
+function wasedaMigrateState(raw){
  let s=raw && typeof raw==="object"?raw:{};
  let v=Number(s.schemaVersion||1);
  if(v===1){
@@ -423,6 +382,49 @@ function migrate(raw){
  }
  return s;
 }
+const MASTER_LABEL=["未学習","学習中","安定","覚えた","定着"];
+const MODE_OPTIONS=[
+ ["recommended","おすすめ"],["60","60点突破"],["70","70点安定"],["diagnostic","基礎診断"],["75","75点挑戦"],
+ ["unlearned","未学習"],["weak","苦手"],["review","復習"],["frequent","年度横断・頻出"],["random","ランダム"]
+];
+const LAYER_LABEL={core:"通常学習",diagnostic:"基礎診断",challenge:"75点挑戦",reference:"参照のみ"};
+const LAYER_SCORE={core:70,diagnostic:55,challenge:10,reference:0};
+const PRIORITY_SCORE={S:90,A:48,B:24,C:8};
+const LEVEL_SCORE={60:50,70:24,75:8};
+const CATEGORY_JP={listening:"Listening",language:"語彙・文法",writing:"英作文・要約",reading:"Reading",question:"設問・選択肢"};
+const SAFE_CONFUSIONS=[
+ ["increase","decrease","reduce","improve"],["remember","forget","realize","notice"],
+ ["decide","suggest","allow","prevent"],["receive","offer","carry","return"],
+ ["cause","result","reason","purpose"],["likely","possible","impossible","necessary"],
+ ["healthy","harmful","serious","active"],["finally","suddenly","eventually","recently"],
+ ["accept","avoid","consider","prefer"],["worry","concern","surprise","disappoint"],
+ ["communicate","explain","mention","reply"],["environment","climate","atmosphere","condition"],
+ ["support","protect","prevent","harm"]
+];
+const VOCAB_BY_ID=new Map(VOCAB.map(v=>[v.id,v]));
+const VOCAB_BY_WORD=new Map(VOCAB.map(v=>[v.word,v]));
+function effectiveFrequency(v){return Number.isFinite(Number(v&&v.surfaceFrequency))?Number(v.surfaceFrequency):Number(v&&v.frequency)||0}
+function yearsText(xs){return Array.isArray(xs)&&xs.length?xs.join(", "):"—"}
+function evidenceBadge(v){return v&&v.auditStatus&&v.auditStatus!=="provisional"?"精査済み":"暫定"}
+
+let state=loadState();
+let currentView="learn";
+let session=null;
+let currentQuestion=null;
+let questionResolved=false;
+let voices=[];
+let toastTimer=null;
+
+function $(id){return document.getElementById(id)}
+function now(){return Date.now()}
+function localDayKey(d=new Date()){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function defaultProgress(){return {mastery:0,correct:0,incorrect:0,streak:0,lastStudied:null,nextReview:null,recentMistakeUntil:null,lastRating:null,evidence:0,recentResults:[]}}
+function defaultState(){return {
+ schemaVersion:SCHEMA_VERSION,dataVersion:META.dataVersion,words:{},
+ stats:{todayKey:localDayKey(),todayCount:0,totalAnswers:0,totalSessions:0},
+ settings:{mode:"recommended",sessionSize:20,year:"all",accent:"auto",voiceURI:"",theme:"auto"}
+}}
+function migrate(raw){return wasedaMigrateState(raw)}
 function loadState(){
  try{
    const raw=wasedaStorageGet(STORAGE_KEY);
