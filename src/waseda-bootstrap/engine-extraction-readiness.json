@@ -33,6 +33,7 @@
       "reason": "Pure calculation from memory-model values and retrievability."
     }
   ],
+  "promotedSchoolNeutralHelpers": [],
   "policyInjectionRequired": [
     {
       "symbol": "v75ChallengeScore",
@@ -106,5 +107,6 @@
     "state.",
     "session."
   ],
-  "firstPromotion": "v75WeightedWithoutReplacement"
+  "firstPromotion": "v75WeightedWithoutReplacement",
+  "firstPromotionStatus": "pending"
 }
