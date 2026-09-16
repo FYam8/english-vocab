@@ -45,23 +45,34 @@ jobs:
           p=Path('src/waseda-bootstrap/15-waseda-persistence.js').read_text(encoding='utf-8')
           assert 'schemaVersion:7' in p
           assert 'storageKey:"waseshibu_vocab_state"' in p
+          assert 'activeSessionKey:"waseshibu_vocab_active_session_v1"' in p
+          assert 'activeSessionFormatVersion:1' in p
           assert 'const SCHEMA_VERSION=WASEDA_APP_CONFIG.schemaVersion;' in p
           assert 'const STORAGE_KEY=WASEDA_APP_CONFIG.storageKey;' in p
-          print('Waseda persistence adapter seed: REQUIRED CONTRACT PRESENT')
+          assert 'function wasedaStorageGet(key)' in p
+          assert 'function wasedaStorageSet(key,value)' in p
+          assert 'function wasedaStorageRemove(key)' in p
+          print('Waseda persistence adapter: REQUIRED CONTRACT PRESENT')
           PY
 
       - name: Source ownership safety gate
         run: |
+          python3 -m py_compile tools/refactor_waseda_persistence_boundary.py
           python3 - <<'PY'
           from pathlib import Path
           cloud_patch=Path('tools/apply_vocab_cloud_progress.py').read_text(encoding='utf-8')
           cloud_flow=Path('.github/workflows/vocab-cloud-progress.yml').read_text(encoding='utf-8')
+          assemble_flow=Path('.github/workflows/assemble-common-engine.yml').read_text(encoding='utf-8')
+          persistence_refactor=Path('tools/refactor_waseda_persistence_boundary.py').read_text(encoding='utf-8')
           v75=Path('tools/apply_v75_patch.py').read_text(encoding='utf-8')
           v76=Path('tools/apply_v76_memory_scheduler.py').read_text(encoding='utf-8')
           assert 'SOURCE_MANIFEST' in cloud_patch and 'SOURCE_SUFFIX' in cloud_patch
-          assert "assemble_waseda.py" in cloud_patch
+          assert 'assemble_waseda.py' in cloud_patch
           assert 'src/waseda-bootstrap/90-shell-suffix.html' in cloud_flow
           assert 'src/waseda-bootstrap/manifest.json' in cloud_flow
+          assert 'refactor_waseda_persistence_boundary.py' in assemble_flow
+          assert 'main-state storage still bypasses Waseda persistence adapter' in persistence_refactor
+          assert 'active-session storage still bypasses adapter' in persistence_refactor
           assert 'Refusing legacy v7.5 direct index patch' in v75
           assert 'Refusing legacy v7.6 direct index patch' in v76
           print('source ownership guards: PASS')
@@ -73,12 +84,26 @@ jobs:
           import os
           from pathlib import Path
           s = Path('index.html').read_text(encoding='utf-8')
-          assert 'waseshibu_vocab_state' in s
-          assert 'SCHEMA_VERSION' in s
-          assert 'STORAGE_KEY' in s
-          assert 'waseshibu_vocab_active_session_v1' in s
-          assert 'localStorage.clear(' not in s
+          assert 'storageKey:"waseshibu_vocab_state"' in s
+          assert 'activeSessionKey:"waseshibu_vocab_active_session_v1"' in s
+          assert 'activeSessionFormatVersion:1' in s
+          assert 'const SCHEMA_VERSION=WASEDA_APP_CONFIG.schemaVersion;' in s
+          assert 'const STORAGE_KEY=WASEDA_APP_CONFIG.storageKey;' in s
+          assert 'const V75_ACTIVE_SESSION_KEY=WASEDA_APP_CONFIG.activeSessionKey;' in s
+          assert 'const V75_SESSION_FORMAT_VERSION=WASEDA_APP_CONFIG.activeSessionFormatVersion;' in s
+          assert 'const raw=wasedaStorageGet(STORAGE_KEY);' in s
+          assert 'wasedaStorageSet(STORAGE_KEY,JSON.stringify(state))' in s
+          assert 'wasedaStorageSet(V75_ACTIVE_SESSION_KEY,JSON.stringify(v75SerializableSession()))' in s
+          assert 'wasedaStorageGet(V75_ACTIVE_SESSION_KEY)' in s
+          assert 'wasedaStorageRemove(V75_ACTIVE_SESSION_KEY)' in s
+          assert 'localStorage.getItem(STORAGE_KEY)' not in s
+          assert 'localStorage.setItem(STORAGE_KEY' not in s
           assert 'localStorage.removeItem(STORAGE_KEY)' not in s
+          assert 'wasedaStorageRemove(STORAGE_KEY)' not in s
+          assert 'localStorage.getItem(V75_ACTIVE_SESSION_KEY)' not in s
+          assert 'localStorage.setItem(V75_ACTIVE_SESSION_KEY' not in s
+          assert 'localStorage.removeItem(V75_ACTIVE_SESSION_KEY)' not in s
+          assert 'localStorage.clear(' not in s
           assert 'const VOCAB=' in s
           assert '<script src="progress-sync.js?v=vocab-cloud2"></script>' in s
           assert os.environ['WASEDA_PRODUCTION_DATA_VERSION'] in s
