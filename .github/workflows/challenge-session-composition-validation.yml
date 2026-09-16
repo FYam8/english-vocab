@@ -1,0 +1,106 @@
+name: Validate Waseda challenge-session composition adapter
+
+on:
+  push:
+    branches:
+      - refactor/waseda-common-engine-v1
+    paths:
+      - src/common-engine/challenge-session-composition-contract.json
+      - src/common-engine/session-planning-contract-validation.json
+      - src/waseda-bootstrap/31a-waseda-planning-policy.js
+      - src/waseda-bootstrap/32-session-planning-runtime.js
+      - src/waseda-bootstrap/manifest.json
+      - tools/extract_waseda_challenge_session_composition_policy_adapter.py
+      - tools/waseda_challenge_session_composition_policy_adapter_test.mjs
+      - tools/common_engine_session_planning_contract_test.mjs
+      - tools/common_engine_session_planning_validation_test.mjs
+      - .github/workflows/challenge-session-composition-validation.yml
+  pull_request:
+    branches:
+      - main
+    paths:
+      - src/common-engine/challenge-session-composition-contract.json
+      - src/common-engine/session-planning-contract-validation.json
+      - src/waseda-bootstrap/31a-waseda-planning-policy.js
+      - src/waseda-bootstrap/32-session-planning-runtime.js
+      - src/waseda-bootstrap/manifest.json
+      - tools/extract_waseda_challenge_session_composition_policy_adapter.py
+      - tools/waseda_challenge_session_composition_policy_adapter_test.mjs
+      - tools/common_engine_session_planning_contract_test.mjs
+      - tools/common_engine_session_planning_validation_test.mjs
+      - .github/workflows/challenge-session-composition-validation.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-third-boundary:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Pin production and reviewed runtime transform
+        run: |
+          git fetch origin main --quiet
+          test "$(git rev-parse origin/main)" = "531d505c19a86eaa2c8bbc4b25179de8089ab585"
+          git merge-base --is-ancestor b8a3fef6fefef9966ec32916c795e56bb0a23e0e HEAD
+          test "$(git rev-parse b8a3fef6fefef9966ec32916c795e56bb0a23e0e^)" = "31665b113d81879740eee4e40cc4220bac6a5a5a"
+
+      - name: Prove runtime transform changed only approved files
+        run: |
+          ACTUAL="$(git diff --name-only 31665b113d81879740eee4e40cc4220bac6a5a5a b8a3fef6fefef9966ec32916c795e56bb0a23e0e | sort)"
+          EXPECTED="$(printf '%s\n' index.html src/waseda-bootstrap/31a-waseda-planning-policy.js src/waseda-bootstrap/32-session-planning-runtime.js src/waseda-bootstrap/manifest.json | sort)"
+          test "$ACTUAL" = "$EXPECTED"
+          git diff --exit-code 31665b113d81879740eee4e40cc4220bac6a5a5a b8a3fef6fefef9966ec32916c795e56bb0a23e0e -- \
+            progress-sync.js \
+            src/waseda-bootstrap/15-waseda-persistence.js \
+            src/waseda-bootstrap/20-engine-candidate.js \
+            src/waseda-bootstrap/30-compat-runtime.js \
+            src/waseda-bootstrap/31-waseda-session-runtime.js \
+            src/waseda-bootstrap/33-v75-ui-runtime.js \
+            src/waseda-bootstrap/34-waseda-memory-policy.js \
+            src/waseda-bootstrap/35-v76-memory-runtime.js \
+            src/waseda-bootstrap/36-v76-engine-integration.js \
+            src/waseda-bootstrap/37-v76-waseda-ui-runtime.js \
+            src/waseda-bootstrap/40-runtime-bootstrap-tail.js
+
+      - name: Validate adapter and critical getProgress ordering
+        run: |
+          python3 -m py_compile tools/extract_waseda_challenge_session_composition_policy_adapter.py
+          node --check tools/waseda_challenge_session_composition_policy_adapter_test.mjs
+          node --check src/waseda-bootstrap/31a-waseda-planning-policy.js
+          node --check src/waseda-bootstrap/32-session-planning-runtime.js
+          node tools/common_engine_session_planning_contract_test.mjs
+          node tools/common_engine_session_planning_validation_test.mjs
+          node tools/waseda_foundation_reason_policy_adapter_test.mjs
+          node tools/waseda_challenge_score_policy_adapter_test.mjs
+          node tools/waseda_challenge_session_composition_policy_adapter_test.mjs
+
+      - name: Prove transform is now idempotent
+        run: |
+          rm -rf tools/__pycache__
+          git diff --quiet
+          python3 tools/extract_waseda_challenge_session_composition_policy_adapter.py
+          rm -rf tools/__pycache__
+          git diff --exit-code
+
+      - name: Verify artifact and cloud isolation
+        run: |
+          python3 tools/assemble_waseda.py --check
+          node - <<'JS'
+          const fs=require('node:fs');
+          const assert=require('node:assert/strict');
+          const m=JSON.parse(fs.readFileSync('src/waseda-bootstrap/manifest.json','utf8'));
+          const v=JSON.parse(fs.readFileSync('src/common-engine/session-planning-contract-validation.json','utf8'));
+          assert.equal(m.artifactSha256,'5e40e1e18f06cbb6735648c32a85d1d3e20746c13cfda93dcf14fc24bdf06f7f');
+          assert.equal(v.thirdPlanningAdapterRuntimeValidation.runtimeTransformHead,'b8a3fef6fefef9966ec32916c795e56bb0a23e0e');
+          assert.equal(v.thirdPlanningAdapterRuntimeValidation.artifactSha256,m.artifactSha256);
+          assert.equal(v.thirdPlanningAdapterRuntimeValidation.productionMainUnchanged,true);
+          assert.equal(v.thirdPlanningAdapterRuntimeValidation.rikkyoRuntimeUnchanged,true);
+          console.log('third planning runtime pin: PASS');
+          JS
+          git diff --exit-code 531d505c19a86eaa2c8bbc4b25179de8089ab585...HEAD -- progress-sync.js
+          git diff --check
