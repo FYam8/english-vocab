@@ -23,7 +23,6 @@ def main() -> None:
     engine = ENGINE.read_text(encoding="utf-8")
     compat_prelude = COMPAT_PRELUDE.read_text(encoding="utf-8")
     session_path = SESSION_RUNTIME if SESSION_RUNTIME.is_file() else COMPAT_PRELUDE
-    session_runtime = session_path.read_text(encoding="utf-8")
 
     required_config = [
         'schemaVersion:7',
@@ -73,6 +72,9 @@ def main() -> None:
         'active-session format adapter',
     )
 
+    # Before the v7.5 runtime is mechanically split, session I/O lives in the
+    # same file as the constants above. After the split it lives in 31-*.
+    session_runtime = compat_prelude if session_path == COMPAT_PRELUDE else session_path.read_text(encoding="utf-8")
     session_runtime = replace_once(
         session_runtime,
         'try{localStorage.setItem(V75_ACTIVE_SESSION_KEY,JSON.stringify(v75SerializableSession()))}',
@@ -91,6 +93,8 @@ def main() -> None:
         'const raw=wasedaStorageGet(V75_ACTIVE_SESSION_KEY);',
         'active-session load adapter',
     )
+    if session_path == COMPAT_PRELUDE:
+        compat_prelude = session_runtime
 
     # The schema/ID migration policy is Waseda-specific. Move the exact existing
     # function body into the Waseda persistence adapter, leaving only a generic
@@ -147,8 +151,6 @@ def main() -> None:
     COMPAT_PRELUDE.write_text(compat_prelude, encoding="utf-8")
     if session_path == SESSION_RUNTIME:
         SESSION_RUNTIME.write_text(session_runtime, encoding="utf-8")
-    else:
-        COMPAT_PRELUDE.write_text(session_runtime, encoding="utf-8")
     print("Waseda persistence boundary transform: PASS")
 
 
