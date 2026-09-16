@@ -1,6 +1,6 @@
 {
   "format": "common-vocab-engine-policy-contract/v1",
-  "status": "contract-only-no-runtime-wiring",
+  "status": "first-runtime-boundary-validated-next-contract-defined",
   "masterRepository": "FYam8/english-vocab",
   "engineCandidateStatus": "mixed-not-exportable",
   "purpose": "Define the school-neutral engine boundary after pure-helper extraction, without changing Waseda production behavior or replacing Rikkyo's existing FSRS/storage architecture.",
@@ -86,7 +86,8 @@
         "v76TargetRetention",
         "v76ReviewIntervalDays",
         "v76UpdateMemoryAfterOutcome",
-        "schedulerScore v7.6 override"
+        "schedulerScore v7.6 override",
+        "v75ChallengeScore v7.6 override"
       ],
       "retention": {
         "default": 0.9,
@@ -96,6 +97,20 @@
       "reviewIntervalBoundsDays": [0.75, 60],
       "retryCorrectIntervalDays": 1,
       "missIntervalMinutes": 15,
+      "reviewUrgencyBoost": {
+        "gapScale": 900,
+        "floor": 90
+      },
+      "examUrgency": {
+        "windowDays": 30,
+        "prioritySScale": 80,
+        "weakScale": 100,
+        "memoryGapScale": 300
+      },
+      "challengeMemoryBoost": {
+        "gapScale": 700,
+        "floor": 70
+      },
       "mustRemainBehaviorallyIdenticalDuringAdapterIntroduction": true
     },
     "planningPolicy": {
@@ -175,26 +190,55 @@
   ],
   "firstRuntimeBoundary": {
     "name": "memory-scheduler-policy-adapter",
-    "status": "blocked-until-contract-exact-head-green",
+    "status": "introduced-and-exact-head-validated",
+    "validatedHead": "7ccde7dd797dd931721c9dcd1befe6fdb380c6bc",
     "scope": [
       "v76TargetRetention",
       "v76ReviewIntervalDays",
-      "v76UpdateMemoryAfterOutcome",
-      "memory-related part of the v7.6 schedulerScore override"
+      "diagnostic-first-pass branch inside v76UpdateMemoryAfterOutcome",
+      "retry-correct interval inside v76UpdateMemoryAfterOutcome",
+      "miss interval inside v76UpdateMemoryAfterOutcome"
     ],
+    "implementationResult": [
+      "Waseda memory-policy adapter returns the exact reviewed Waseda retention and interval values.",
+      "The existing Waseda memory runtime delegates to the Waseda-only adapter without changing persistence.",
+      "Branch-head and synthetic-merge two-pass existing-user parity and ownership gates passed.",
+      "Rikkyo runtime and production main remained unchanged."
+    ]
+  },
+  "secondRuntimeBoundary": {
+    "name": "memory-priority-scoring-policy-adapter",
+    "status": "blocked-until-contract-exact-head-green",
+    "scope": [
+      "memory retrievability boost in the v7.6 schedulerScore override",
+      "30-day exam urgency in the v7.6 schedulerScore override",
+      "S-priority and weak-item exam urgency weights",
+      "memory-gap exam urgency weight",
+      "memory retrievability boost in the v7.6 v75ChallengeScore override"
+    ],
+    "exactCurrentValues": {
+      "reviewGapScale": 900,
+      "reviewGapFloor": 90,
+      "examWindowDays": 30,
+      "examPrioritySScale": 80,
+      "examWeakScale": 100,
+      "examMemoryGapScale": 300,
+      "challengeGapScale": 700,
+      "challengeGapFloor": 70
+    },
     "implementationOrder": [
-      "Introduce a Waseda memory-policy adapter that returns the exact current Waseda values and does not change persistence.",
-      "Make the current Waseda memory runtime delegate to that adapter while preserving function outputs and state writes.",
+      "Extend WASEDA_MEMORY_POLICY with score-adjustment methods that reproduce the current v7.6 formulas exactly.",
+      "Make only the v7.6 schedulerScore and v75ChallengeScore integration overrides delegate to those methods; preserve their base scores and call order.",
+      "Keep exam-date reading, priority semantics and weak-item semantics Waseda-owned; do not promote these values into the common engine.",
       "Run branch-head and synthetic-merge two-pass existing-user parity and ownership gates.",
-      "Define the common scheduler-adapter surface around opaque scheduler state.",
-      "Map Rikkyo FSRS-6 to that surface without changing its Card state, stages, learning steps or desired retention."
+      "Only after exact validation, describe the school-neutral planning/scheduler score surface that Rikkyo can implement with its existing FSRS planner signals."
     ],
-    "forbiddenFirstStep": [
-      "moving v76TargetRetention directly into the common engine with S-priority logic",
-      "making Rikkyo use Waseda memoryModel",
-      "making Waseda use ts-fsrs during this boundary step",
-      "changing Waseda schemaVersion or localStorage keys",
-      "changing Rikkyo stableId x skillKey identity",
+    "forbiddenSecondStep": [
+      "moving S-priority, weak-item, exam-window or challenge boost constants into the common engine",
+      "changing v76ExamDaysLeft behavior",
+      "changing the pre-v7.6 base schedulerScore or base v75ChallengeScore",
+      "changing Waseda persistence, ids, cloud sync or UI text",
+      "mutating Rikkyo runtime or FSRS state",
       "changing either public deployment"
     ]
   },

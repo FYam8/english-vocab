@@ -12,7 +12,7 @@ const integration = read('src/waseda-bootstrap/36-v76-engine-integration.js');
 const persistence = read('src/waseda-bootstrap/15-waseda-persistence.js');
 
 assert.equal(contract.format, 'common-vocab-engine-policy-contract/v1');
-assert.equal(contract.status, 'contract-only-no-runtime-wiring');
+assert.equal(contract.status, 'first-runtime-boundary-validated-next-contract-defined');
 assert.equal(contract.masterRepository, 'FYam8/english-vocab');
 assert.equal(contract.engineCandidateStatus, 'mixed-not-exportable');
 assert.equal(readiness.pureHelperExtractionStatus, 'complete');
@@ -43,38 +43,39 @@ assert.equal(waseda.memorySchedulerPolicy.retention.prioritySAndWeak, 0.93);
 assert.deepEqual(waseda.memorySchedulerPolicy.reviewIntervalBoundsDays, [0.75, 60]);
 assert.equal(waseda.memorySchedulerPolicy.retryCorrectIntervalDays, 1);
 assert.equal(waseda.memorySchedulerPolicy.missIntervalMinutes, 15);
+assert.deepEqual(waseda.memorySchedulerPolicy.reviewUrgencyBoost, {gapScale:900, floor:90});
+assert.deepEqual(waseda.memorySchedulerPolicy.examUrgency, {windowDays:30, prioritySScale:80, weakScale:100, memoryGapScale:300});
+assert.deepEqual(waseda.memorySchedulerPolicy.challengeMemoryBoost, {gapScale:700, floor:70});
 assert.equal(waseda.memorySchedulerPolicy.mustRemainBehaviorallyIdenticalDuringAdapterIntroduction, true);
 
 assert.ok(memory.includes('function v76TargetRetention(v,p){'));
 assert.ok(memory.includes('function v76ReviewIntervalDays(v,p,model){'));
 assert.ok(memory.includes('function v76UpdateMemoryAfterOutcome(v,p,pending,ctx){'));
-
-if (fs.existsSync(policyPath)) {
-  const policy = read(policyPath);
-  assert.ok(policy.includes('const WASEDA_MEMORY_POLICY=Object.freeze({'));
-  assert.ok(policy.includes('if(s&&w)return .93;'));
-  assert.ok(policy.includes('if(s||w)return .92;'));
-  assert.ok(policy.includes('return .90;'));
-  assert.ok(policy.includes('v76Clamp(v76IntervalForTarget(model.stabilityDays,WASEDA_MEMORY_POLICY.targetRetention(v,p)),.75,60)'));
-  assert.ok(policy.includes('retryCorrectIntervalDays:1'));
-  assert.ok(policy.includes('missIntervalMinutes:15'));
-  assert.ok(memory.includes('return WASEDA_MEMORY_POLICY.targetRetention(v,p);'));
-  assert.ok(memory.includes('return WASEDA_MEMORY_POLICY.reviewIntervalDays(v,p,model);'));
-  assert.ok(memory.includes('if(WASEDA_MEMORY_POLICY.isDiagnosticFirstPass(v,p,ctx.attemptsBefore)){'));
-  assert.ok(memory.includes('pending.isRetry?WASEDA_MEMORY_POLICY.retryCorrectIntervalDays:v76ReviewIntervalDays(v,p,m)'));
-  assert.ok(!memory.includes('if(s&&w)return .93;'));
-  assert.ok(!memory.includes('if(s||w)return .92;'));
-  assert.ok(!memory.includes('v76Clamp(v76IntervalForTarget(model.stabilityDays,v76TargetRetention(v,p)),.75,60)'));
-} else {
-  assert.ok(memory.includes('if(s&&w)return .93;'));
-  assert.ok(memory.includes('if(s||w)return .92;'));
-  assert.ok(memory.includes('return .90;'));
-  assert.ok(memory.includes('v76Clamp(v76IntervalForTarget(model.stabilityDays,v76TargetRetention(v,p)),.75,60)'));
-}
+assert.ok(fs.existsSync(policyPath), 'validated Waseda memory policy adapter must exist');
+const policy = read(policyPath);
+assert.ok(policy.includes('const WASEDA_MEMORY_POLICY=Object.freeze({'));
+assert.ok(policy.includes('if(s&&w)return .93;'));
+assert.ok(policy.includes('if(s||w)return .92;'));
+assert.ok(policy.includes('return .90;'));
+assert.ok(policy.includes('v76Clamp(v76IntervalForTarget(model.stabilityDays,WASEDA_MEMORY_POLICY.targetRetention(v,p)),.75,60)'));
+assert.ok(policy.includes('retryCorrectIntervalDays:1'));
+assert.ok(policy.includes('missIntervalMinutes:15'));
+assert.ok(memory.includes('return WASEDA_MEMORY_POLICY.targetRetention(v,p);'));
+assert.ok(memory.includes('return WASEDA_MEMORY_POLICY.reviewIntervalDays(v,p,model);'));
+assert.ok(memory.includes('if(WASEDA_MEMORY_POLICY.isDiagnosticFirstPass(v,p,ctx.attemptsBefore)){'));
+assert.ok(memory.includes('pending.isRetry?WASEDA_MEMORY_POLICY.retryCorrectIntervalDays:v76ReviewIntervalDays(v,p,m)'));
+assert.ok(!memory.includes('if(s&&w)return .93;'));
+assert.ok(!memory.includes('if(s||w)return .92;'));
+assert.ok(!memory.includes('v76Clamp(v76IntervalForTarget(model.stabilityDays,v76TargetRetention(v,p)),.75,60)'));
 
 assert.ok(integration.includes('schedulerScore=function(v,mode){'));
+assert.ok(integration.includes('if(r<target)extra+=(target-r)*900+90;'));
 assert.ok(integration.includes('const days=v76ExamDaysLeft();'));
+assert.ok(integration.includes('if(days!=null&&days>=0&&days<=30){'));
 assert.ok(integration.includes('if(v.priority==="S")extra+=80*urgency;'));
+assert.ok(integration.includes('if(isWeakProgress(p))extra+=100*urgency;'));
+assert.ok(integration.includes('extra+=Math.max(0,target-r)*300*urgency;'));
+assert.ok(integration.includes('if(r<target)score+=(target-r)*700+70;'));
 
 for (const symbol of ['v75ChallengeScore', 'v75FoundationReason', 'buildChallengeSessionPlan', 'buildSessionPlan', 'v75DueRetry', 'v75PickUnlimitedBase', 'v75NextSessionItem']) {
   assert.ok(planning.includes(symbol), `Waseda planning policy moved before adapter contract: ${symbol}`);
@@ -100,10 +101,31 @@ assert.equal(rikkyo.persistenceMustRemainSchoolSpecific, true);
 
 const first = contract.firstRuntimeBoundary;
 assert.equal(first.name, 'memory-scheduler-policy-adapter');
-assert.equal(first.status, 'blocked-until-contract-exact-head-green');
+assert.equal(first.status, 'introduced-and-exact-head-validated');
+assert.equal(first.validatedHead, '7ccde7dd797dd931721c9dcd1befe6fdb380c6bc');
 for (const symbol of ['v76TargetRetention', 'v76ReviewIntervalDays', 'v76UpdateMemoryAfterOutcome']) {
   assert.ok(first.scope.some((x) => x.includes(symbol)), `first runtime boundary missing reviewed symbol: ${symbol}`);
 }
+
+const second = contract.secondRuntimeBoundary;
+assert.equal(second.name, 'memory-priority-scoring-policy-adapter');
+assert.equal(second.status, 'blocked-until-contract-exact-head-green');
+assert.deepEqual(second.exactCurrentValues, {
+  reviewGapScale:900,
+  reviewGapFloor:90,
+  examWindowDays:30,
+  examPrioritySScale:80,
+  examWeakScale:100,
+  examMemoryGapScale:300,
+  challengeGapScale:700,
+  challengeGapFloor:70
+});
+for (const token of ['schedulerScore', 'exam urgency', 'S-priority', 'weak-item', 'v75ChallengeScore']) {
+  assert.ok(second.scope.some((x) => x.includes(token)), `second runtime boundary missing scope token: ${token}`);
+}
+assert.ok(second.forbiddenSecondStep.some((x) => x.includes('common engine')));
+assert.ok(second.forbiddenSecondStep.some((x) => x.includes('Rikkyo')));
+
 for (const forbidden of ['waseshibu_', 'rikkyo-uk-vocab', 'direct localStorage access', 'cross-school export acceptance']) {
   assert.ok(contract.forbiddenCommonEngineAssumptions.includes(forbidden), `forbidden engine assumption missing: ${forbidden}`);
 }

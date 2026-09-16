@@ -18,7 +18,9 @@ assert.equal(validation.allowWasedaAdapterIntroduction, true);
 assert.equal(validation.allowRikkyoRuntimeMutation, false);
 assert.equal(validation.allowProductionMainMutation, false);
 assert.equal(validation.allowSharedRuntimeArtifactRelease, false);
-assert.equal(contract.firstRuntimeBoundary.status, 'blocked-until-contract-exact-head-green');
+assert.equal(contract.firstRuntimeBoundary.status, 'introduced-and-exact-head-validated');
+assert.equal(contract.firstRuntimeBoundary.validatedHead, '7ccde7dd797dd931721c9dcd1befe6fdb380c6bc');
+assert.equal(contract.secondRuntimeBoundary.status, 'blocked-until-contract-exact-head-green');
 assert.equal(contract.gates.runtimeWiringAllowedBeforeContractGreen, false);
 
 const adapter = validation.wasedaMemoryPolicyAdapterValidation || {};
