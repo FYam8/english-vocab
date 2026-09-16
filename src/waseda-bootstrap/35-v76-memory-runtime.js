@@ -62,10 +62,7 @@ function v76Retrievability(model,atMs=now()){
   return v76Clamp(Math.pow(.9,v76ElapsedDays(model.lastReviewAt,atMs)/s),0,1);
 }
 function v76TargetRetention(v,p){
-  const s=v&&v.priority==="S",w=!!(p&&isWeakProgress(p));
-  if(s&&w)return .93;
-  if(s||w)return .92;
-  return .90;
+  return WASEDA_MEMORY_POLICY.targetRetention(v,p);
 }
 function v76ExamDaysLeft(){
   const raw=state&&state.settings&&state.settings.examDate;
@@ -86,7 +83,7 @@ function v76CorrectGrowth(model,retrievability,strong,elapsedDays,sameSession){
   return s*growth;
 }
 function v76ReviewIntervalDays(v,p,model){
-  return v76Clamp(v76IntervalForTarget(model.stabilityDays,v76TargetRetention(v,p)),.75,60);
+  return WASEDA_MEMORY_POLICY.reviewIntervalDays(v,p,model);
 }
 function v76UpdateMemoryAfterOutcome(v,p,pending,ctx){
   const m=ctx.model;
@@ -98,7 +95,7 @@ function v76UpdateMemoryAfterOutcome(v,p,pending,ctx){
       m.stabilityDays=Math.max(1,Math.min(1.5,m.stabilityDays*1.15));
     }else{
       m.stabilityDays=v76Clamp(v76CorrectGrowth(m,ctx.retrievability,strong,ctx.elapsedDays,sameSession),.5,180);
-      if((v.studyLayer||"core")==="diagnostic"&&ctx.attemptsBefore===0&&p.incorrect===0){
+      if(WASEDA_MEMORY_POLICY.isDiagnosticFirstPass(v,p,ctx.attemptsBefore)){
         m.stabilityDays=Math.max(m.stabilityDays,v76SeedStability(p.mastery));
       }
     }
@@ -114,11 +111,11 @@ function v76UpdateMemoryAfterOutcome(v,p,pending,ctx){
   m.updatedAt=ctx.nowIso;
   m.targetRetention=v76TargetRetention(v,p);
   if(ok){
-    const days=pending.isRetry?1:v76ReviewIntervalDays(v,p,m);
+    const days=pending.isRetry?WASEDA_MEMORY_POLICY.retryCorrectIntervalDays:v76ReviewIntervalDays(v,p,m);
     m.lastIntervalDays=days;
     p.nextReview=new Date(ctx.nowMs+days*V76_DAY_MS).toISOString();
   }else{
-    m.lastIntervalDays=15*V76_MINUTE_MS/V76_DAY_MS;
-    p.nextReview=new Date(ctx.nowMs+15*V76_MINUTE_MS).toISOString();
+    m.lastIntervalDays=WASEDA_MEMORY_POLICY.missIntervalMinutes*V76_MINUTE_MS/V76_DAY_MS;
+    p.nextReview=new Date(ctx.nowMs+WASEDA_MEMORY_POLICY.missIntervalMinutes*V76_MINUTE_MS).toISOString();
   }
 }
