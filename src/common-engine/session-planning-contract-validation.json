@@ -62,18 +62,50 @@
     "rikkyoRuntimeUnchanged": true,
     "approvedGroup": "challenge-score-base-policy-adapter"
   },
-  "secondPlanningAdapterCandidate": {
-    "runtimeHead": "261c1ae713810578b523cbcf7fb53239d9b3b027",
+  "secondPlanningAdapterRuntimeValidation": {
+    "validatedHead": "ebbeb439937e3f90bb79a041d7f27d7ddf0e94d1",
+    "runtimeTransformHead": "261c1ae713810578b523cbcf7fb53239d9b3b027",
     "artifactSha256": "16655e85045d1b83e2caea23ed4a0a6aafe8af50e86f199ecab6506b5268206d",
-    "status": "awaiting-exact-head-validation",
-    "productionMainMustRemain": "531d505c19a86eaa2c8bbc4b25179de8089ab585",
-    "rikkyoRuntimeMustRemain": "06eb47656bf0066af5cfe2072a53cfcdd42e5232"
+    "branchTwoPass": "success",
+    "syntheticMergeTwoPass": "success",
+    "branchOwnership": "success",
+    "syntheticMergeOwnership": "success",
+    "assemble": "success",
+    "productionMainUnchanged": true,
+    "rikkyoRuntimeUnchanged": true,
+    "validatedGroup": "challenge-score-base-policy-adapter"
   },
+  "allowThirdPlanningAdapterGroupIntroduction": false,
+  "thirdProposedGroup": "challenge-session-composition-policy-adapter",
+  "thirdContractPath": "src/common-engine/challenge-session-composition-contract.json",
+  "thirdContractStatus": "contract-definition-only-awaiting-green-validation",
+  "thirdProposedGroupScope": [
+    "challenge-layer classification and exact challenge/foundation composition ratios",
+    "foundation layer/state eligibility predicates while preserving layer -> year -> getProgress -> state evaluation order",
+    "required challenge count and foundation exception cap calculations"
+  ],
+  "thirdProposedGroupMustPreserve": [
+    "challenge predicate (studyLayer||core)===challenge",
+    "desired=requested||challenge.length",
+    "required challenge count Math.ceil(desired*0.8)",
+    "challenge-pool-shortage behavior returns challenge-only and does not backfill foundation items",
+    "foundation exception cap Math.floor(desired*0.2)",
+    "foundation layer eligibility excludes reference and challenge",
+    "year eligibility is checked before getProgress",
+    "getProgress is not called for layer- or year-excluded foundation entities",
+    "foundation state eligibility weak OR due OR recent mistake",
+    "foundation exceptions are scored in recommended mode",
+    "challenge items keep v75ChallengeScore",
+    "final challenge plus exception shuffle/slice semantics",
+    "foundation reason attachment only to exceptions",
+    "all retry gaps, due-retry precedence, unlimited queue behavior, persistence and cloud contracts"
+  ],
   "forbidden": [
     "moving Waseda priority/mastery/challenge score constants into the common engine",
-    "changing challenge session composition in the second group",
-    "changing foundation-reason strings or precedence in the second group",
-    "changing retry gaps or queue order in the second group",
+    "changing challenge session composition before the third contract is green",
+    "moving getProgress ahead of foundation layer/year exclusion checks",
+    "changing foundation-reason strings or precedence",
+    "changing retry gaps, due-retry precedence or unlimited queue order",
     "mutating FYam8/rikkyo-uk-vocab",
     "changing Waseda production main",
     "deploying either public app"

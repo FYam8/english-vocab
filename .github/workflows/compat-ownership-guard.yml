@@ -139,15 +139,21 @@ jobs:
           const assert=require('node:assert/strict');
           const v=JSON.parse(fs.readFileSync('src/common-engine/policy-contract-validation.json','utf8'));
           const p=JSON.parse(fs.readFileSync('src/common-engine/session-planning-contract-validation.json','utf8'));
+          const c=JSON.parse(fs.readFileSync('src/common-engine/challenge-session-composition-contract.json','utf8'));
           assert.equal(v.allowRikkyoRuntimeMutation,false);
           assert.equal(v.allowProductionMainMutation,false);
           assert.equal(v.allowSharedRuntimeArtifactRelease,false);
           assert.equal(p.allowFullPlanningRuntimeMutation,false);
           assert.equal(p.firstPlanningAdapterValidation.validatedHead,'728da033e8e815ebb8585c97966de9c253e334a9');
           assert.equal(p.secondPlanningAdapterApprovalValidation.validatedHead,'32c2724e60f764a59fa8136a789d27efa7188846');
-          assert.equal(p.secondPlanningAdapterCandidate.runtimeHead,'261c1ae713810578b523cbcf7fb53239d9b3b027');
-          assert.equal(p.secondPlanningAdapterCandidate.artifactSha256,'16655e85045d1b83e2caea23ed4a0a6aafe8af50e86f199ecab6506b5268206d');
-          assert.equal(p.secondPlanningAdapterCandidate.status,'awaiting-exact-head-validation');
+          assert.equal(p.secondPlanningAdapterRuntimeValidation.validatedHead,'ebbeb439937e3f90bb79a041d7f27d7ddf0e94d1');
+          assert.equal(p.secondPlanningAdapterRuntimeValidation.runtimeTransformHead,'261c1ae713810578b523cbcf7fb53239d9b3b027');
+          assert.equal(p.secondPlanningAdapterRuntimeValidation.artifactSha256,'16655e85045d1b83e2caea23ed4a0a6aafe8af50e86f199ecab6506b5268206d');
+          assert.equal(p.allowThirdPlanningAdapterGroupIntroduction,false);
+          assert.equal(p.thirdProposedGroup,'challenge-session-composition-policy-adapter');
+          assert.equal(p.thirdContractStatus,'contract-definition-only-awaiting-green-validation');
+          assert.equal(c.status,'contract-only-no-runtime-mutation');
+          assert.equal(c.exactBehavior.mustNotCreateProgressForLayerOrYearExcludedEntities,true);
           console.log('Waseda-only adapter scope: PASS');
           JS
       - name: Diff hygiene

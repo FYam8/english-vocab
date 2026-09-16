@@ -1,0 +1,76 @@
+{
+  "format": "waseda-challenge-session-composition-policy-contract/v1",
+  "status": "contract-only-no-runtime-mutation",
+  "productionBaseline": "531d505c19a86eaa2c8bbc4b25179de8089ab585",
+  "reviewedPlanningRuntimeHead": "ebbeb439937e3f90bb79a041d7f27d7ddf0e94d1",
+  "source": "src/waseda-bootstrap/32-session-planning-runtime.js",
+  "policyAdapter": "src/waseda-bootstrap/31a-waseda-planning-policy.js",
+  "scope": "Only the Waseda-specific challenge-session composition constants and predicates. Queue traversal, retry scheduling, selection orchestration, persistence, cloud sync and Rikkyo runtime are out of scope.",
+  "exactBehavior": {
+    "challengePredicate": "(v.studyLayer||\"core\")===\"challenge\"",
+    "yearAllSentinel": "all",
+    "desiredCount": "requested||challenge.length",
+    "requiredChallengeCount": "Math.ceil(desired*0.8)",
+    "challengePoolShortage": "when challenge.length < requiredChallengeCount, return only weighted challenge items up to desired; do not backfill foundation items",
+    "foundationExceptionCap": "Math.floor(desired*0.2)",
+    "foundationLayerEligibility": "exclude reference and challenge layers",
+    "foundationYearEligibility": "if a specific year is selected, entity.years must include it",
+    "foundationFilterEvaluationOrder": [
+      "layer eligibility",
+      "year eligibility",
+      "getProgress(v.id)",
+      "derive due and recent-mistake flags",
+      "weak OR due OR recent-mistake state eligibility"
+    ],
+    "getProgressMayCreateDefaultProgress": true,
+    "mustNotCreateProgressForLayerOrYearExcludedEntities": true,
+    "foundationStateEligibility": "isWeakProgress(p) OR due OR recent",
+    "foundationSelectionScoreMode": "recommended",
+    "challengeSelectionScore": "v75ChallengeScore",
+    "weightedSelection": "v75WeightedWithoutReplacement",
+    "challengeCountAfterExceptions": "Math.min(challenge.length, desired-exceptions.length)",
+    "finalCombination": "shuffle([...challengePicked,...exceptions]).slice(0,desired)",
+    "foundationReasonAttachment": "baseReasons only for selected foundation exceptions using v75FoundationReason",
+    "returnedChallengeCount": "count final combined items whose layer resolves to challenge"
+  },
+  "adapterDesign": {
+    "allowedMethods": [
+      "isChallengeEntity(v)",
+      "isFoundationLayerEligible(v)",
+      "isFoundationStateEligible(p,t)",
+      "requiredChallengeCount(desired)",
+      "foundationExceptionCap(desired)"
+    ],
+    "runtimeMustKeep": [
+      "year filtering before getProgress",
+      "getProgress call itself",
+      "v75WeightedWithoutReplacement orchestration",
+      "schedulerScore(v,\"recommended\") call",
+      "v75ChallengeScore call",
+      "shuffle and slice",
+      "baseReasons construction"
+    ],
+    "reason": "Keeping getProgress in runtime after layer/year guards prevents the refactor from creating new default progress entries for entities that legacy Waseda would have excluded before touching learner state."
+  },
+  "mustPreserve": [
+    "all existing learner-visible challenge/foundation ratios and shortage behavior",
+    "exact evaluation order around getProgress",
+    "all current scoring functions and their call order",
+    "foundation reason strings and precedence",
+    "retry gap 6/8 behavior",
+    "due-retry precedence and unlimited queue behavior",
+    "Waseda schema/storage identifiers and legacy migrations",
+    "progress-sync.js and Waseda cloud contract",
+    "current public Waseda main and deployment"
+  ],
+  "forbiddenAtThisStage": [
+    "moving challenge composition policy into the common engine",
+    "calling getProgress before layer and year rejection",
+    "changing buildSessionPlan generic behavior",
+    "changing v75DueRetry, v75PickUnlimitedBase or v75NextSessionItem",
+    "changing src/waseda-bootstrap/31-waseda-session-runtime.js",
+    "changing Waseda persistence or cloud sync",
+    "mutating FYam8/rikkyo-uk-vocab",
+    "changing or deploying Waseda production main"
+  ]
+}
