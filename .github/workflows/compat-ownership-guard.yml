@@ -6,20 +6,36 @@ on:
       - refactor/waseda-common-engine-v1
     paths:
       - src/waseda-bootstrap/compat-ownership.json
+      - src/waseda-bootstrap/engine-extraction-readiness.json
       - src/waseda-bootstrap/15-waseda-persistence.js
       - src/waseda-bootstrap/20-engine-candidate.js
       - src/waseda-bootstrap/30-compat-runtime.js
+      - src/waseda-bootstrap/31-waseda-session-runtime.js
+      - src/waseda-bootstrap/32-session-planning-runtime.js
+      - src/waseda-bootstrap/33-v75-ui-runtime.js
+      - src/waseda-bootstrap/35-v76-memory-runtime.js
+      - src/waseda-bootstrap/36-v76-engine-integration.js
+      - src/waseda-bootstrap/37-v76-waseda-ui-runtime.js
       - tools/common_engine_compat_ownership_test.mjs
+      - tools/common_engine_extraction_readiness_test.mjs
       - .github/workflows/compat-ownership-guard.yml
   pull_request:
     branches:
       - main
     paths:
       - src/waseda-bootstrap/compat-ownership.json
+      - src/waseda-bootstrap/engine-extraction-readiness.json
       - src/waseda-bootstrap/15-waseda-persistence.js
       - src/waseda-bootstrap/20-engine-candidate.js
       - src/waseda-bootstrap/30-compat-runtime.js
+      - src/waseda-bootstrap/31-waseda-session-runtime.js
+      - src/waseda-bootstrap/32-session-planning-runtime.js
+      - src/waseda-bootstrap/33-v75-ui-runtime.js
+      - src/waseda-bootstrap/35-v76-memory-runtime.js
+      - src/waseda-bootstrap/36-v76-engine-integration.js
+      - src/waseda-bootstrap/37-v76-waseda-ui-runtime.js
       - tools/common_engine_compat_ownership_test.mjs
+      - tools/common_engine_extraction_readiness_test.mjs
       - .github/workflows/compat-ownership-guard.yml
   workflow_dispatch:
 
@@ -31,9 +47,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Syntax check ownership guard
-        run: node --check tools/common_engine_compat_ownership_test.mjs
+      - name: Syntax check ownership and extraction guards
+        run: |
+          node --check tools/common_engine_compat_ownership_test.mjs
+          node --check tools/common_engine_extraction_readiness_test.mjs
       - name: Enforce Waseda/common ownership boundary
         run: node tools/common_engine_compat_ownership_test.mjs
+      - name: Enforce extraction readiness classification
+        run: node tools/common_engine_extraction_readiness_test.mjs
       - name: Diff hygiene
         run: git diff --check
