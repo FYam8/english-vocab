@@ -5,6 +5,8 @@ const read = (path) => fs.readFileSync(path, 'utf8');
 const contract = JSON.parse(read('src/common-engine/policy-contract.json'));
 const readiness = JSON.parse(read('src/waseda-bootstrap/engine-extraction-readiness.json'));
 const engine = read('src/waseda-bootstrap/20-engine-candidate.js');
+const planningPolicyPath = 'src/waseda-bootstrap/31a-waseda-planning-policy.js';
+const planningPolicy = fs.existsSync(planningPolicyPath) ? read(planningPolicyPath) : '';
 const planning = read('src/waseda-bootstrap/32-session-planning-runtime.js');
 const policyPath = 'src/waseda-bootstrap/34-waseda-memory-policy.js';
 const memory = read('src/waseda-bootstrap/35-v76-memory-runtime.js');
@@ -94,7 +96,14 @@ for (const token of [
 for (const symbol of ['v75ChallengeScore', 'v75FoundationReason', 'buildChallengeSessionPlan', 'buildSessionPlan', 'v75DueRetry', 'v75PickUnlimitedBase', 'v75NextSessionItem']) {
   assert.ok(planning.includes(symbol), `Waseda planning policy moved before its adapter contract: ${symbol}`);
 }
-assert.ok(planning.includes('75点挑戦を支える基礎語'));
+if (planningPolicy) {
+  assert.ok(planningPolicy.includes('75点挑戦を支える基礎語'));
+  assert.ok(planningPolicy.includes('const WASEDA_PLANNING_POLICY=Object.freeze({'));
+  assert.ok(planning.includes('return WASEDA_PLANNING_POLICY.foundationReason(v,p,t);'));
+  assert.ok(!planning.includes('75点挑戦を支える基礎語'));
+} else {
+  assert.ok(planning.includes('75点挑戦を支える基礎語'));
+}
 assert.ok(planning.includes('if(mode==="75")'));
 assert.ok(planning.includes('(v.studyLayer||"core")==="challenge"'));
 
