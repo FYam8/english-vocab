@@ -121,6 +121,15 @@
   },
   "secondPromotion": "v76Clamp",
   "secondPromotionStatus": "promoted",
+  "secondPromotionValidation": {
+    "validatedHead": "6507a960e0e71493c2076c6bc9199ebd9c0f1047",
+    "branchTwoPass": "success",
+    "syntheticMergeTwoPass": "success",
+    "branchOwnership": "success",
+    "syntheticMergeOwnership": "success"
+  },
+  "thirdPromotion": "v76SeedStability",
+  "thirdPromotionStatus": "pending",
   "promotionValidation": {
     "requireExactBranchHead": true,
     "requireSyntheticMerge": true,
