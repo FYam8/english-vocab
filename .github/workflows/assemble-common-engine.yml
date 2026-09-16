@@ -13,6 +13,7 @@ on:
       - tools/split_waseda_v75_runtime.py
       - tools/split_waseda_v76_runtime.py
       - tools/promote_first_common_engine_helper.py
+      - tools/promote_second_common_engine_helper.py
       - .github/workflows/assemble-common-engine.yml
 
 permissions:
@@ -81,20 +82,27 @@ jobs:
           cmp src/waseda-bootstrap/manifest.json /tmp/waseda-v76-subsplit-manifest.json
           echo "v7.6 ownership split idempotence: PASS"
 
-      - name: Promote only the reviewed first school-neutral helper
+      - name: Verify first reviewed school-neutral helper remains canonical
         run: |
           python3 -m py_compile tools/promote_first_common_engine_helper.py
-          node tools/common_engine_extraction_readiness_test.mjs
           python3 tools/promote_first_common_engine_helper.py
           node tools/common_engine_extraction_readiness_test.mjs
-          cp src/waseda-bootstrap/20-engine-candidate.js /tmp/waseda-promoted-engine.js
-          cp src/waseda-bootstrap/32-session-planning-runtime.js /tmp/waseda-promoted-planning.js
-          cp src/waseda-bootstrap/engine-extraction-readiness.json /tmp/waseda-promoted-readiness.json
-          python3 tools/promote_first_common_engine_helper.py
-          cmp src/waseda-bootstrap/20-engine-candidate.js /tmp/waseda-promoted-engine.js
-          cmp src/waseda-bootstrap/32-session-planning-runtime.js /tmp/waseda-promoted-planning.js
-          cmp src/waseda-bootstrap/engine-extraction-readiness.json /tmp/waseda-promoted-readiness.json
-          echo "first common-engine helper promotion idempotence: PASS"
+          echo "first common-engine helper remains canonical: PASS"
+
+      - name: Promote only the reviewed second school-neutral helper
+        run: |
+          python3 -m py_compile tools/promote_second_common_engine_helper.py
+          node tools/common_engine_extraction_readiness_test.mjs
+          python3 tools/promote_second_common_engine_helper.py
+          node tools/common_engine_extraction_readiness_test.mjs
+          cp src/waseda-bootstrap/20-engine-candidate.js /tmp/waseda-second-promoted-engine.js
+          cp src/waseda-bootstrap/35-v76-memory-runtime.js /tmp/waseda-second-promoted-v76-core.js
+          cp src/waseda-bootstrap/engine-extraction-readiness.json /tmp/waseda-second-promoted-readiness.json
+          python3 tools/promote_second_common_engine_helper.py
+          cmp src/waseda-bootstrap/20-engine-candidate.js /tmp/waseda-second-promoted-engine.js
+          cmp src/waseda-bootstrap/35-v76-memory-runtime.js /tmp/waseda-second-promoted-v76-core.js
+          cmp src/waseda-bootstrap/engine-extraction-readiness.json /tmp/waseda-second-promoted-readiness.json
+          echo "second common-engine helper promotion idempotence: PASS"
 
       - name: Assemble production artifact from source parts
         run: python3 tools/assemble_waseda.py --write
@@ -130,5 +138,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add index.html src/waseda-bootstrap/manifest.json src/waseda-bootstrap/engine-extraction-readiness.json src/waseda-bootstrap/15-waseda-persistence.js src/waseda-bootstrap/20-engine-candidate.js src/waseda-bootstrap/30-compat-runtime.js src/waseda-bootstrap/31-waseda-session-runtime.js src/waseda-bootstrap/32-session-planning-runtime.js src/waseda-bootstrap/33-v75-ui-runtime.js src/waseda-bootstrap/35-v76-memory-runtime.js src/waseda-bootstrap/36-v76-engine-integration.js src/waseda-bootstrap/37-v76-waseda-ui-runtime.js src/waseda-bootstrap/40-runtime-bootstrap-tail.js
-          git commit -m "refactor: promote first school-neutral engine helper"
+          git commit -m "refactor: promote second school-neutral engine helper"
           git push origin HEAD:refactor/waseda-common-engine-v1
