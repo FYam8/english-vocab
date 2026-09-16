@@ -35,5 +35,12 @@
     "productionMainUnchanged": true,
     "rikkyoRuntimeUnchanged": true,
     "approvedBoundary": "memory-priority-scoring-policy-adapter"
+  },
+  "wasedaMemoryScoringPolicyAdapterCandidate": {
+    "runtimeHead": "460e2b78d6c6800d4beef6956e8e6104c122edca",
+    "artifactSha256": "5315e82069688b7bef265d2057e618f88afa1cdc2b31b051f7746ae8000d8463",
+    "status": "awaiting-exact-head-validation",
+    "productionMainMustRemain": "531d505c19a86eaa2c8bbc4b25179de8089ab585",
+    "rikkyoRuntimeMustRemain": "06eb47656bf0066af5cfe2072a53cfcdd42e5232"
   }
 }
