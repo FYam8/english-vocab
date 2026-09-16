@@ -14,7 +14,7 @@ assert.ok(Array.isArray(readiness.blockedTokensForReadyHelpers));
 assert.ok(['pending', 'promoted'].includes(readiness.firstPromotionStatus));
 assert.ok(['pending', 'promoted'].includes(readiness.secondPromotionStatus));
 assert.ok(['pending', 'promoted'].includes(readiness.thirdPromotionStatus));
-assert.ok(['pending', 'promoted'].includes(readiness.fourthPromotionStatus));
+assert.equal(readiness.fourthPromotionStatus, 'promoted', 'fourth helper must remain promoted after reviewed move');
 const validation = readiness.promotionValidation || {};
 assert.equal(validation.requireExactBranchHead, true, 'helper promotion must require exact branch-head validation');
 assert.equal(validation.requireSyntheticMerge, true, 'helper promotion must require synthetic-merge validation');
