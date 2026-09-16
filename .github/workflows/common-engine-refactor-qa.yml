@@ -43,6 +43,7 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
           p=Path('src/waseda-bootstrap/15-waseda-persistence.js').read_text(encoding='utf-8')
+          engine=Path('src/waseda-bootstrap/20-engine-candidate.js').read_text(encoding='utf-8')
           assert 'schemaVersion:7' in p
           assert 'storageKey:"waseshibu_vocab_state"' in p
           assert 'activeSessionKey:"waseshibu_vocab_active_session_v1"' in p
@@ -52,7 +53,12 @@ jobs:
           assert 'function wasedaStorageGet(key)' in p
           assert 'function wasedaStorageSet(key,value)' in p
           assert 'function wasedaStorageRemove(key)' in p
-          print('Waseda persistence adapter: REQUIRED CONTRACT PRESENT')
+          assert 'function wasedaMigrateState(raw){' in p
+          assert 'const oldId="w3186341920",newId="p0431020501";' in p
+          assert 's.schemaVersion=7;v=7;' in p
+          assert 'function migrate(raw){return wasedaMigrateState(raw)}' in engine
+          assert 'const oldId="w3186341920",newId="p0431020501";' not in engine
+          print('Waseda persistence adapter: REQUIRED CONTRACT AND MIGRATION POLICY PRESENT')
           PY
 
       - name: Source ownership safety gate
@@ -73,6 +79,8 @@ jobs:
           assert 'refactor_waseda_persistence_boundary.py' in assemble_flow
           assert 'main-state storage still bypasses Waseda persistence adapter' in persistence_refactor
           assert 'active-session storage still bypasses adapter' in persistence_refactor
+          assert 'Waseda fixed-ID migration policy still lives in engine candidate' in persistence_refactor
+          assert 'function wasedaMigrateState(raw)' in persistence_refactor
           assert 'Refusing legacy v7.5 direct index patch' in v75
           assert 'Refusing legacy v7.6 direct index patch' in v76
           print('source ownership guards: PASS')
@@ -89,6 +97,8 @@ jobs:
           assert 'activeSessionFormatVersion:1' in s
           assert 'const SCHEMA_VERSION=WASEDA_APP_CONFIG.schemaVersion;' in s
           assert 'const STORAGE_KEY=WASEDA_APP_CONFIG.storageKey;' in s
+          assert 'function wasedaMigrateState(raw){' in s
+          assert 'function migrate(raw){return wasedaMigrateState(raw)}' in s
           assert 'const V75_ACTIVE_SESSION_KEY=WASEDA_APP_CONFIG.activeSessionKey;' in s
           assert 'const V75_SESSION_FORMAT_VERSION=WASEDA_APP_CONFIG.activeSessionFormatVersion;' in s
           assert 'const raw=wasedaStorageGet(STORAGE_KEY);' in s
