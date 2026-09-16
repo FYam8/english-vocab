@@ -126,7 +126,7 @@ function migrate(raw){
 }
 function loadState(){
  try{
-   const raw=localStorage.getItem(STORAGE_KEY);
+   const raw=wasedaStorageGet(STORAGE_KEY);
    return raw?migrate(JSON.parse(raw)):defaultState();
  }catch(e){
    console.warn("Storage load failed",e);
@@ -135,7 +135,7 @@ function loadState(){
 }
 function saveState(){
  state.dataVersion=META.dataVersion;
- try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}
+ try{wasedaStorageSet(STORAGE_KEY,JSON.stringify(state))}
  catch(e){showToast("学習履歴を保存できませんでした")}
 }
 function getProgress(id){

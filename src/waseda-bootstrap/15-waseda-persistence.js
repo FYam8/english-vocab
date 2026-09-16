@@ -6,3 +6,6 @@ const WASEDA_APP_CONFIG=Object.freeze({
 });
 const SCHEMA_VERSION=WASEDA_APP_CONFIG.schemaVersion;
 const STORAGE_KEY=WASEDA_APP_CONFIG.storageKey;
+function wasedaStorageGet(key){return localStorage.getItem(key)}
+function wasedaStorageSet(key,value){localStorage.setItem(key,value)}
+function wasedaStorageRemove(key){localStorage.removeItem(key)}

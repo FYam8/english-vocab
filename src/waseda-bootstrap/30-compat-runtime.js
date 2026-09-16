@@ -4,8 +4,8 @@
  * Keep schemaVersion 7 and the existing waseshibu_vocab_state intact.
  */
 const V75_DATA_VERSION="2019-2026-v7.5-user-test-remediation";
-const V75_ACTIVE_SESSION_KEY="waseshibu_vocab_active_session_v1";
-const V75_SESSION_FORMAT_VERSION=1;
+const V75_ACTIVE_SESSION_KEY=WASEDA_APP_CONFIG.activeSessionKey;
+const V75_SESSION_FORMAT_VERSION=WASEDA_APP_CONFIG.activeSessionFormatVersion;
 let v75DraftTimer=null;
 let v75RestorableSession=null;
 let v75RestorePromptOpen=false;
@@ -173,18 +173,18 @@ function v75SerializableSession(){
 }
 persistActiveSession=function(){
   if(!session||!session.active)return;
-  try{localStorage.setItem(V75_ACTIVE_SESSION_KEY,JSON.stringify(v75SerializableSession()))}
+  try{wasedaStorageSet(V75_ACTIVE_SESSION_KEY,JSON.stringify(v75SerializableSession()))}
   catch(e){console.warn("Active session save failed",e)}
 };
 function clearActiveSession(){
-  try{localStorage.removeItem(V75_ACTIVE_SESSION_KEY)}catch(e){console.warn("Active session clear failed",e)}
+  try{wasedaStorageRemove(V75_ACTIVE_SESSION_KEY)}catch(e){console.warn("Active session clear failed",e)}
 }
 // Hoisted bindings required by the strict-mode single-file app before the v7.5 overrides assign implementations.
 var clearToast;
 var persistActiveSession;
 function loadActiveSession(){
   try{
-    const raw=localStorage.getItem(V75_ACTIVE_SESSION_KEY);
+    const raw=wasedaStorageGet(V75_ACTIVE_SESSION_KEY);
     if(!raw)return null;
     const x=JSON.parse(raw);
     return validateActiveSession(x)?x:null;

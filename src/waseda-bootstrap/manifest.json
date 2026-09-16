@@ -19,16 +19,16 @@
       "sha256": "2126f14b5b7e1cf537a3ef2671073b83852a9a83a3a17f5089b5ab416cfa5390"
     },
     "15-waseda-persistence.js": {
-      "bytes": 290,
-      "sha256": "6bc407e05561786ebcc6037f6543584fe918b11d47995de8e58e2681d78ff076"
+      "bytes": 489,
+      "sha256": "51db16ad6ed0d555a3a03ee52fbdb4aea7db6abf863191c352163c09db89ca13"
     },
     "20-engine-candidate.js": {
-      "bytes": 47960,
-      "sha256": "83cd7c20755225b298b5dfd8ce421f42f2aeaeba33be9b5d19fb54f15095cddd"
+      "bytes": 47952,
+      "sha256": "6572950f516f80d557c7cb25d0342e33b40a146b6f38a50468020ec9db2375ed"
     },
     "30-compat-runtime.js": {
-      "bytes": 75396,
-      "sha256": "5e875d4c2720cab57ac4669c0193d1c3b8526379d82900fdaf9901179d0655da"
+      "bytes": 75426,
+      "sha256": "a4f49e56b358a88879da381becae782682db11e5018b552efcac32152a037d98"
     },
     "90-shell-suffix.html": {
       "bytes": 82,
@@ -49,5 +49,5 @@
   ],
   "baselineSourceGitBlobSha": "bb77a0c54153502e25bccb1ed89ca33b29b45c83",
   "baselineSourceSha256": "a6e58a9321d4e739216957fcbfaa0cf7f1d1621ca0f0bb88a03507da81bf452f",
-  "artifactSha256": "8f418b0756e9daa4b31f0850faa6e4fc5bb0086cd6000c7df1ca72ca7b3db885"
+  "artifactSha256": "fe4f9e754b4ae7691e37a04ff65f034c7515fac66016ac00eceab3f86073b0e4"
 }
