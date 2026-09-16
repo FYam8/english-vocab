@@ -1,14 +1,4 @@
 
-function v75WeightedWithoutReplacement(pool,count,scoreFn){
-  const remaining=[...pool],out=[];
-  while(remaining.length&&out.length<count){
-    const weights=remaining.map(v=>Math.max(.1,scoreFn(v))*(.92+Math.random()*.16));
-    const picked=weightedChoice(remaining,weights);
-    out.push(picked);
-    remaining.splice(remaining.findIndex(v=>v.id===picked.id),1);
-  }
-  return out;
-}
 function v75ChallengeScore(v){
   const p=getProgress(v.id),t=now();
   let score=(PRIORITY_SCORE[v.priority]||0)+(v.yearCount||0)*8+Math.sqrt(effectiveFrequency(v))*4+[80,110,65,25,4][p.mastery];

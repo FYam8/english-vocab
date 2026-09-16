@@ -3,12 +3,6 @@
   "purpose": "Record which mechanically separated helpers are safe to promote into the canonical engine now, which require policy injection first, and which remain Waseda-owned. This classification does not itself change runtime behavior.",
   "readySchoolNeutralHelpers": [
     {
-      "symbol": "v75WeightedWithoutReplacement",
-      "source": "32-session-planning-runtime.js",
-      "target": "20-engine-candidate.js",
-      "reason": "Generic weighted sampling without replacement; depends only on its arguments, Math.random, and the generic weightedChoice helper. It contains no Waseda storage, branding, score-band, study-layer, UI-text, or cloud dependency."
-    },
-    {
       "symbol": "v76Clamp",
       "source": "35-v76-memory-runtime.js",
       "target": "20-engine-candidate.js",
@@ -33,7 +27,15 @@
       "reason": "Pure calculation from memory-model values and retrievability."
     }
   ],
-  "promotedSchoolNeutralHelpers": [],
+  "promotedSchoolNeutralHelpers": [
+    {
+      "symbol": "v75WeightedWithoutReplacement",
+      "previousSource": "32-session-planning-runtime.js",
+      "target": "20-engine-candidate.js",
+      "reason": "Generic weighted sampling without replacement; depends only on its arguments, Math.random, and the generic weightedChoice helper. It contains no Waseda storage, branding, score-band, study-layer, UI-text, or cloud dependency.",
+      "promotionType": "definition-move-only; name and function body unchanged"
+    }
+  ],
   "policyInjectionRequired": [
     {
       "symbol": "v75ChallengeScore",
@@ -108,5 +110,5 @@
     "session."
   ],
   "firstPromotion": "v75WeightedWithoutReplacement",
-  "firstPromotionStatus": "pending"
+  "firstPromotionStatus": "promoted"
 }
