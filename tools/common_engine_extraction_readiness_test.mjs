@@ -7,9 +7,11 @@ const exists = (path) => fs.existsSync(path);
 const readiness = JSON.parse(read(`${ROOT}/engine-extraction-readiness.json`));
 
 assert.equal(readiness.format, 'waseda-vocab-engine-extraction-readiness/v1');
-assert.ok(Array.isArray(readiness.readySchoolNeutralHelpers) && readiness.readySchoolNeutralHelpers.length > 0);
+assert.ok(Array.isArray(readiness.readySchoolNeutralHelpers));
+assert.ok(Array.isArray(readiness.promotedSchoolNeutralHelpers));
 assert.ok(Array.isArray(readiness.policyInjectionRequired) && readiness.policyInjectionRequired.length > 0);
 assert.ok(Array.isArray(readiness.blockedTokensForReadyHelpers));
+assert.ok(['pending', 'promoted'].includes(readiness.firstPromotionStatus));
 
 function functionBlock(source, symbol) {
   const marker = `function ${symbol}(`;
@@ -50,14 +52,29 @@ function functionBlock(source, symbol) {
   assert.fail(`unterminated function body for ${symbol}`);
 }
 
+function assertSchoolNeutral(block, symbol) {
+  for (const token of readiness.blockedTokensForReadyHelpers) {
+    assert.ok(!block.includes(token), `${symbol} is not school-neutral yet; blocked token: ${token}`);
+  }
+}
+
 for (const item of readiness.readySchoolNeutralHelpers) {
   assert.equal(typeof item.symbol, 'string');
   assert.ok(exists(`${ROOT}/${item.source}`), `ready-helper source missing: ${item.source}`);
   assert.ok(exists(`${ROOT}/${item.target}`), `ready-helper target missing: ${item.target}`);
   const source = read(`${ROOT}/${item.source}`);
   const block = functionBlock(source, item.symbol);
-  for (const token of readiness.blockedTokensForReadyHelpers) {
-    assert.ok(!block.includes(token), `${item.symbol} is not school-neutral yet; blocked token: ${token}`);
+  assertSchoolNeutral(block, item.symbol);
+}
+for (const item of readiness.promotedSchoolNeutralHelpers) {
+  assert.equal(typeof item.symbol, 'string');
+  assert.ok(exists(`${ROOT}/${item.target}`), `promoted-helper target missing: ${item.target}`);
+  const target = read(`${ROOT}/${item.target}`);
+  const block = functionBlock(target, item.symbol);
+  assertSchoolNeutral(block, item.symbol);
+  if (item.previousSource) {
+    assert.ok(exists(`${ROOT}/${item.previousSource}`), `promoted-helper previous source missing: ${item.previousSource}`);
+    assert.ok(!read(`${ROOT}/${item.previousSource}`).includes(`function ${item.symbol}(`), `promoted helper still duplicated in ${item.previousSource}: ${item.symbol}`);
   }
 }
 
@@ -81,17 +98,30 @@ for (const symbol of readiness.wasedaOwned) {
   assert.ok((persistence + '\n' + allRuntime).includes(symbol), `Waseda-owned symbol missing: ${symbol}`);
 }
 
-const readySymbols = new Set(readiness.readySchoolNeutralHelpers.map((x) => x.symbol));
-assert.ok(readySymbols.has(readiness.firstPromotion), 'firstPromotion must be classified as ready');
 assert.equal(readiness.firstPromotion, 'v75WeightedWithoutReplacement', 'first semantic promotion changed without explicit review');
-const first = readiness.readySchoolNeutralHelpers.find((x) => x.symbol === readiness.firstPromotion);
-assert.equal(first.source, '32-session-planning-runtime.js');
-assert.equal(first.target, '20-engine-candidate.js');
-const firstBlock = functionBlock(read(`${ROOT}/${first.source}`), first.symbol);
-assert.ok(firstBlock.includes('weightedChoice('), 'first promotion lost generic weightedChoice dependency');
-for (const forbidden of ['getProgress(', 'schedulerScore(', 'VOCAB', 'state.', 'session.', 'priority', 'studyLayer']) {
-  assert.ok(!firstBlock.includes(forbidden), `first promotion unexpectedly depends on Waseda policy: ${forbidden}`);
+if (readiness.firstPromotionStatus === 'pending') {
+  const readySymbols = new Set(readiness.readySchoolNeutralHelpers.map((x) => x.symbol));
+  assert.ok(readySymbols.has(readiness.firstPromotion), 'pending firstPromotion must remain classified as ready');
+  const first = readiness.readySchoolNeutralHelpers.find((x) => x.symbol === readiness.firstPromotion);
+  assert.equal(first.source, '32-session-planning-runtime.js');
+  assert.equal(first.target, '20-engine-candidate.js');
+  const firstBlock = functionBlock(read(`${ROOT}/${first.source}`), first.symbol);
+  assert.ok(firstBlock.includes('weightedChoice('), 'first promotion lost generic weightedChoice dependency');
+  for (const forbidden of ['getProgress(', 'schedulerScore(', 'VOCAB', 'state.', 'session.', 'priority', 'studyLayer']) {
+    assert.ok(!firstBlock.includes(forbidden), `first promotion unexpectedly depends on Waseda policy: ${forbidden}`);
+  }
+  assert.ok(!read(`${ROOT}/${first.target}`).includes(`function ${first.symbol}(`), 'pending first promotion already moved');
+} else {
+  const promoted = readiness.promotedSchoolNeutralHelpers.find((x) => x.symbol === readiness.firstPromotion);
+  assert.ok(promoted, 'promoted firstPromotion must be recorded in promotedSchoolNeutralHelpers');
+  assert.equal(promoted.previousSource, '32-session-planning-runtime.js');
+  assert.equal(promoted.target, '20-engine-candidate.js');
+  const block = functionBlock(read(`${ROOT}/${promoted.target}`), promoted.symbol);
+  assert.ok(block.includes('weightedChoice('), 'promoted first helper lost generic weightedChoice dependency');
+  for (const forbidden of ['getProgress(', 'schedulerScore(', 'VOCAB', 'state.', 'session.', 'priority', 'studyLayer']) {
+    assert.ok(!block.includes(forbidden), `promoted first helper unexpectedly depends on Waseda policy: ${forbidden}`);
+  }
+  assert.ok(!read(`${ROOT}/${promoted.previousSource}`).includes(`function ${promoted.symbol}(`), 'promoted first helper remains duplicated in policy source');
 }
-assert.ok(!read(`${ROOT}/${first.target}`).includes(`function ${first.symbol}(`), 'first promotion already moved; update readiness contract and review migration explicitly');
 
 console.log('Common-engine extraction readiness classification: PASS');
