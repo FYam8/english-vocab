@@ -9,7 +9,7 @@
   "wasedaProductionBaseline": "531d505c19a86eaa2c8bbc4b25179de8089ab585",
   "rikkyoAuditedBaseline": "06eb47656bf0066af5cfe2072a53cfcdd42e5232",
   "approvedRuntimeBoundary": "memory-scheduler-policy-adapter",
-  "approvalScope": "Introduce only the Waseda adapter boundary while preserving exact Waseda scheduler outputs and persistence; do not mutate Rikkyo or production main.",
+  "approvalScope": "Introduce only reviewed Waseda policy adapter boundaries while preserving exact Waseda scheduler outputs and persistence; do not mutate Rikkyo or production main.",
   "allowWasedaAdapterIntroduction": true,
   "allowWasedaScoringAdapterIntroduction": true,
   "allowRikkyoRuntimeMutation": false,
@@ -36,11 +36,21 @@
     "rikkyoRuntimeUnchanged": true,
     "approvedBoundary": "memory-priority-scoring-policy-adapter"
   },
-  "wasedaMemoryScoringPolicyAdapterCandidate": {
-    "runtimeHead": "460e2b78d6c6800d4beef6956e8e6104c122edca",
+  "wasedaMemoryScoringPolicyAdapterValidation": {
+    "validatedHead": "d2fec5e326564b5af46406fd3360887ad9ce5d9a",
+    "runtimeTransformHead": "460e2b78d6c6800d4beef6956e8e6104c122edca",
+    "branchTwoPass": "success",
+    "syntheticMergeTwoPass": "success",
+    "branchOwnership": "success",
+    "syntheticMergeOwnership": "success",
     "artifactSha256": "5315e82069688b7bef265d2057e618f88afa1cdc2b31b051f7746ae8000d8463",
-    "status": "awaiting-exact-head-validation",
-    "productionMainMustRemain": "531d505c19a86eaa2c8bbc4b25179de8089ab585",
-    "rikkyoRuntimeMustRemain": "06eb47656bf0066af5cfe2072a53cfcdd42e5232"
+    "productionMainUnchanged": true,
+    "rikkyoRuntimeUnchanged": true,
+    "validatedBoundary": "memory-priority-scoring-policy-adapter"
+  },
+  "nextBoundary": {
+    "name": "session-planning-policy-adapter",
+    "status": "contract-definition-only",
+    "allowRuntimeMutation": false
   }
 }

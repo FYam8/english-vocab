@@ -12,7 +12,7 @@ const integration = read('src/waseda-bootstrap/36-v76-engine-integration.js');
 const persistence = read('src/waseda-bootstrap/15-waseda-persistence.js');
 
 assert.equal(contract.format, 'common-vocab-engine-policy-contract/v1');
-assert.equal(contract.status, 'first-runtime-boundary-validated-next-contract-defined');
+assert.equal(contract.status, 'second-runtime-boundary-validated-next-contract-defined');
 assert.equal(contract.masterRepository, 'FYam8/english-vocab');
 assert.equal(contract.engineCandidateStatus, 'mixed-not-exportable');
 assert.equal(readiness.pureHelperExtractionStatus, 'complete');
@@ -70,39 +70,29 @@ assert.ok(!memory.includes('v76Clamp(v76IntervalForTarget(model.stabilityDays,v7
 
 assert.ok(integration.includes('schedulerScore=function(v,mode){'));
 assert.ok(integration.includes('const days=v76ExamDaysLeft();'));
-const scoringAdapterApplied = policy.includes('applyReviewUrgencyExtra(extra,v,p,m){');
-if (scoringAdapterApplied) {
-  for (const token of [
-    'applyReviewUrgencyExtra(extra,v,p,m){',
-    'if(r<target)extra+=(target-r)*900+90;',
-    'applyExamUrgencyExtra(extra,v,p,m,days){',
-    'if(v.priority==="S")extra+=80*urgency;',
-    'if(isWeakProgress(p))extra+=100*urgency;',
-    'extra+=Math.max(0,target-r)*300*urgency;',
-    'applyChallengeMemoryScore(score,v,p,m){',
-    'if(r<target)score+=(target-r)*700+70;'
-  ]) assert.ok(policy.includes(token), `Waseda scoring policy formula missing: ${token}`);
-  assert.ok(integration.includes('extra=WASEDA_MEMORY_POLICY.applyReviewUrgencyExtra(extra,v,p,m);'));
-  assert.ok(integration.includes('extra=WASEDA_MEMORY_POLICY.applyExamUrgencyExtra(extra,v,p,m,days);'));
-  assert.ok(integration.includes('score=WASEDA_MEMORY_POLICY.applyChallengeMemoryScore(score,v,p,m);'));
-  for (const token of [
-    'if(r<target)extra+=(target-r)*900+90;',
-    'if(v.priority==="S")extra+=80*urgency;',
-    'if(isWeakProgress(p))extra+=100*urgency;',
-    'extra+=Math.max(0,target-r)*300*urgency;',
-    'if(r<target)score+=(target-r)*700+70;'
-  ]) assert.ok(!integration.includes(token), `Waseda scoring policy remains duplicated in integration: ${token}`);
-} else {
-  assert.ok(integration.includes('if(r<target)extra+=(target-r)*900+90;'));
-  assert.ok(integration.includes('if(days!=null&&days>=0&&days<=30){'));
-  assert.ok(integration.includes('if(v.priority==="S")extra+=80*urgency;'));
-  assert.ok(integration.includes('if(isWeakProgress(p))extra+=100*urgency;'));
-  assert.ok(integration.includes('extra+=Math.max(0,target-r)*300*urgency;'));
-  assert.ok(integration.includes('if(r<target)score+=(target-r)*700+70;'));
-}
+for (const token of [
+  'applyReviewUrgencyExtra(extra,v,p,m){',
+  'if(r<target)extra+=(target-r)*900+90;',
+  'applyExamUrgencyExtra(extra,v,p,m,days){',
+  'if(v.priority==="S")extra+=80*urgency;',
+  'if(isWeakProgress(p))extra+=100*urgency;',
+  'extra+=Math.max(0,target-r)*300*urgency;',
+  'applyChallengeMemoryScore(score,v,p,m){',
+  'if(r<target)score+=(target-r)*700+70;'
+]) assert.ok(policy.includes(token), `Waseda scoring policy formula missing: ${token}`);
+assert.ok(integration.includes('extra=WASEDA_MEMORY_POLICY.applyReviewUrgencyExtra(extra,v,p,m);'));
+assert.ok(integration.includes('extra=WASEDA_MEMORY_POLICY.applyExamUrgencyExtra(extra,v,p,m,days);'));
+assert.ok(integration.includes('score=WASEDA_MEMORY_POLICY.applyChallengeMemoryScore(score,v,p,m);'));
+for (const token of [
+  'if(r<target)extra+=(target-r)*900+90;',
+  'if(v.priority==="S")extra+=80*urgency;',
+  'if(isWeakProgress(p))extra+=100*urgency;',
+  'extra+=Math.max(0,target-r)*300*urgency;',
+  'if(r<target)score+=(target-r)*700+70;'
+]) assert.ok(!integration.includes(token), `Waseda scoring policy remains duplicated in integration: ${token}`);
 
 for (const symbol of ['v75ChallengeScore', 'v75FoundationReason', 'buildChallengeSessionPlan', 'buildSessionPlan', 'v75DueRetry', 'v75PickUnlimitedBase', 'v75NextSessionItem']) {
-  assert.ok(planning.includes(symbol), `Waseda planning policy moved before adapter contract: ${symbol}`);
+  assert.ok(planning.includes(symbol), `Waseda planning policy moved before its adapter contract: ${symbol}`);
 }
 assert.ok(planning.includes('75点挑戦を支える基礎語'));
 assert.ok(planning.includes('if(mode==="75")'));
@@ -133,7 +123,9 @@ for (const symbol of ['v76TargetRetention', 'v76ReviewIntervalDays', 'v76UpdateM
 
 const second = contract.secondRuntimeBoundary;
 assert.equal(second.name, 'memory-priority-scoring-policy-adapter');
-assert.equal(second.status, 'blocked-until-contract-exact-head-green');
+assert.equal(second.status, 'introduced-and-exact-head-validated');
+assert.equal(second.validatedHead, 'd2fec5e326564b5af46406fd3360887ad9ce5d9a');
+assert.equal(second.artifactSha256, '5315e82069688b7bef265d2057e618f88afa1cdc2b31b051f7746ae8000d8463');
 assert.deepEqual(second.exactCurrentValues, {
   reviewGapScale:900,
   reviewGapFloor:90,
@@ -147,8 +139,16 @@ assert.deepEqual(second.exactCurrentValues, {
 for (const token of ['schedulerScore', 'exam urgency', 'S-priority', 'weak-item', 'v75ChallengeScore']) {
   assert.ok(second.scope.some((x) => x.includes(token)), `second runtime boundary missing scope token: ${token}`);
 }
-assert.ok(second.forbiddenSecondStep.some((x) => x.includes('common engine')));
-assert.ok(second.forbiddenSecondStep.some((x) => x.includes('Rikkyo')));
+
+const third = contract.thirdRuntimeBoundary;
+assert.equal(third.name, 'session-planning-policy-adapter');
+assert.equal(third.status, 'blocked-until-contract-exact-head-green');
+for (const token of ['v75ChallengeScore', 'v75FoundationReason', 'buildChallengeSessionPlan', 'buildSessionPlan', 'v75DueRetry/v75PickUnlimitedBase/v75NextSessionItem']) {
+  assert.ok(third.scope.some((x) => x.includes(token)), `third runtime boundary missing scope token: ${token}`);
+}
+assert.ok(third.forbiddenThirdStep.some((x) => x.includes('common engine')));
+assert.ok(third.forbiddenThirdStep.some((x) => x.includes('Rikkyo')));
+assert.ok(third.forbiddenThirdStep.some((x) => x.includes('deploying')));
 
 for (const forbidden of ['waseshibu_', 'rikkyo-uk-vocab', 'direct localStorage access', 'cross-school export acceptance']) {
   assert.ok(contract.forbiddenCommonEngineAssumptions.includes(forbidden), `forbidden engine assumption missing: ${forbidden}`);
