@@ -20,4 +20,15 @@ assert.equal(validation.allowProductionMainMutation, false);
 assert.equal(validation.allowSharedRuntimeArtifactRelease, false);
 assert.equal(contract.firstRuntimeBoundary.status, 'blocked-until-contract-exact-head-green');
 assert.equal(contract.gates.runtimeWiringAllowedBeforeContractGreen, false);
+
+const adapter = validation.wasedaMemoryPolicyAdapterValidation || {};
+assert.equal(adapter.validatedHead, '7ccde7dd797dd931721c9dcd1befe6fdb380c6bc');
+for (const key of ['branchTwoPass', 'syntheticMergeTwoPass', 'branchOwnership', 'syntheticMergeOwnership']) {
+  assert.equal(adapter[key], 'success', `Waseda memory-policy adapter validation incomplete: ${key}`);
+}
+assert.match(adapter.artifactSha256 || '', /^[0-9a-f]{64}$/);
+assert.equal(adapter.artifactSha256, '520e3f324f25f9d5f07e348eb618f2b62fa6bddc2f890e33704b5ac9719a07a5');
+assert.equal(adapter.productionMainUnchanged, true);
+assert.equal(adapter.rikkyoRuntimeUnchanged, true);
+
 console.log('Common-engine policy validation checkpoint: PASS');
