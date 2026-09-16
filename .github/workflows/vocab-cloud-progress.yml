@@ -59,8 +59,12 @@ jobs:
           adapter_storage='storageKey:"waseshibu_vocab_state"' in s and 'const STORAGE_KEY=WASEDA_APP_CONFIG.storageKey;' in s
           assert legacy_schema or adapter_schema
           assert legacy_storage or adapter_storage
+          if adapter_schema or adapter_storage:
+            assert 'activeSessionKey:"waseshibu_vocab_active_session_v1"' in s
+            assert 'activeSessionFormatVersion:1' in s
           assert 'localStorage.clear(' not in s
           assert 'localStorage.removeItem(STORAGE_KEY)' not in s
+          assert 'wasedaStorageRemove(STORAGE_KEY)' not in s
           assert s.count('<script src="progress-sync.js?v=vocab-cloud2"></script>') == 1
           assert '<script src="progress-sync.js?v=vocab-cloud1"></script>' not in s
           print('existing-user protection: PASS')
