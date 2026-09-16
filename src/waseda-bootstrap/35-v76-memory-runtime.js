@@ -85,10 +85,6 @@ function v76CorrectGrowth(model,retrievability,strong,elapsedDays,sameSession){
   const growth=1+(strength*challenge*difficultyFactor)/saturation;
   return s*growth;
 }
-function v76LapseStability(model,retrievability){
-  const s=Math.max(.25,Number(model.stabilityDays)||.75);
-  return Math.max(.5,s*(.35+.15*v76Clamp(retrievability,0,1)));
-}
 function v76ReviewIntervalDays(v,p,model){
   return v76Clamp(v76IntervalForTarget(model.stabilityDays,v76TargetRetention(v,p)),.75,60);
 }

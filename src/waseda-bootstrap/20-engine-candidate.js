@@ -197,6 +197,10 @@ function v76IntervalForTarget(stabilityDays,targetRetention){
   const t=v76Clamp(targetRetention,.80,.97);
   return s*Math.log(t)/Math.log(.9);
 }
+function v76LapseStability(model,retrievability){
+  const s=Math.max(.25,Number(model.stabilityDays)||.75);
+  return Math.max(.5,s*(.35+.15*v76Clamp(retrievability,0,1)));
+}
 function v75WeightedWithoutReplacement(pool,count,scoreFn){
   const remaining=[...pool],out=[];
   while(remaining.length&&out.length<count){

@@ -581,6 +581,10 @@ function v76IntervalForTarget(stabilityDays,targetRetention){
   const t=v76Clamp(targetRetention,.80,.97);
   return s*Math.log(t)/Math.log(.9);
 }
+function v76LapseStability(model,retrievability){
+  const s=Math.max(.25,Number(model.stabilityDays)||.75);
+  return Math.max(.5,s*(.35+.15*v76Clamp(retrievability,0,1)));
+}
 function v75WeightedWithoutReplacement(pool,count,scoreFn){
   const remaining=[...pool],out=[];
   while(remaining.length&&out.length<count){
@@ -2345,10 +2349,6 @@ function v76CorrectGrowth(model,retrievability,strong,elapsedDays,sameSession){
   const saturation=1+Math.log2(1+s)*.18;
   const growth=1+(strength*challenge*difficultyFactor)/saturation;
   return s*growth;
-}
-function v76LapseStability(model,retrievability){
-  const s=Math.max(.25,Number(model.stabilityDays)||.75);
-  return Math.max(.5,s*(.35+.15*v76Clamp(retrievability,0,1)));
 }
 function v76ReviewIntervalDays(v,p,model){
   return v76Clamp(v76IntervalForTarget(model.stabilityDays,v76TargetRetention(v,p)),.75,60);

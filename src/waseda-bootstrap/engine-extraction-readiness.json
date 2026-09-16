@@ -1,14 +1,7 @@
 {
   "format": "waseda-vocab-engine-extraction-readiness/v1",
   "purpose": "Record which mechanically separated helpers are safe to promote into the canonical engine now, which require policy injection first, and which remain Waseda-owned. This classification does not itself change runtime behavior.",
-  "readySchoolNeutralHelpers": [
-    {
-      "symbol": "v76LapseStability",
-      "source": "35-v76-memory-runtime.js",
-      "target": "20-engine-candidate.js",
-      "reason": "Pure calculation from memory-model values and retrievability."
-    }
-  ],
+  "readySchoolNeutralHelpers": [],
   "promotedSchoolNeutralHelpers": [
     {
       "symbol": "v75WeightedWithoutReplacement",
@@ -36,6 +29,13 @@
       "previousSource": "35-v76-memory-runtime.js",
       "target": "20-engine-candidate.js",
       "reason": "Pure interval calculation from stability and target retention.",
+      "promotionType": "definition-move-only; name and function body unchanged"
+    },
+    {
+      "symbol": "v76LapseStability",
+      "previousSource": "35-v76-memory-runtime.js",
+      "target": "20-engine-candidate.js",
+      "reason": "Pure calculation from memory-model values and retrievability.",
       "promotionType": "definition-move-only; name and function body unchanged"
     }
   ],
@@ -149,7 +149,7 @@
     "syntheticMergeOwnership": "success"
   },
   "fifthPromotion": "v76LapseStability",
-  "fifthPromotionStatus": "pending",
+  "fifthPromotionStatus": "promoted",
   "promotionValidation": {
     "requireExactBranchHead": true,
     "requireSyntheticMerge": true,

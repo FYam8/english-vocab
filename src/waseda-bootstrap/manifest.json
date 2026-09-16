@@ -30,8 +30,8 @@
       "sha256": "73f3dcf5cf3974394038c902e56943f10ecc320fcdeb53052317dcbf75335211"
     },
     "20-engine-candidate.js": {
-      "bytes": 45228,
-      "sha256": "e92195bd744e614bdc3b2c3832e5674d5e094d0aefe3a17a3ec2cb216152765f"
+      "bytes": 45402,
+      "sha256": "a1298c0ceacd4e908d9b04790c2d6a6789fbfde2e6eab58786d632adc40a19ec"
     },
     "30-compat-runtime.js": {
       "bytes": 4647,
@@ -50,8 +50,8 @@
       "sha256": "e18d032d012ed8d6aa25524b80c10c438b6de371c6919b3c842cd9ea10fe5d9c"
     },
     "35-v76-memory-runtime.js": {
-      "bytes": 5002,
-      "sha256": "60d8b1c819ebbc040062fc209aae5f03be8415920e84400c34f6f40cb261e485"
+      "bytes": 4828,
+      "sha256": "9b7c240205ba51a1928c4a6cdadd76f94745cc7f9962b961d6a04304a58ba7e2"
     },
     "36-v76-engine-integration.js": {
       "bytes": 3021,
@@ -93,5 +93,5 @@
   ],
   "baselineSourceGitBlobSha": "bb77a0c54153502e25bccb1ed89ca33b29b45c83",
   "baselineSourceSha256": "a6e58a9321d4e739216957fcbfaa0cf7f1d1621ca0f0bb88a03507da81bf452f",
-  "artifactSha256": "5ec26ca4ef714aebb0ccb0047fa3dcf20c7a2a46eb155dcb37ab5d73e4b2f6d1"
+  "artifactSha256": "d7df54e6d81a3c4a8635b2f12217d6ab78758ec17d0a2b099ce212d2b598dcc3"
 }
