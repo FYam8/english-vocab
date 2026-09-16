@@ -88,6 +88,18 @@ The final bootstrap/export/init tail remains in `40-runtime-bootstrap-tail.js`. 
 
 A dedicated compatibility ownership guard now evaluates the decomposed parts together, while also checking the individual reviewed boundaries. This prevents raw Waseda persistence identifiers from leaking back into executable engine/compatibility code and prevents a partial split from being treated as valid.
 
+## Checkpoint G — first school-neutral helper promoted into the engine candidate
+
+The first semantic source move is intentionally limited to a single reviewed helper: `v75WeightedWithoutReplacement`.
+
+Before the move, an explicit extraction-readiness contract was added. It classifies helpers as either immediately school-neutral, policy-injection-required, or Waseda-owned, and rejects supposedly neutral helpers if they contain persistence identifiers, branding, score-band policy, `priority`, `studyLayer`, exam-date policy, Waseda data globals, or learner/session globals.
+
+`v75WeightedWithoutReplacement` passed that gate because its implementation depends only on its arguments, `Math.random`, item IDs, and the generic `weightedChoice` helper. Its name and function body were not changed. The definition was moved from `32-session-planning-runtime.js` into `20-engine-candidate.js`; all Waseda-specific challenge scoring, Japanese foundation-reason text, `75`-mode policy and session-state behavior remain in the policy/runtime side.
+
+This source move necessarily changes the assembled byte order, so the generated artifact hash changed to `cf8b5078bc6e7ab09113464025857e49cb7c5a5e8d31a514d5733ab301f3c1b7`. The move is not considered safe merely because the function body is unchanged: the exact assembled head must pass the same full branch-head and synthetic PR-merge two-pass parity suites before any further helper is promoted.
+
+No second helper is to be promoted until that exact-head validation is green.
+
 ## Manual production-safety blocker
 
 The refactor is still **draft-only and not merge-eligible**.
@@ -96,11 +108,11 @@ Production `main` currently has no branch protection/ruleset. Before this PR may
 
 ## Next extraction step
 
-The compatibility runtime is now physically separated enough to audit each ownership boundary without first rewriting behavior. The next phase remains intentionally conservative:
+The first pure helper promotion is now isolated behind a machine-readable readiness contract. The next phase remains intentionally conservative:
 
-1. audit `32-session-planning-runtime.js` and `35-v76-memory-runtime.js` for hidden Waseda policy dependencies before moving any code into the canonical engine;
-2. promote only pure school-neutral helpers first; functions containing Waseda score bands, Japanese UI text, priority policy, exam-date policy, persistence identifiers or Waseda content assumptions must remain behind a policy/adapter boundary;
-3. move one helper or one coherent behavior group at a time and rerun the full branch-head and PR-merge two-pass suites after every semantic source move;
+1. complete exact-head branch and synthetic-merge validation for the first helper promotion;
+2. do not move `v75ChallengeScore`, `buildChallengeSessionPlan`, `buildSessionPlan`, retry/session functions, `v76TargetRetention`, `v76UpdateMemoryAfterOutcome`, scheduler overrides, exam-date logic or UI functions into the common engine without first introducing explicit policy injection;
+3. after the first promotion has passed all gates, review the remaining pure numeric v7.6 helpers individually rather than moving the entire memory runtime as a block;
 4. keep Waseda active-session policy, branding/data metadata, UI wording and cloud integration outside the common engine;
 5. only after the compatibility-only override structure has been flattened and the Waseda production app has passed live existing-user smoke testing may a school-neutral shared engine be extracted for Rikkyo.
 
