@@ -13,5 +13,15 @@
   "allowWasedaAdapterIntroduction": true,
   "allowRikkyoRuntimeMutation": false,
   "allowProductionMainMutation": false,
-  "allowSharedRuntimeArtifactRelease": false
+  "allowSharedRuntimeArtifactRelease": false,
+  "wasedaMemoryPolicyAdapterValidation": {
+    "validatedHead": "7ccde7dd797dd931721c9dcd1befe6fdb380c6bc",
+    "branchTwoPass": "success",
+    "syntheticMergeTwoPass": "success",
+    "branchOwnership": "success",
+    "syntheticMergeOwnership": "success",
+    "artifactSha256": "520e3f324f25f9d5f07e348eb618f2b62fa6bddc2f890e33704b5ac9719a07a5",
+    "productionMainUnchanged": true,
+    "rikkyoRuntimeUnchanged": true
+  }
 }
