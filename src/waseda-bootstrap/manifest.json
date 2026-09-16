@@ -51,16 +51,16 @@
       "sha256": "e18d032d012ed8d6aa25524b80c10c438b6de371c6919b3c842cd9ea10fe5d9c"
     },
     "34-waseda-memory-policy.js": {
-      "bytes": 756,
-      "sha256": "46bdccd59aec1ab01ed26831a1a28234c232b22e6e96bcd6d86b14b711025728"
+      "bytes": 1562,
+      "sha256": "b6260fc954acb3b495a172c6709c5bb14ad4f3652802e11cf7ace95851543f62"
     },
     "35-v76-memory-runtime.js": {
       "bytes": 4840,
       "sha256": "384e3bcc818219c932ed51dd971e3e9886eaec6454f621a2d899a380ed9bf4c9"
     },
     "36-v76-engine-integration.js": {
-      "bytes": 3021,
-      "sha256": "b7a0451b48097f5b07906fcbb47fb45ffb821176d75a9015f6a191abb1a82ff0"
+      "bytes": 2649,
+      "sha256": "81a84fa3c487cbc11eedff6d11a71f11761ac21967bc561c89c031885dc3adf9"
     },
     "37-v76-waseda-ui-runtime.js": {
       "bytes": 2688,
@@ -87,7 +87,8 @@
     "memorySchedulerCoreV76": "35-v76-memory-runtime.js",
     "memorySchedulerIntegrationV76": "36-v76-engine-integration.js",
     "memorySchedulerWasedaUiV76": "37-v76-waseda-ui-runtime.js",
-    "wasedaMemoryPolicyV76": "34-waseda-memory-policy.js"
+    "wasedaMemoryPolicyV76": "34-waseda-memory-policy.js",
+    "wasedaMemoryScoringPolicyV76": "34-waseda-memory-policy.js"
   },
   "notes": [
     "This remains a byte-exact mechanical split; browser behavior and persistence semantics are unchanged.",
@@ -96,9 +97,10 @@
     "30/35/40 are a byte-preserving mechanical decomposition of the reviewed compatibility runtime: v7.5 compatibility, v7.6 memory scheduler, then bootstrap tail. No runtime semantics are changed by this split.",
     "30/31/32/33 are a byte-preserving decomposition of the reviewed v7.5 compatibility runtime into prelude, Waseda session state, session planning, and UI/question behavior. Ownership is descriptive only; runtime order is unchanged.",
     "35/36/37 are a byte-preserving decomposition of the reviewed v7.6 block into scheduler core, engine integration overrides, and Waseda UI/settings integration. No scheduler semantics are changed by this split.",
-    "34-waseda-memory-policy.js owns the current Waseda target-retention, review-interval, diagnostic-first-pass and retry/miss interval policy. 35-v76-memory-runtime.js delegates to it without changing learner persistence or scheduler outputs."
+    "34-waseda-memory-policy.js owns the current Waseda target-retention, review-interval, diagnostic-first-pass and retry/miss interval policy. 35-v76-memory-runtime.js delegates to it without changing learner persistence or scheduler outputs.",
+    "34-waseda-memory-policy.js also owns the exact current v7.6 review-gap, exam-urgency and challenge-memory scoring formulas. 36-v76-engine-integration.js delegates to those Waseda-only methods while preserving base score calculation and evaluation order."
   ],
   "baselineSourceGitBlobSha": "bb77a0c54153502e25bccb1ed89ca33b29b45c83",
   "baselineSourceSha256": "a6e58a9321d4e739216957fcbfaa0cf7f1d1621ca0f0bb88a03507da81bf452f",
-  "artifactSha256": "520e3f324f25f9d5f07e348eb618f2b62fa6bddc2f890e33704b5ac9719a07a5"
+  "artifactSha256": "5315e82069688b7bef265d2057e618f88afa1cdc2b31b051f7746ae8000d8463"
 }

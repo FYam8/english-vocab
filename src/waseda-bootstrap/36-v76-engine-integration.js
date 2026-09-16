@@ -39,30 +39,16 @@ schedulerScore=function(v,mode){
   if(mode==="random")return base;
   const p=getProgress(v.id),m=p.memoryModel;
   let extra=0;
-  if(m&&Number(m.version)===V76_MEMORY_MODEL_VERSION){
-    const r=v76Retrievability(m),target=v76TargetRetention(v,p);
-    if(r<target)extra+=(target-r)*900+90;
-  }
+  extra=WASEDA_MEMORY_POLICY.applyReviewUrgencyExtra(extra,v,p,m);
   const days=v76ExamDaysLeft();
-  if(days!=null&&days>=0&&days<=30){
-    const urgency=(30-days)/30;
-    if(v.priority==="S")extra+=80*urgency;
-    if(isWeakProgress(p))extra+=100*urgency;
-    if(m){
-      const r=v76Retrievability(m),target=v76TargetRetention(v,p);
-      extra+=Math.max(0,target-r)*300*urgency;
-    }
-  }
+  extra=WASEDA_MEMORY_POLICY.applyExamUrgencyExtra(extra,v,p,m,days);
   return base+extra;
 };
 const v75ChallengeScoreForV76=v75ChallengeScore;
 v75ChallengeScore=function(v){
   let score=v75ChallengeScoreForV76(v);
   const p=getProgress(v.id),m=p.memoryModel;
-  if(m){
-    const r=v76Retrievability(m),target=v76TargetRetention(v,p);
-    if(r<target)score+=(target-r)*700+70;
-  }
+  score=WASEDA_MEMORY_POLICY.applyChallengeMemoryScore(score,v,p,m);
   return score;
 };
 
