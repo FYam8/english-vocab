@@ -191,6 +191,7 @@ function weightedChoice(items,weights){
  return items[items.length-1];
 }
 function v76Clamp(x,lo,hi){return Math.max(lo,Math.min(hi,Number(x)))}
+function v76SeedStability(mastery){const i=Math.max(0,Math.min(4,Math.round(Number(mastery)||0)));return [0.75,1.5,4,14,30][i]}
 function v75WeightedWithoutReplacement(pool,count,scoreFn){
   const remaining=[...pool],out=[];
   while(remaining.length&&out.length<count){

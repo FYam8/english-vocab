@@ -13,7 +13,6 @@ META.dataVersion=V76_DATA_VERSION;
 state.dataVersion=V76_DATA_VERSION;
 
 function v76StrongRecallType(type){return ["reverse","audio","cloze"].includes(type)}
-function v76SeedStability(mastery){const i=Math.max(0,Math.min(4,Math.round(Number(mastery)||0)));return [0.75,1.5,4,14,30][i]}
 function v76ExistingScheduledDays(p){
   if(!p||!p.lastStudied||!p.nextReview||p.lastRating==="miss")return null;
   const a=new Date(p.lastStudied).getTime(),b=new Date(p.nextReview).getTime();
