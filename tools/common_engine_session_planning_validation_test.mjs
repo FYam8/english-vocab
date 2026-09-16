@@ -38,4 +38,11 @@ assert.equal(contract.foundationReasonPolicy.mustRemainOutsideCommonEngine, true
 assert.deepEqual(contract.foundationReasonPolicy.precedence, ['weak','recentMistake','due','default']);
 assert.equal(contract.status, 'contract-only-no-runtime-wiring');
 
+const candidate = validation.firstPlanningAdapterCandidate || {};
+assert.equal(candidate.runtimeHead, '44a277acdc3703147cfe1a30ee873597b286a3a7');
+assert.equal(candidate.artifactSha256, '3cbd1e048d40ae59b4b8e2ac4ed6922b75a93b765bbe250001ecc2833d6447c0');
+assert.equal(candidate.status, 'awaiting-exact-head-validation');
+assert.equal(candidate.productionMainMustRemain, validation.wasedaProductionBaseline);
+assert.equal(candidate.rikkyoRuntimeMustRemain, validation.rikkyoAuditedBaseline);
+
 console.log('Waseda session-planning policy validation checkpoint: PASS');

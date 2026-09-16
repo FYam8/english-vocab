@@ -30,5 +30,12 @@
     "mutating FYam8/rikkyo-uk-vocab",
     "changing Waseda production main",
     "deploying either public app"
-  ]
+  ],
+  "firstPlanningAdapterCandidate": {
+    "runtimeHead": "44a277acdc3703147cfe1a30ee873597b286a3a7",
+    "artifactSha256": "3cbd1e048d40ae59b4b8e2ac4ed6922b75a93b765bbe250001ecc2833d6447c0",
+    "status": "awaiting-exact-head-validation",
+    "productionMainMustRemain": "531d505c19a86eaa2c8bbc4b25179de8089ab585",
+    "rikkyoRuntimeMustRemain": "06eb47656bf0066af5cfe2072a53cfcdd42e5232"
+  }
 }

@@ -12,6 +12,7 @@ on:
       - src/waseda-bootstrap/20-engine-candidate.js
       - src/waseda-bootstrap/30-compat-runtime.js
       - src/waseda-bootstrap/31-waseda-session-runtime.js
+      - src/waseda-bootstrap/31a-waseda-planning-policy.js
       - src/waseda-bootstrap/32-session-planning-runtime.js
       - src/waseda-bootstrap/33-v75-ui-runtime.js
       - src/waseda-bootstrap/34-waseda-memory-policy.js
@@ -26,8 +27,10 @@ on:
       - tools/common_engine_session_planning_validation_test.mjs
       - tools/waseda_memory_policy_adapter_test.mjs
       - tools/waseda_memory_scoring_policy_adapter_test.mjs
+      - tools/waseda_foundation_reason_policy_adapter_test.mjs
       - tools/extract_waseda_memory_policy_adapter.py
       - tools/extract_waseda_memory_scoring_policy_adapter.py
+      - tools/extract_waseda_foundation_reason_policy_adapter.py
       - .github/workflows/compat-ownership-guard.yml
   pull_request:
     branches:
@@ -40,6 +43,7 @@ on:
       - src/waseda-bootstrap/20-engine-candidate.js
       - src/waseda-bootstrap/30-compat-runtime.js
       - src/waseda-bootstrap/31-waseda-session-runtime.js
+      - src/waseda-bootstrap/31a-waseda-planning-policy.js
       - src/waseda-bootstrap/32-session-planning-runtime.js
       - src/waseda-bootstrap/33-v75-ui-runtime.js
       - src/waseda-bootstrap/34-waseda-memory-policy.js
@@ -54,8 +58,10 @@ on:
       - tools/common_engine_session_planning_validation_test.mjs
       - tools/waseda_memory_policy_adapter_test.mjs
       - tools/waseda_memory_scoring_policy_adapter_test.mjs
+      - tools/waseda_foundation_reason_policy_adapter_test.mjs
       - tools/extract_waseda_memory_policy_adapter.py
       - tools/extract_waseda_memory_scoring_policy_adapter.py
+      - tools/extract_waseda_foundation_reason_policy_adapter.py
       - .github/workflows/compat-ownership-guard.yml
   workflow_dispatch:
 
@@ -77,8 +83,10 @@ jobs:
           node --check tools/common_engine_session_planning_validation_test.mjs
           node --check tools/waseda_memory_policy_adapter_test.mjs
           node --check tools/waseda_memory_scoring_policy_adapter_test.mjs
+          node --check tools/waseda_foundation_reason_policy_adapter_test.mjs
           python3 -m py_compile tools/extract_waseda_memory_policy_adapter.py
           python3 -m py_compile tools/extract_waseda_memory_scoring_policy_adapter.py
+          python3 -m py_compile tools/extract_waseda_foundation_reason_policy_adapter.py
       - name: Enforce Waseda/common ownership boundary
         run: node tools/common_engine_compat_ownership_test.mjs
       - name: Enforce extraction readiness classification
@@ -114,6 +122,8 @@ jobs:
         run: node tools/waseda_memory_policy_adapter_test.mjs
       - name: Pin Waseda memory scoring policy adapter boundary
         run: node tools/waseda_memory_scoring_policy_adapter_test.mjs
+      - name: Pin Waseda foundation reason policy adapter boundary
+        run: node tools/waseda_foundation_reason_policy_adapter_test.mjs
       - name: Confirm adapter scope remains Waseda-only
         run: |
           node - <<'JS'
@@ -135,6 +145,9 @@ jobs:
           assert.equal(p.allowFullPlanningRuntimeMutation,false);
           assert.equal(p.allowFirstPlanningAdapterGroupIntroduction,true);
           assert.equal(p.firstApprovedGroup,'foundation-reason-policy-adapter');
+          assert.equal(p.firstPlanningAdapterCandidate.runtimeHead,'44a277acdc3703147cfe1a30ee873597b286a3a7');
+          assert.equal(p.firstPlanningAdapterCandidate.artifactSha256,'3cbd1e048d40ae59b4b8e2ac4ed6922b75a93b765bbe250001ecc2833d6447c0');
+          assert.equal(p.firstPlanningAdapterCandidate.status,'awaiting-exact-head-validation');
           console.log('Waseda-only adapter scope: PASS');
           JS
       - name: Diff hygiene
