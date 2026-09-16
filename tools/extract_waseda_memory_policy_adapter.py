@@ -38,6 +38,15 @@ const WASEDA_MEMORY_POLICY=Object.freeze({
 });
 '''
 
+BASE_POLICY_REQUIRED = [
+    'const WASEDA_MEMORY_POLICY=Object.freeze({',
+    'targetRetention(v,p){\n    const s=v&&v.priority==="S",w=!!(p&&isWeakProgress(p));\n    if(s&&w)return .93;\n    if(s||w)return .92;\n    return .90;\n  },',
+    'reviewIntervalDays(v,p,model){\n    return v76Clamp(v76IntervalForTarget(model.stabilityDays,WASEDA_MEMORY_POLICY.targetRetention(v,p)),.75,60);\n  },',
+    'isDiagnosticFirstPass(v,p,attemptsBefore){\n    return (v.studyLayer||"core")==="diagnostic"&&attemptsBefore===0&&p.incorrect===0;\n  },',
+    'retryCorrectIntervalDays:1,',
+    'missIntervalMinutes:15',
+]
+
 OLD_TARGET = '''function v76TargetRetention(v,p){
   const s=v&&v.priority==="S",w=!!(p&&isWeakProgress(p));
   if(s&&w)return .93;
@@ -101,10 +110,18 @@ def replace_exact_once(text: str, old: str, new: str, label: str) -> str:
     return text.replace(old, new, 1)
 
 
+def validate_base_policy(policy: str) -> None:
+    # Later reviewed Waseda-only policy boundaries may extend the same adapter object.
+    # Keep the first boundary immutable by pinning its exact method/value fragments
+    # rather than requiring the whole file to remain byte-identical forever.
+    for required in BASE_POLICY_REQUIRED:
+        if required not in policy:
+            raise SystemExit(f"Waseda base memory policy content drifted: {required[:80]}")
+
+
 def validate_applied(memory: str, manifest: dict) -> None:
     policy = POLICY.read_text(encoding="utf-8") if POLICY.is_file() else ""
-    if policy != POLICY_CONTENT:
-        raise SystemExit("Waseda memory policy adapter content drifted")
+    validate_base_policy(policy)
     for required in [NEW_TARGET, NEW_INTERVAL, NEW_DIAGNOSTIC, NEW_RETRY, NEW_MISS]:
         if required not in memory:
             raise SystemExit(f"Waseda memory runtime missing policy delegation: {required[:80]}")
