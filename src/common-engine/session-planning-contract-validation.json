@@ -23,19 +23,41 @@
     "all queue order and retry behavior",
     "all Waseda persistence and cloud contracts"
   ],
+  "firstPlanningAdapterValidation": {
+    "validatedHead": "728da033e8e815ebb8585c97966de9c253e334a9",
+    "runtimeTransformHead": "44a277acdc3703147cfe1a30ee873597b286a3a7",
+    "branchTwoPass": "success",
+    "syntheticMergeTwoPass": "success",
+    "branchOwnership": "success",
+    "syntheticMergeOwnership": "success",
+    "assemble": "success",
+    "artifactSha256": "3cbd1e048d40ae59b4b8e2ac4ed6922b75a93b765bbe250001ecc2833d6447c0",
+    "productionMainUnchanged": true,
+    "rikkyoRuntimeUnchanged": true,
+    "validatedGroup": "foundation-reason-policy-adapter"
+  },
+  "allowSecondPlanningAdapterGroupIntroduction": true,
+  "secondApprovedGroup": "challenge-score-base-policy-adapter",
+  "secondApprovedGroupScope": [
+    "v75ChallengeScore base Waseda priority/year/frequency/mastery/due/recent/weak scoring and mastery-4 suppression, excluding the already-separated v7.6 memory boost"
+  ],
+  "secondApprovedGroupMustPreserve": [
+    "PRIORITY_SCORE lookup with fallback 0",
+    "yearCount x8 plus sqrt(effectiveFrequency) x4 plus mastery weights [80,110,65,25,4]",
+    "due +115, recent mistake +80, weak +95",
+    "mastery 4 and not due multiplier 0.12",
+    "getProgress/now/effectiveFrequency/isWeakProgress semantics",
+    "the later v7.6 WASEDA_MEMORY_POLICY challenge-memory boost",
+    "all session composition, queue and retry behavior",
+    "all Waseda persistence and cloud contracts"
+  ],
   "forbidden": [
-    "moving the reason strings into the common engine",
-    "changing challenge score or session composition in the first group",
-    "changing retry gaps or queue order in the first group",
+    "moving Waseda priority/mastery/challenge score constants into the common engine",
+    "changing challenge session composition in the second group",
+    "changing foundation-reason strings or precedence in the second group",
+    "changing retry gaps or queue order in the second group",
     "mutating FYam8/rikkyo-uk-vocab",
     "changing Waseda production main",
     "deploying either public app"
-  ],
-  "firstPlanningAdapterCandidate": {
-    "runtimeHead": "44a277acdc3703147cfe1a30ee873597b286a3a7",
-    "artifactSha256": "3cbd1e048d40ae59b4b8e2ac4ed6922b75a93b765bbe250001ecc2833d6447c0",
-    "status": "awaiting-exact-head-validation",
-    "productionMainMustRemain": "531d505c19a86eaa2c8bbc4b25179de8089ab585",
-    "rikkyoRuntimeMustRemain": "06eb47656bf0066af5cfe2072a53cfcdd42e5232"
-  }
+  ]
 }
