@@ -75,6 +75,7 @@ for (const item of readiness.readySchoolNeutralHelpers) {
 }
 for (const item of readiness.promotedSchoolNeutralHelpers) {
   assert.equal(typeof item.symbol, 'string');
+  assert.equal(item.promotionType, 'definition-move-only; name and function body unchanged', `promoted helper changed promotion type: ${item.symbol}`);
   assert.ok(exists(`${ROOT}/${item.target}`), `promoted-helper target missing: ${item.target}`);
   const target = read(`${ROOT}/${item.target}`);
   const block = functionBlock(target, item.symbol);
@@ -151,6 +152,7 @@ if (readiness.secondPromotionStatus === 'pending') {
   assert.ok(promoted, 'promoted secondPromotion must be recorded');
   assert.equal(promoted.previousSource, '35-v76-memory-runtime.js');
   assert.equal(promoted.target, '20-engine-candidate.js');
+  assert.equal(promoted.promotionType, 'definition-move-only; name and function body unchanged');
   assertSchoolNeutral(functionBlock(read(`${ROOT}/${promoted.target}`), promoted.symbol), promoted.symbol);
   assert.ok(!read(`${ROOT}/${promoted.previousSource}`).includes(`function ${promoted.symbol}(`), 'promoted second helper remains duplicated in v7.6 source');
 }
