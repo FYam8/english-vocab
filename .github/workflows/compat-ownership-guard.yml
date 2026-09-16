@@ -23,6 +23,7 @@ on:
       - tools/common_engine_policy_contract_test.mjs
       - tools/common_engine_policy_validation_test.mjs
       - tools/common_engine_session_planning_contract_test.mjs
+      - tools/common_engine_session_planning_validation_test.mjs
       - tools/waseda_memory_policy_adapter_test.mjs
       - tools/waseda_memory_scoring_policy_adapter_test.mjs
       - tools/extract_waseda_memory_policy_adapter.py
@@ -50,6 +51,7 @@ on:
       - tools/common_engine_policy_contract_test.mjs
       - tools/common_engine_policy_validation_test.mjs
       - tools/common_engine_session_planning_contract_test.mjs
+      - tools/common_engine_session_planning_validation_test.mjs
       - tools/waseda_memory_policy_adapter_test.mjs
       - tools/waseda_memory_scoring_policy_adapter_test.mjs
       - tools/extract_waseda_memory_policy_adapter.py
@@ -72,6 +74,7 @@ jobs:
           node --check tools/common_engine_policy_contract_test.mjs
           node --check tools/common_engine_policy_validation_test.mjs
           node --check tools/common_engine_session_planning_contract_test.mjs
+          node --check tools/common_engine_session_planning_validation_test.mjs
           node --check tools/waseda_memory_policy_adapter_test.mjs
           node --check tools/waseda_memory_scoring_policy_adapter_test.mjs
           python3 -m py_compile tools/extract_waseda_memory_policy_adapter.py
@@ -105,6 +108,8 @@ jobs:
         run: node tools/common_engine_policy_validation_test.mjs
       - name: Enforce Waseda session-planning policy contract
         run: node tools/common_engine_session_planning_contract_test.mjs
+      - name: Enforce session-planning validation checkpoint
+        run: node tools/common_engine_session_planning_validation_test.mjs
       - name: Pin Waseda memory policy adapter boundary
         run: node tools/waseda_memory_policy_adapter_test.mjs
       - name: Pin Waseda memory scoring policy adapter boundary
@@ -115,6 +120,7 @@ jobs:
           const fs=require('node:fs');
           const assert=require('node:assert/strict');
           const v=JSON.parse(fs.readFileSync('src/common-engine/policy-contract-validation.json','utf8'));
+          const p=JSON.parse(fs.readFileSync('src/common-engine/session-planning-contract-validation.json','utf8'));
           assert.equal(v.approvedRuntimeBoundary,'memory-scheduler-policy-adapter');
           assert.equal(v.allowWasedaAdapterIntroduction,true);
           assert.equal(v.allowWasedaScoringAdapterIntroduction,true);
@@ -126,6 +132,9 @@ jobs:
           assert.equal(v.nextBoundary.name,'session-planning-policy-adapter');
           assert.equal(v.nextBoundary.status,'contract-definition-only');
           assert.equal(v.nextBoundary.allowRuntimeMutation,false);
+          assert.equal(p.allowFullPlanningRuntimeMutation,false);
+          assert.equal(p.allowFirstPlanningAdapterGroupIntroduction,true);
+          assert.equal(p.firstApprovedGroup,'foundation-reason-policy-adapter');
           console.log('Waseda-only adapter scope: PASS');
           JS
       - name: Diff hygiene

@@ -1,0 +1,34 @@
+{
+  "format": "waseda-session-planning-policy-validation/v1",
+  "contractPath": "src/common-engine/session-planning-contract.json",
+  "validatedContractHead": "ac052208a09ff27926ec785c6ba2d9c4286ad47e",
+  "branchTwoPass": "success",
+  "syntheticMergeTwoPass": "success",
+  "branchOwnership": "success",
+  "syntheticMergeOwnership": "success",
+  "assemble": "success",
+  "wasedaProductionBaseline": "531d505c19a86eaa2c8bbc4b25179de8089ab585",
+  "rikkyoAuditedBaseline": "06eb47656bf0066af5cfe2072a53cfcdd42e5232",
+  "runtimeSourcesUnchangedDuringContractValidation": true,
+  "allowFullPlanningRuntimeMutation": false,
+  "allowFirstPlanningAdapterGroupIntroduction": true,
+  "firstApprovedGroup": "foundation-reason-policy-adapter",
+  "firstApprovedGroupScope": [
+    "v75FoundationReason precedence and the four exact Japanese reason strings"
+  ],
+  "firstApprovedGroupMustPreserve": [
+    "weak > recentMistake > due > default precedence",
+    "the four exact Japanese strings",
+    "getProgress/now/isWeakProgress semantics",
+    "all queue order and retry behavior",
+    "all Waseda persistence and cloud contracts"
+  ],
+  "forbidden": [
+    "moving the reason strings into the common engine",
+    "changing challenge score or session composition in the first group",
+    "changing retry gaps or queue order in the first group",
+    "mutating FYam8/rikkyo-uk-vocab",
+    "changing Waseda production main",
+    "deploying either public app"
+  ]
+}
