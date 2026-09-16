@@ -9,6 +9,7 @@ on:
       - src/waseda-bootstrap/**
       - tools/assemble_waseda.py
       - tools/refactor_waseda_persistence_boundary.py
+      - tools/split_waseda_compat_runtime.py
       - .github/workflows/assemble-common-engine.yml
 
 permissions:
@@ -40,6 +41,20 @@ jobs:
           cmp src/waseda-bootstrap/30-compat-runtime.js /tmp/waseda-compat-runtime.js
           echo "persistence boundary transform idempotence: PASS"
 
+      - name: Mechanically split reviewed compatibility runtime
+        run: |
+          python3 tools/split_waseda_compat_runtime.py
+          cp src/waseda-bootstrap/30-compat-runtime.js /tmp/waseda-v75-compat-runtime.js
+          cp src/waseda-bootstrap/35-v76-memory-runtime.js /tmp/waseda-v76-memory-runtime.js
+          cp src/waseda-bootstrap/40-runtime-bootstrap-tail.js /tmp/waseda-runtime-bootstrap-tail.js
+          cp src/waseda-bootstrap/manifest.json /tmp/waseda-split-manifest.json
+          python3 tools/split_waseda_compat_runtime.py
+          cmp src/waseda-bootstrap/30-compat-runtime.js /tmp/waseda-v75-compat-runtime.js
+          cmp src/waseda-bootstrap/35-v76-memory-runtime.js /tmp/waseda-v76-memory-runtime.js
+          cmp src/waseda-bootstrap/40-runtime-bootstrap-tail.js /tmp/waseda-runtime-bootstrap-tail.js
+          cmp src/waseda-bootstrap/manifest.json /tmp/waseda-split-manifest.json
+          echo "compatibility runtime split idempotence: PASS"
+
       - name: Assemble production artifact from source parts
         run: python3 tools/assemble_waseda.py --write
 
@@ -49,21 +64,23 @@ jobs:
           node --check src/waseda-bootstrap/15-waseda-persistence.js
           node --check src/waseda-bootstrap/20-engine-candidate.js
           node --check src/waseda-bootstrap/30-compat-runtime.js
+          node --check src/waseda-bootstrap/35-v76-memory-runtime.js
+          node --check src/waseda-bootstrap/40-runtime-bootstrap-tail.js
 
       - name: Protect Waseda cloud sync and diff hygiene
         run: |
           git diff --exit-code 531d505c19a86eaa2c8bbc4b25179de8089ab585...HEAD -- progress-sync.js
           git diff --check
 
-      - name: Commit generated artifact and persistence boundary
+      - name: Commit generated artifact and reviewed source boundaries
         run: |
-          CHANGED="$(git status --porcelain -- index.html src/waseda-bootstrap/manifest.json src/waseda-bootstrap/15-waseda-persistence.js src/waseda-bootstrap/20-engine-candidate.js src/waseda-bootstrap/30-compat-runtime.js)"
+          CHANGED="$(git status --porcelain -- index.html src/waseda-bootstrap/manifest.json src/waseda-bootstrap/15-waseda-persistence.js src/waseda-bootstrap/20-engine-candidate.js src/waseda-bootstrap/30-compat-runtime.js src/waseda-bootstrap/35-v76-memory-runtime.js src/waseda-bootstrap/40-runtime-bootstrap-tail.js)"
           if [ -z "$CHANGED" ]; then
-            echo "Generated Waseda artifact and persistence boundary already up to date"
+            echo "Generated Waseda artifact and reviewed source boundaries already up to date"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add index.html src/waseda-bootstrap/manifest.json src/waseda-bootstrap/15-waseda-persistence.js src/waseda-bootstrap/20-engine-candidate.js src/waseda-bootstrap/30-compat-runtime.js
-          git commit -m "refactor: route Waseda persistence through adapter boundary"
+          git add index.html src/waseda-bootstrap/manifest.json src/waseda-bootstrap/15-waseda-persistence.js src/waseda-bootstrap/20-engine-candidate.js src/waseda-bootstrap/30-compat-runtime.js src/waseda-bootstrap/35-v76-memory-runtime.js src/waseda-bootstrap/40-runtime-bootstrap-tail.js
+          git commit -m "refactor: split Waseda compatibility runtime by reviewed boundary"
           git push origin HEAD:refactor/waseda-common-engine-v1
