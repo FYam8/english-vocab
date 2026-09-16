@@ -131,6 +131,15 @@
   },
   "thirdPromotion": "v76SeedStability",
   "thirdPromotionStatus": "promoted",
+  "thirdPromotionValidation": {
+    "validatedHead": "0de8fd6d9977e0943503c12cf15ca2b9f6e5dbb4",
+    "branchTwoPass": "success",
+    "syntheticMergeTwoPass": "success",
+    "branchOwnership": "success",
+    "syntheticMergeOwnership": "success"
+  },
+  "fourthPromotion": "v76IntervalForTarget",
+  "fourthPromotionStatus": "pending",
   "promotionValidation": {
     "requireExactBranchHead": true,
     "requireSyntheticMerge": true,
