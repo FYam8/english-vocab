@@ -10,6 +10,7 @@ on:
       - tools/assemble_waseda.py
       - tools/refactor_waseda_persistence_boundary.py
       - tools/split_waseda_compat_runtime.py
+      - tools/split_waseda_v75_runtime.py
       - .github/workflows/assemble-common-engine.yml
 
 permissions:
@@ -32,28 +33,45 @@ jobs:
       - name: Apply reviewed Waseda persistence boundary
         run: |
           python3 tools/refactor_waseda_persistence_boundary.py
-          cp src/waseda-bootstrap/15-waseda-persistence.js /tmp/waseda-persistence.js
-          cp src/waseda-bootstrap/20-engine-candidate.js /tmp/waseda-engine-candidate.js
-          cp src/waseda-bootstrap/30-compat-runtime.js /tmp/waseda-compat-runtime.js
+          mkdir -p /tmp/waseda-persistence-boundary
+          for f in 15-waseda-persistence.js 20-engine-candidate.js 30-compat-runtime.js 31-waseda-session-runtime.js; do
+            if [ -f "src/waseda-bootstrap/$f" ]; then cp "src/waseda-bootstrap/$f" "/tmp/waseda-persistence-boundary/$f"; fi
+          done
           python3 tools/refactor_waseda_persistence_boundary.py
-          cmp src/waseda-bootstrap/15-waseda-persistence.js /tmp/waseda-persistence.js
-          cmp src/waseda-bootstrap/20-engine-candidate.js /tmp/waseda-engine-candidate.js
-          cmp src/waseda-bootstrap/30-compat-runtime.js /tmp/waseda-compat-runtime.js
+          for f in 15-waseda-persistence.js 20-engine-candidate.js 30-compat-runtime.js 31-waseda-session-runtime.js; do
+            if [ -f "/tmp/waseda-persistence-boundary/$f" ]; then cmp "src/waseda-bootstrap/$f" "/tmp/waseda-persistence-boundary/$f"; fi
+          done
           echo "persistence boundary transform idempotence: PASS"
 
-      - name: Mechanically split reviewed compatibility runtime
+      - name: Mechanically split v7.5 from v7.6 runtime
         run: |
           python3 tools/split_waseda_compat_runtime.py
           cp src/waseda-bootstrap/30-compat-runtime.js /tmp/waseda-v75-compat-runtime.js
           cp src/waseda-bootstrap/35-v76-memory-runtime.js /tmp/waseda-v76-memory-runtime.js
           cp src/waseda-bootstrap/40-runtime-bootstrap-tail.js /tmp/waseda-runtime-bootstrap-tail.js
-          cp src/waseda-bootstrap/manifest.json /tmp/waseda-split-manifest.json
+          cp src/waseda-bootstrap/manifest.json /tmp/waseda-v76-split-manifest.json
           python3 tools/split_waseda_compat_runtime.py
           cmp src/waseda-bootstrap/30-compat-runtime.js /tmp/waseda-v75-compat-runtime.js
           cmp src/waseda-bootstrap/35-v76-memory-runtime.js /tmp/waseda-v76-memory-runtime.js
           cmp src/waseda-bootstrap/40-runtime-bootstrap-tail.js /tmp/waseda-runtime-bootstrap-tail.js
-          cmp src/waseda-bootstrap/manifest.json /tmp/waseda-split-manifest.json
-          echo "compatibility runtime split idempotence: PASS"
+          cmp src/waseda-bootstrap/manifest.json /tmp/waseda-v76-split-manifest.json
+          echo "v7.5/v7.6 runtime split idempotence: PASS"
+
+      - name: Mechanically decompose v7.5 runtime by ownership boundary
+        run: |
+          python3 tools/split_waseda_v75_runtime.py
+          cp src/waseda-bootstrap/30-compat-runtime.js /tmp/waseda-v75-prelude.js
+          cp src/waseda-bootstrap/31-waseda-session-runtime.js /tmp/waseda-v75-session.js
+          cp src/waseda-bootstrap/32-session-planning-runtime.js /tmp/waseda-v75-planning.js
+          cp src/waseda-bootstrap/33-v75-ui-runtime.js /tmp/waseda-v75-ui.js
+          cp src/waseda-bootstrap/manifest.json /tmp/waseda-v75-split-manifest.json
+          python3 tools/split_waseda_v75_runtime.py
+          cmp src/waseda-bootstrap/30-compat-runtime.js /tmp/waseda-v75-prelude.js
+          cmp src/waseda-bootstrap/31-waseda-session-runtime.js /tmp/waseda-v75-session.js
+          cmp src/waseda-bootstrap/32-session-planning-runtime.js /tmp/waseda-v75-planning.js
+          cmp src/waseda-bootstrap/33-v75-ui-runtime.js /tmp/waseda-v75-ui.js
+          cmp src/waseda-bootstrap/manifest.json /tmp/waseda-v75-split-manifest.json
+          echo "v7.5 ownership split idempotence: PASS"
 
       - name: Assemble production artifact from source parts
         run: python3 tools/assemble_waseda.py --write
@@ -64,6 +82,9 @@ jobs:
           node --check src/waseda-bootstrap/15-waseda-persistence.js
           node --check src/waseda-bootstrap/20-engine-candidate.js
           node --check src/waseda-bootstrap/30-compat-runtime.js
+          node --check src/waseda-bootstrap/31-waseda-session-runtime.js
+          node --check src/waseda-bootstrap/32-session-planning-runtime.js
+          node --check src/waseda-bootstrap/33-v75-ui-runtime.js
           node --check src/waseda-bootstrap/35-v76-memory-runtime.js
           node --check src/waseda-bootstrap/40-runtime-bootstrap-tail.js
 
@@ -74,13 +95,13 @@ jobs:
 
       - name: Commit generated artifact and reviewed source boundaries
         run: |
-          CHANGED="$(git status --porcelain -- index.html src/waseda-bootstrap/manifest.json src/waseda-bootstrap/15-waseda-persistence.js src/waseda-bootstrap/20-engine-candidate.js src/waseda-bootstrap/30-compat-runtime.js src/waseda-bootstrap/35-v76-memory-runtime.js src/waseda-bootstrap/40-runtime-bootstrap-tail.js)"
+          CHANGED="$(git status --porcelain -- index.html src/waseda-bootstrap/manifest.json src/waseda-bootstrap/15-waseda-persistence.js src/waseda-bootstrap/20-engine-candidate.js src/waseda-bootstrap/30-compat-runtime.js src/waseda-bootstrap/31-waseda-session-runtime.js src/waseda-bootstrap/32-session-planning-runtime.js src/waseda-bootstrap/33-v75-ui-runtime.js src/waseda-bootstrap/35-v76-memory-runtime.js src/waseda-bootstrap/40-runtime-bootstrap-tail.js)"
           if [ -z "$CHANGED" ]; then
             echo "Generated Waseda artifact and reviewed source boundaries already up to date"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add index.html src/waseda-bootstrap/manifest.json src/waseda-bootstrap/15-waseda-persistence.js src/waseda-bootstrap/20-engine-candidate.js src/waseda-bootstrap/30-compat-runtime.js src/waseda-bootstrap/35-v76-memory-runtime.js src/waseda-bootstrap/40-runtime-bootstrap-tail.js
-          git commit -m "refactor: split Waseda compatibility runtime by reviewed boundary"
+          git add index.html src/waseda-bootstrap/manifest.json src/waseda-bootstrap/15-waseda-persistence.js src/waseda-bootstrap/20-engine-candidate.js src/waseda-bootstrap/30-compat-runtime.js src/waseda-bootstrap/31-waseda-session-runtime.js src/waseda-bootstrap/32-session-planning-runtime.js src/waseda-bootstrap/33-v75-ui-runtime.js src/waseda-bootstrap/35-v76-memory-runtime.js src/waseda-bootstrap/40-runtime-bootstrap-tail.js
+          git commit -m "refactor: decompose Waseda v7.5 runtime by reviewed boundary"
           git push origin HEAD:refactor/waseda-common-engine-v1
