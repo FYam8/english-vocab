@@ -5,6 +5,8 @@ const read = (path) => fs.readFileSync(path, 'utf8');
 const contract = JSON.parse(read('src/common-engine/session-planning-contract.json'));
 const engine = read('src/waseda-bootstrap/20-engine-candidate.js');
 const session = read('src/waseda-bootstrap/31-waseda-session-runtime.js');
+const planningPolicyPath = 'src/waseda-bootstrap/31a-waseda-planning-policy.js';
+const planningPolicy = fs.existsSync(planningPolicyPath) ? read(planningPolicyPath) : '';
 const planning = read('src/waseda-bootstrap/32-session-planning-runtime.js');
 const validation = JSON.parse(read('src/common-engine/policy-contract-validation.json'));
 
@@ -93,7 +95,17 @@ for (const snippet of [
 
 const reasons = contract.foundationReasonPolicy;
 assert.deepEqual(reasons.precedence, ['weak','recentMistake','due','default']);
-for (const key of ['weak','recentMistake','due','default']) assert.ok(planning.includes(reasons[key]), `Waseda foundation reason drifted: ${key}`);
+if (planningPolicy) {
+  assert.ok(planningPolicy.includes('const WASEDA_PLANNING_POLICY=Object.freeze({'));
+  assert.ok(planningPolicy.includes('foundationReason(v,p,t){'));
+  for (const key of ['weak','recentMistake','due','default']) {
+    assert.ok(planningPolicy.includes(reasons[key]), `Waseda foundation reason adapter drifted: ${key}`);
+    assert.ok(!planning.includes(reasons[key]), `Waseda foundation reason remains duplicated in planning runtime: ${key}`);
+  }
+  assert.ok(planning.includes('return WASEDA_PLANNING_POLICY.foundationReason(v,p,t);'), 'v75FoundationReason lost Waseda adapter delegation');
+} else {
+  for (const key of ['weak','recentMistake','due','default']) assert.ok(planning.includes(reasons[key]), `Waseda foundation reason drifted: ${key}`);
+}
 assert.equal(reasons.mustRemainOutsideCommonEngine, true);
 
 assert.equal(contract.challengeSessionComposition.requiredChallengeFraction, 0.8);
