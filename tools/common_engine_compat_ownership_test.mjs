@@ -2,10 +2,16 @@ import fs from 'node:fs';
 import assert from 'node:assert/strict';
 
 const read = (path) => fs.readFileSync(path, 'utf8');
+const stripComments = (text) => text
+  .replace(/\/\*[\s\S]*?\*\//g, '')
+  .replace(/(^|[^:])\/\/.*$/gm, '$1');
+
 const ownership = JSON.parse(read('src/waseda-bootstrap/compat-ownership.json'));
 const persistence = read('src/waseda-bootstrap/15-waseda-persistence.js');
 const engine = read('src/waseda-bootstrap/20-engine-candidate.js');
 const compat = read('src/waseda-bootstrap/30-compat-runtime.js');
+const executableEngine = stripComments(engine);
+const executableCompat = stripComments(compat);
 
 assert.equal(ownership.format, 'waseda-vocab-compat-ownership/v1');
 
@@ -25,10 +31,10 @@ for (const identifier of ownership.rawPersistenceIdentifiers) {
   assert.ok(persistence.includes(identifier), `raw persistence identifier must remain owned by Waseda adapter: ${identifier}`);
 }
 for (const forbidden of ownership.forbiddenInEngineCandidate) {
-  assert.ok(!engine.includes(forbidden), `engine candidate bypasses Waseda boundary: ${forbidden}`);
+  assert.ok(!executableEngine.includes(forbidden), `engine candidate bypasses Waseda boundary: ${forbidden}`);
 }
 for (const forbidden of ownership.forbiddenInCompatibilityRuntime) {
-  assert.ok(!compat.includes(forbidden), `compat runtime bypasses Waseda boundary: ${forbidden}`);
+  assert.ok(!executableCompat.includes(forbidden), `compat runtime bypasses Waseda boundary: ${forbidden}`);
 }
 
 assert.ok(engine.includes('function migrate(raw){return wasedaMigrateState(raw)}'), 'engine candidate must delegate historical migration to Waseda adapter');
