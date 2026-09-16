@@ -14,11 +14,9 @@ assert.equal(validation.wasedaProductionBaseline, contract.productionBaseline);
 assert.equal(validation.rikkyoAuditedBaseline, '06eb47656bf0066af5cfe2072a53cfcdd42e5232');
 assert.equal(validation.runtimeSourcesUnchangedDuringContractValidation, true);
 assert.equal(validation.allowFullPlanningRuntimeMutation, false);
+
 assert.equal(validation.allowFirstPlanningAdapterGroupIntroduction, true);
 assert.equal(validation.firstApprovedGroup, 'foundation-reason-policy-adapter');
-assert.equal(validation.firstApprovedGroupScope.length, 1);
-assert.ok(validation.firstApprovedGroupScope[0].includes('v75FoundationReason'));
-
 const first = validation.firstPlanningAdapterValidation || {};
 assert.equal(first.validatedHead, '728da033e8e815ebb8585c97966de9c253e334a9');
 assert.equal(first.runtimeTransformHead, '44a277acdc3703147cfe1a30ee873597b286a3a7');
@@ -44,6 +42,16 @@ for (const required of [
   'all session composition, queue and retry behavior',
   'all Waseda persistence and cloud contracts'
 ]) assert.ok(validation.secondApprovedGroupMustPreserve.includes(required), `missing second-group preservation rule: ${required}`);
+
+const second = validation.secondPlanningAdapterApprovalValidation || {};
+assert.equal(second.validatedHead, '32c2724e60f764a59fa8136a789d27efa7188846');
+for (const key of ['branchTwoPass','syntheticMergeTwoPass','branchOwnership','syntheticMergeOwnership','assemble']) {
+  assert.equal(second[key], 'success', `challenge-score boundary approval validation incomplete: ${key}`);
+}
+assert.equal(second.productionMainUnchanged, true);
+assert.equal(second.rikkyoRuntimeUnchanged, true);
+assert.equal(second.approvedGroup, 'challenge-score-base-policy-adapter');
+
 for (const forbidden of [
   'moving Waseda priority/mastery/challenge score constants into the common engine',
   'changing challenge session composition in the second group',

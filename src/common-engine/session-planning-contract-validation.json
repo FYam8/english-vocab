@@ -51,6 +51,17 @@
     "all session composition, queue and retry behavior",
     "all Waseda persistence and cloud contracts"
   ],
+  "secondPlanningAdapterApprovalValidation": {
+    "validatedHead": "32c2724e60f764a59fa8136a789d27efa7188846",
+    "branchTwoPass": "success",
+    "syntheticMergeTwoPass": "success",
+    "branchOwnership": "success",
+    "syntheticMergeOwnership": "success",
+    "assemble": "success",
+    "productionMainUnchanged": true,
+    "rikkyoRuntimeUnchanged": true,
+    "approvedGroup": "challenge-score-base-policy-adapter"
+  },
   "forbidden": [
     "moving Waseda priority/mastery/challenge score constants into the common engine",
     "changing challenge session composition in the second group",
