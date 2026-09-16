@@ -150,6 +150,15 @@
   },
   "fifthPromotion": "v76LapseStability",
   "fifthPromotionStatus": "promoted",
+  "fifthPromotionValidation": {
+    "validatedHead": "25c27cffa2ae760394782d01b8a69386cb700baf",
+    "branchTwoPass": "success",
+    "syntheticMergeTwoPass": "success",
+    "branchOwnership": "success",
+    "syntheticMergeOwnership": "success"
+  },
+  "pureHelperExtractionStatus": "complete",
+  "nextPhase": "policy-injection-contract",
   "promotionValidation": {
     "requireExactBranchHead": true,
     "requireSyntheticMerge": true,
