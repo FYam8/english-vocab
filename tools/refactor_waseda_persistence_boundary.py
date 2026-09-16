@@ -3,9 +3,11 @@ from __future__ import annotations
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-PERSISTENCE = ROOT / "src" / "waseda-bootstrap" / "15-waseda-persistence.js"
-ENGINE = ROOT / "src" / "waseda-bootstrap" / "20-engine-candidate.js"
-COMPAT = ROOT / "src" / "waseda-bootstrap" / "30-compat-runtime.js"
+SRC = ROOT / "src" / "waseda-bootstrap"
+PERSISTENCE = SRC / "15-waseda-persistence.js"
+ENGINE = SRC / "20-engine-candidate.js"
+COMPAT_PRELUDE = SRC / "30-compat-runtime.js"
+SESSION_RUNTIME = SRC / "31-waseda-session-runtime.js"
 
 
 def replace_once(text: str, old: str, new: str, label: str) -> str:
@@ -19,7 +21,9 @@ def replace_once(text: str, old: str, new: str, label: str) -> str:
 def main() -> None:
     persistence = PERSISTENCE.read_text(encoding="utf-8")
     engine = ENGINE.read_text(encoding="utf-8")
-    compat = COMPAT.read_text(encoding="utf-8")
+    compat_prelude = COMPAT_PRELUDE.read_text(encoding="utf-8")
+    session_path = SESSION_RUNTIME if SESSION_RUNTIME.is_file() else COMPAT_PRELUDE
+    session_runtime = session_path.read_text(encoding="utf-8")
 
     required_config = [
         'schemaVersion:7',
@@ -56,32 +60,33 @@ def main() -> None:
         'main-state save adapter',
     )
 
-    compat = replace_once(
-        compat,
+    compat_prelude = replace_once(
+        compat_prelude,
         'const V75_ACTIVE_SESSION_KEY="waseshibu_vocab_active_session_v1";',
         'const V75_ACTIVE_SESSION_KEY=WASEDA_APP_CONFIG.activeSessionKey;',
         'active-session key adapter',
     )
-    compat = replace_once(
-        compat,
+    compat_prelude = replace_once(
+        compat_prelude,
         'const V75_SESSION_FORMAT_VERSION=1;',
         'const V75_SESSION_FORMAT_VERSION=WASEDA_APP_CONFIG.activeSessionFormatVersion;',
         'active-session format adapter',
     )
-    compat = replace_once(
-        compat,
+
+    session_runtime = replace_once(
+        session_runtime,
         'try{localStorage.setItem(V75_ACTIVE_SESSION_KEY,JSON.stringify(v75SerializableSession()))}',
         'try{wasedaStorageSet(V75_ACTIVE_SESSION_KEY,JSON.stringify(v75SerializableSession()))}',
         'active-session save adapter',
     )
-    compat = replace_once(
-        compat,
+    session_runtime = replace_once(
+        session_runtime,
         'try{localStorage.removeItem(V75_ACTIVE_SESSION_KEY)}',
         'try{wasedaStorageRemove(V75_ACTIVE_SESSION_KEY)}',
         'active-session clear adapter',
     )
-    compat = replace_once(
-        compat,
+    session_runtime = replace_once(
+        session_runtime,
         'const raw=localStorage.getItem(V75_ACTIVE_SESSION_KEY);',
         'const raw=wasedaStorageGet(V75_ACTIVE_SESSION_KEY);',
         'active-session load adapter',
@@ -118,12 +123,13 @@ def main() -> None:
 
     if 'localStorage.getItem(STORAGE_KEY)' in engine or 'localStorage.setItem(STORAGE_KEY' in engine:
         raise SystemExit("main-state storage still bypasses Waseda persistence adapter")
+    combined_session_sources = compat_prelude if session_path == COMPAT_PRELUDE else compat_prelude + session_runtime
     for forbidden in [
         'localStorage.getItem(V75_ACTIVE_SESSION_KEY)',
         'localStorage.setItem(V75_ACTIVE_SESSION_KEY',
         'localStorage.removeItem(V75_ACTIVE_SESSION_KEY)',
     ]:
-        if forbidden in compat:
+        if forbidden in combined_session_sources:
             raise SystemExit(f"active-session storage still bypasses adapter: {forbidden}")
 
     if 'const oldId="w3186341920",newId="p0431020501";' in engine:
@@ -138,7 +144,11 @@ def main() -> None:
 
     PERSISTENCE.write_text(persistence, encoding="utf-8")
     ENGINE.write_text(engine, encoding="utf-8")
-    COMPAT.write_text(compat, encoding="utf-8")
+    COMPAT_PRELUDE.write_text(compat_prelude, encoding="utf-8")
+    if session_path == SESSION_RUNTIME:
+        SESSION_RUNTIME.write_text(session_runtime, encoding="utf-8")
+    else:
+        COMPAT_PRELUDE.write_text(session_runtime, encoding="utf-8")
     print("Waseda persistence boundary transform: PASS")
 
 
