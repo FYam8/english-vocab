@@ -14,9 +14,10 @@ const persistence = read('src/waseda-bootstrap/15-waseda-persistence.js');
 const engine = read('src/waseda-bootstrap/20-engine-candidate.js');
 const v75Prelude = read('src/waseda-bootstrap/30-compat-runtime.js');
 const v75Session = readIfExists('src/waseda-bootstrap/31-waseda-session-runtime.js');
+const v75PlanningPolicy = readIfExists('src/waseda-bootstrap/31a-waseda-planning-policy.js');
 const v75Planning = readIfExists('src/waseda-bootstrap/32-session-planning-runtime.js');
 const v75Ui = readIfExists('src/waseda-bootstrap/33-v75-ui-runtime.js');
-const compatV75 = v75Prelude + v75Session + v75Planning + v75Ui;
+const compatV75 = v75Prelude + v75Session + v75PlanningPolicy + v75Planning + v75Ui;
 const v76Core = readIfExists('src/waseda-bootstrap/35-v76-memory-runtime.js');
 const v76Integration = readIfExists('src/waseda-bootstrap/36-v76-engine-integration.js');
 const v76Ui = readIfExists('src/waseda-bootstrap/37-v76-waseda-ui-runtime.js');
@@ -72,6 +73,11 @@ if (v75Session || v75Planning || v75Ui) {
   assert.ok(startsAtReviewedBoundary(v75Ui, 'const v74ChooseType=chooseType;\n'), 'v7.5 UI runtime must begin at reviewed question-behavior boundary');
   assert.ok(v75Session.includes('persistActiveSession=function(){'), 'session runtime lost persistence behavior');
   assert.ok(v75Planning.includes('function buildSessionPlan(mode,year,size){'), 'planning runtime lost session planning behavior');
+  if (v75PlanningPolicy) {
+    assert.ok(v75PlanningPolicy.includes('const WASEDA_PLANNING_POLICY=Object.freeze({'), 'Waseda planning policy adapter object missing');
+    assert.ok(v75PlanningPolicy.includes('foundationReason(v,p,t){'), 'Waseda planning policy lost foundation reason behavior');
+    assert.ok(v75Planning.includes('return WASEDA_PLANNING_POLICY.foundationReason(v,p,t);'), 'planning runtime lost foundation reason delegation');
+  }
 }
 
 if (v76Integration || v76Ui) {
