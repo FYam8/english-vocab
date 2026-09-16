@@ -111,6 +111,15 @@
   ],
   "firstPromotion": "v75WeightedWithoutReplacement",
   "firstPromotionStatus": "promoted",
+  "firstPromotionValidation": {
+    "validatedHead": "003e183ff3a8c5e00ffb7980342cb65aa12db997",
+    "branchTwoPass": "success",
+    "syntheticMergeTwoPass": "success",
+    "branchOwnership": "success",
+    "syntheticMergeOwnership": "success"
+  },
+  "secondPromotion": "v76Clamp",
+  "secondPromotionStatus": "pending",
   "promotionValidation": {
     "requireExactBranchHead": true,
     "requireSyntheticMerge": true,
