@@ -22,6 +22,7 @@ on:
       - tools/common_engine_extraction_readiness_test.mjs
       - tools/common_engine_policy_contract_test.mjs
       - tools/common_engine_policy_validation_test.mjs
+      - tools/common_engine_session_planning_contract_test.mjs
       - tools/waseda_memory_policy_adapter_test.mjs
       - tools/waseda_memory_scoring_policy_adapter_test.mjs
       - tools/extract_waseda_memory_policy_adapter.py
@@ -48,6 +49,7 @@ on:
       - tools/common_engine_extraction_readiness_test.mjs
       - tools/common_engine_policy_contract_test.mjs
       - tools/common_engine_policy_validation_test.mjs
+      - tools/common_engine_session_planning_contract_test.mjs
       - tools/waseda_memory_policy_adapter_test.mjs
       - tools/waseda_memory_scoring_policy_adapter_test.mjs
       - tools/extract_waseda_memory_policy_adapter.py
@@ -69,6 +71,7 @@ jobs:
           node --check tools/common_engine_extraction_readiness_test.mjs
           node --check tools/common_engine_policy_contract_test.mjs
           node --check tools/common_engine_policy_validation_test.mjs
+          node --check tools/common_engine_session_planning_contract_test.mjs
           node --check tools/waseda_memory_policy_adapter_test.mjs
           node --check tools/waseda_memory_scoring_policy_adapter_test.mjs
           python3 -m py_compile tools/extract_waseda_memory_policy_adapter.py
@@ -100,6 +103,8 @@ jobs:
         run: node tools/common_engine_policy_contract_test.mjs
       - name: Enforce policy-contract validation checkpoint
         run: node tools/common_engine_policy_validation_test.mjs
+      - name: Enforce Waseda session-planning policy contract
+        run: node tools/common_engine_session_planning_contract_test.mjs
       - name: Pin Waseda memory policy adapter boundary
         run: node tools/waseda_memory_policy_adapter_test.mjs
       - name: Pin Waseda memory scoring policy adapter boundary
@@ -119,6 +124,7 @@ jobs:
           assert.equal(v.wasedaMemoryScoringPolicyAdapterValidation.validatedHead,'d2fec5e326564b5af46406fd3360887ad9ce5d9a');
           assert.equal(v.wasedaMemoryScoringPolicyAdapterValidation.artifactSha256,'5315e82069688b7bef265d2057e618f88afa1cdc2b31b051f7746ae8000d8463');
           assert.equal(v.nextBoundary.name,'session-planning-policy-adapter');
+          assert.equal(v.nextBoundary.status,'contract-definition-only');
           assert.equal(v.nextBoundary.allowRuntimeMutation,false);
           console.log('Waseda-only adapter scope: PASS');
           JS

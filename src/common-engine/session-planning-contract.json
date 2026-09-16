@@ -1,0 +1,137 @@
+{
+  "format": "waseda-session-planning-policy-contract/v1",
+  "status": "contract-only-no-runtime-wiring",
+  "reviewedSourceHead": "727783e9adc53c9caa55201bcee4817cd0c1373f",
+  "productionBaseline": "531d505c19a86eaa2c8bbc4b25179de8089ab585",
+  "purpose": "Freeze the exact current Waseda selection, challenge-session and retry/queue semantics before introducing a Waseda-only planning adapter. This contract must not change runtime behavior, Rikkyo runtime or either public deployment.",
+  "sourceOwnership": {
+    "baseSelectionPolicy": "src/waseda-bootstrap/20-engine-candidate.js",
+    "sessionOutcomeRetryPolicy": "src/waseda-bootstrap/31-waseda-session-runtime.js",
+    "challengeAndQueuePolicy": "src/waseda-bootstrap/32-session-planning-runtime.js",
+    "sessionOutcomeRetryPolicyBlobSha": "2c35a6536670fda8913e9460504b5739fa4bea40",
+    "challengeAndQueuePolicyBlobSha": "bae77bb70677a0b95c8082e6db8c57368a593861"
+  },
+  "baseSelectionPolicy": {
+    "priorityScore": {"S":90,"A":48,"B":24,"C":8},
+    "levelScore": {"60":50,"70":24,"75":8},
+    "layerScore": {"core":70,"diagnostic":55,"challenge":10,"reference":0},
+    "masteryWeight": [80,110,65,25,4],
+    "yearCountScale": 8,
+    "sqrtFrequencyScale": 4,
+    "dueBoost": 115,
+    "recentMistakeBoost": 80,
+    "weakBoost": 95,
+    "prioritySUnderMastery3Boost": 70,
+    "level60UnderMastery3Boost": 55,
+    "directVocabUnderMastery3Boost": 90,
+    "diagnosticUnattemptedBoost": 75,
+    "diagnosticPassedSuppressionMultiplier": 0.08,
+    "mode60Boost": 40,
+    "mode70Boost": 25,
+    "modeDiagnosticBoost": 80,
+    "modeFrequentYearScale": 10,
+    "mastery4NotDueSuppressionMultiplier": 0.10,
+    "minimumScore": 0.1,
+    "weightedWithoutReplacementJitter": {"minMultiplier":0.92,"range":0.16},
+    "schoolSpecific": true
+  },
+  "modeEligibility": {
+    "referenceNeverEligible": true,
+    "yearFilterUsesEntityYears": true,
+    "diagnosticPassed": "studyLayer diagnostic AND ((correct>=1 AND incorrect===0 AND not weak) OR mastery>=3)",
+    "recommended": "exclude challenge; exclude diagnosticPassed",
+    "60": "exclude challenge; level===60; exclude diagnosticPassed",
+    "70": "exclude challenge; level===60 or 70; exclude diagnosticPassed",
+    "diagnostic": "diagnostic AND not diagnosticPassed",
+    "75": "core OR diagnostic OR challenge",
+    "unlearned": "attemptCount===0",
+    "weak": "isWeakProgress",
+    "review": "nextReview is due",
+    "frequent": "(yearCount>=3 OR effectiveFrequency>=10) AND not challenge",
+    "random": "all non-reference after year filter"
+  },
+  "challengeScorePolicy": {
+    "formulaBase": "priorityScore + yearCount*8 + sqrt(effectiveFrequency)*4 + masteryWeight",
+    "dueBoost": 115,
+    "recentMistakeBoost": 80,
+    "weakBoost": 95,
+    "mastery4NotDueSuppressionMultiplier": 0.12,
+    "memoryBoostOwnedBy": "WASEDA_MEMORY_POLICY.applyChallengeMemoryScore",
+    "schoolSpecific": true
+  },
+  "foundationReasonPolicy": {
+    "precedence": ["weak","recentMistake","due","default"],
+    "weak": "挑戦前の基礎確認：最近の正誤履歴で苦手判定となっている重要語です。",
+    "recentMistake": "挑戦前の基礎確認：最近間違えた重要語のため再確認します。",
+    "due": "挑戦前の基礎確認：復習期限を迎えた重要語です。",
+    "default": "挑戦前の基礎確認：75点挑戦を支える基礎語を再確認します。",
+    "mustRemainOutsideCommonEngine": true
+  },
+  "challengeSessionComposition": {
+    "challengeLayer": "challenge",
+    "defaultLayer": "core",
+    "requiredChallengeFraction": 0.8,
+    "foundationExceptionFractionCap": 0.2,
+    "whenChallengePoolBelowRequired": "return only weighted challenge items up to requested size; do not fill with foundation exceptions",
+    "foundationCandidateLayers": "not reference and not challenge",
+    "foundationCandidateTriggers": ["weak","due","recentMistake"],
+    "foundationSelectionScoreMode": "recommended",
+    "finalCombination": "shuffle challenge picks plus foundation exceptions, then slice to desired",
+    "yearAllSentinel": "all"
+  },
+  "sessionPlanPolicy": {
+    "unlimitedSentinelSize": 0,
+    "challengeMode": "75",
+    "randomMode": "random",
+    "unlimitedPlanUsesFilteredCandidatePool": true,
+    "finiteChallengeUsesSpecialChallengePlan": true,
+    "finiteRandomUsesShuffle": true,
+    "finiteOtherModesUseWeightedWithoutReplacement": true
+  },
+  "retryPolicy": {
+    "scheduleOn": "first non-retry miss only when retryCounts[wordId]===0",
+    "gapAnswersPrioritySOrLevel60": 6,
+    "gapAnswersOther": 8,
+    "dueAt": "session.totalAnswered + gap after incrementing totalAnswered for the miss",
+    "retryMiss": "remove retry and block word for rest of session",
+    "retryCorrect": "remove retry and unblock word",
+    "dueRetryEligibility": "dueAfterTotal<=session.totalAnswered AND wordId not blocked",
+    "dueRetryOrdering": "lowest dueAfterTotal first",
+    "nextItemPrecedence": ["dueRetry","unlimitedBase","finiteBaseQueue","endSession"],
+    "unripeRetryAtFiniteQueueEnd": "defer to nextReview; do not force inside session"
+  },
+  "unlimitedQueuePolicy": {
+    "blockedWordsExcluded": true,
+    "challengeModeRestrictsToChallengeLayer": true,
+    "recentExclusionWindow": 6,
+    "fallbackIfAllCandidatesRecent": "use full eligible pool",
+    "challengeWeights": "v75ChallengeScore",
+    "otherModeWeights": "schedulerScore(mode)",
+    "selection": "weightedChoice"
+  },
+  "commonEngineBoundary": {
+    "engineMayOwnLater": [
+      "generic weighted selection orchestration",
+      "generic queue traversal after a school adapter supplies eligible candidates, scores and retry decisions"
+    ],
+    "wasedaAdapterMustOwn": [
+      "mode names and semantics including 60/70/75",
+      "S/A/B/C priority scoring",
+      "core/diagnostic/challenge/reference meanings",
+      "challenge/foundation composition ratios",
+      "foundation reason strings",
+      "retry gap rules",
+      "Waseda schedulerScore constants and predicates"
+    ]
+  },
+  "forbiddenDuringContractStage": [
+    "changing src/waseda-bootstrap/20-engine-candidate.js runtime behavior",
+    "changing src/waseda-bootstrap/31-waseda-session-runtime.js runtime behavior",
+    "changing src/waseda-bootstrap/32-session-planning-runtime.js runtime behavior",
+    "changing queue order or retry spacing",
+    "moving Japanese reason strings into common engine",
+    "mutating FYam8/rikkyo-uk-vocab",
+    "changing Waseda production main",
+    "deploying either public app"
+  ]
+}
