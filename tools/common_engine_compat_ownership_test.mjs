@@ -9,6 +9,7 @@ const stripComments = (text) => text
 const startsAtReviewedBoundary = (text, marker) => text.startsWith(marker) || text.startsWith(`\n${marker}`);
 
 const ownership = JSON.parse(read('src/waseda-bootstrap/compat-ownership.json'));
+const readiness = JSON.parse(read('src/waseda-bootstrap/engine-extraction-readiness.json'));
 const persistence = read('src/waseda-bootstrap/15-waseda-persistence.js');
 const engine = read('src/waseda-bootstrap/20-engine-candidate.js');
 const v75Prelude = read('src/waseda-bootstrap/30-compat-runtime.js');
@@ -22,10 +23,12 @@ const v76Ui = readIfExists('src/waseda-bootstrap/37-v76-waseda-ui-runtime.js');
 const compatV76 = v76Core + v76Integration + v76Ui;
 const compatTail = readIfExists('src/waseda-bootstrap/40-runtime-bootstrap-tail.js');
 const compat = compatV75 + compatV76 + compatTail;
+const engineAndCompat = engine + compat;
 const executableEngine = stripComments(engine);
 const executableCompat = stripComments(compat);
 
 assert.equal(ownership.format, 'waseda-vocab-compat-ownership/v1');
+assert.equal(readiness.format, 'waseda-vocab-engine-extraction-readiness/v1');
 
 for (const symbol of ownership.wasedaPersistenceOwned) {
   assert.ok(persistence.includes(symbol), `missing Waseda persistence-owned symbol: ${symbol}`);
@@ -34,7 +37,7 @@ for (const symbol of ownership.wasedaSessionOwned) {
   assert.ok(compat.includes(symbol), `missing Waseda session-owned symbol: ${symbol}`);
 }
 for (const symbol of ownership.sharedEngineCandidates) {
-  assert.ok(compat.includes(symbol), `missing shared-engine candidate symbol: ${symbol}`);
+  assert.ok(engineAndCompat.includes(symbol), `missing shared-engine candidate symbol: ${symbol}`);
 }
 for (const symbol of ownership.wasedaUiOrContentPolicy) {
   assert.ok(compat.includes(symbol), `missing Waseda UI/content policy symbol: ${symbol}`);
@@ -60,7 +63,12 @@ if (v75Session || v75Planning || v75Ui) {
   assert.ok(v75Session && v75Planning && v75Ui, 'v7.5 runtime split must create session, planning, and UI parts together');
   assert.ok(!v75Prelude.includes('function v75SerializeCurrentQuestion(){'), 'session serialization must not remain in v7.5 prelude');
   assert.ok(startsAtReviewedBoundary(v75Session, 'function v75SerializeCurrentQuestion(){\n'), 'session runtime must begin at reviewed serialization boundary');
-  assert.ok(startsAtReviewedBoundary(v75Planning, 'function v75WeightedWithoutReplacement(pool,count,scoreFn){\n'), 'planning runtime must begin at reviewed weighted-selection boundary');
+  if (readiness.firstPromotionStatus === 'pending') {
+    assert.ok(startsAtReviewedBoundary(v75Planning, 'function v75WeightedWithoutReplacement(pool,count,scoreFn){\n'), 'planning runtime must begin at reviewed weighted-selection boundary before promotion');
+  } else {
+    assert.ok(startsAtReviewedBoundary(v75Planning, 'function v75ChallengeScore(v){\n'), 'planning runtime must begin at reviewed challenge-policy boundary after first promotion');
+    assert.ok(engine.includes('function v75WeightedWithoutReplacement(pool,count,scoreFn){'), 'promoted generic weighted helper missing from engine candidate');
+  }
   assert.ok(startsAtReviewedBoundary(v75Ui, 'const v74ChooseType=chooseType;\n'), 'v7.5 UI runtime must begin at reviewed question-behavior boundary');
   assert.ok(v75Session.includes('persistActiveSession=function(){'), 'session runtime lost persistence behavior');
   assert.ok(v75Planning.includes('function buildSessionPlan(mode,year,size){'), 'planning runtime lost session planning behavior');
