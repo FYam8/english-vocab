@@ -20,6 +20,7 @@ on:
       - tools/common_engine_compat_ownership_test.mjs
       - tools/common_engine_extraction_readiness_test.mjs
       - tools/common_engine_policy_contract_test.mjs
+      - tools/common_engine_policy_validation_test.mjs
       - .github/workflows/compat-ownership-guard.yml
   pull_request:
     branches:
@@ -40,6 +41,7 @@ on:
       - tools/common_engine_compat_ownership_test.mjs
       - tools/common_engine_extraction_readiness_test.mjs
       - tools/common_engine_policy_contract_test.mjs
+      - tools/common_engine_policy_validation_test.mjs
       - .github/workflows/compat-ownership-guard.yml
   workflow_dispatch:
 
@@ -56,6 +58,7 @@ jobs:
           node --check tools/common_engine_compat_ownership_test.mjs
           node --check tools/common_engine_extraction_readiness_test.mjs
           node --check tools/common_engine_policy_contract_test.mjs
+          node --check tools/common_engine_policy_validation_test.mjs
       - name: Enforce Waseda/common ownership boundary
         run: node tools/common_engine_compat_ownership_test.mjs
       - name: Enforce extraction readiness classification
@@ -81,5 +84,7 @@ jobs:
           JS
       - name: Enforce school-neutral policy contract
         run: node tools/common_engine_policy_contract_test.mjs
+      - name: Enforce policy-contract validation checkpoint
+        run: node tools/common_engine_policy_validation_test.mjs
       - name: Diff hygiene
         run: git diff --check

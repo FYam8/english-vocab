@@ -1,0 +1,17 @@
+{
+  "format": "common-vocab-engine-policy-validation/v1",
+  "contractPath": "src/common-engine/policy-contract.json",
+  "validatedContractHead": "1bf81756143d1a2cb27f7487927fcbc0fc7d63a9",
+  "branchTwoPass": "success",
+  "syntheticMergeTwoPass": "success",
+  "branchOwnership": "success",
+  "syntheticMergeOwnership": "success",
+  "wasedaProductionBaseline": "531d505c19a86eaa2c8bbc4b25179de8089ab585",
+  "rikkyoAuditedBaseline": "06eb47656bf0066af5cfe2072a53cfcdd42e5232",
+  "approvedRuntimeBoundary": "memory-scheduler-policy-adapter",
+  "approvalScope": "Introduce only the Waseda adapter boundary while preserving exact Waseda scheduler outputs and persistence; do not mutate Rikkyo or production main.",
+  "allowWasedaAdapterIntroduction": true,
+  "allowRikkyoRuntimeMutation": false,
+  "allowProductionMainMutation": false,
+  "allowSharedRuntimeArtifactRelease": false
+}
