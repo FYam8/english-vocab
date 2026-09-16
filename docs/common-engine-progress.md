@@ -61,6 +61,33 @@ The next persistence boundary has now been implemented without changing learner-
 
 The source-owned transformation is idempotent, the generated artifact remains deterministic, and the branch-head plus synthetic PR merge-result both passed the full two-pass suite after the I/O boundary was introduced. The migration-ownership gate was then added and the same two-pass suite passed again.
 
+## Checkpoint E — v7.5 compatibility runtime mechanically decomposed
+
+Completed without changing the assembled browser artifact.
+
+The old v7.5 compatibility block is now source-owned as four consecutive parts:
+
+- `30-compat-runtime.js`: v7.5 prelude/configuration and routing overrides;
+- `31-waseda-session-runtime.js`: active-session serialization, restore, outcome idempotency and recovery behavior;
+- `32-session-planning-runtime.js`: weighted selection, challenge-plan construction and session queue traversal;
+- `33-v75-ui-runtime.js`: remaining v7.5 question/UI/content behavior.
+
+The split is mechanical. Reviewed function boundaries are used as cut points and the split tool first proves that concatenating all four parts reproduces the previous v7.5 byte stream. Separator newlines are assigned to the following part so source files remain `git diff --check` clean without changing the assembled bytes.
+
+## Checkpoint F — v7.6 runtime mechanically decomposed
+
+Completed without changing scheduler semantics or the assembled browser artifact.
+
+The reviewed v7.6 block is now source-owned as three consecutive parts:
+
+- `35-v76-memory-runtime.js`: memory-model and forgetting-curve core calculations;
+- `36-v76-engine-integration.js`: outcome/scheduler/challenge/import integration overrides;
+- `37-v76-waseda-ui-runtime.js`: Waseda memory-detail UI, exam-date settings and init integration.
+
+The final bootstrap/export/init tail remains in `40-runtime-bootstrap-tail.js`. The assembly manifest still reports the same generated artifact SHA-256, `f46c304560446c8d8a8b321fe2097d800c9eb5660c36d22382ce309fb83e8360`, after the v7.5 and v7.6 mechanical decompositions. This means these checkpoints changed source ownership only; the browser-delivered artifact stayed byte-identical to the already-reviewed refactor artifact.
+
+A dedicated compatibility ownership guard now evaluates the decomposed parts together, while also checking the individual reviewed boundaries. This prevents raw Waseda persistence identifiers from leaking back into executable engine/compatibility code and prevents a partial split from being treated as valid.
+
 ## Manual production-safety blocker
 
 The refactor is still **draft-only and not merge-eligible**.
@@ -69,12 +96,12 @@ Production `main` currently has no branch protection/ruleset. Before this PR may
 
 ## Next extraction step
 
-The persistence boundary is now sufficiently separated for the next phase. The next work is to flatten the v7.5/v7.6 compatibility overrides into canonical source-owned engine behavior, but only in small sections and with the same safety discipline:
+The compatibility runtime is now physically separated enough to audit each ownership boundary without first rewriting behavior. The next phase remains intentionally conservative:
 
-1. classify every function/override in `30-compat-runtime.js` as school-neutral engine behavior, Waseda adapter policy, or Waseda UI/data behavior;
-2. move one coherent school-neutral function group at a time into canonical engine source while preserving execution order and runtime semantics;
-3. keep Waseda-only active-session policy, branding/data metadata, and cloud integration outside the common engine;
-4. after every move, rerun branch-head and PR-merge two-pass suites, including baseline differential, historical migration, real-cloud integration, active-session restoration and current persistence-contract tests;
-5. only after the compatibility layer has been flattened without Waseda-specific leakage may a school-neutral shared engine be extracted for Rikkyo.
+1. audit `32-session-planning-runtime.js` and `35-v76-memory-runtime.js` for hidden Waseda policy dependencies before moving any code into the canonical engine;
+2. promote only pure school-neutral helpers first; functions containing Waseda score bands, Japanese UI text, priority policy, exam-date policy, persistence identifiers or Waseda content assumptions must remain behind a policy/adapter boundary;
+3. move one helper or one coherent behavior group at a time and rerun the full branch-head and PR-merge two-pass suites after every semantic source move;
+4. keep Waseda active-session policy, branding/data metadata, UI wording and cloud integration outside the common engine;
+5. only after the compatibility-only override structure has been flattened and the Waseda production app has passed live existing-user smoke testing may a school-neutral shared engine be extracted for Rikkyo.
 
-The common engine must not be extracted for Rikkyo while Waseda-specific session/persistence policy or compatibility-only override structure still contaminates the engine boundary.
+The common engine must not be extracted for Rikkyo while Waseda-specific session/persistence/policy behavior still contaminates the engine boundary.
