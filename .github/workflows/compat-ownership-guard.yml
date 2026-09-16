@@ -5,6 +5,7 @@ on:
     branches:
       - refactor/waseda-common-engine-v1
     paths:
+      - src/common-engine/**
       - src/waseda-bootstrap/compat-ownership.json
       - src/waseda-bootstrap/engine-extraction-readiness.json
       - src/waseda-bootstrap/15-waseda-persistence.js
@@ -18,11 +19,13 @@ on:
       - src/waseda-bootstrap/37-v76-waseda-ui-runtime.js
       - tools/common_engine_compat_ownership_test.mjs
       - tools/common_engine_extraction_readiness_test.mjs
+      - tools/common_engine_policy_contract_test.mjs
       - .github/workflows/compat-ownership-guard.yml
   pull_request:
     branches:
       - main
     paths:
+      - src/common-engine/**
       - src/waseda-bootstrap/compat-ownership.json
       - src/waseda-bootstrap/engine-extraction-readiness.json
       - src/waseda-bootstrap/15-waseda-persistence.js
@@ -36,6 +39,7 @@ on:
       - src/waseda-bootstrap/37-v76-waseda-ui-runtime.js
       - tools/common_engine_compat_ownership_test.mjs
       - tools/common_engine_extraction_readiness_test.mjs
+      - tools/common_engine_policy_contract_test.mjs
       - .github/workflows/compat-ownership-guard.yml
   workflow_dispatch:
 
@@ -47,10 +51,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Syntax check ownership and extraction guards
+      - name: Syntax check ownership, extraction and policy guards
         run: |
           node --check tools/common_engine_compat_ownership_test.mjs
           node --check tools/common_engine_extraction_readiness_test.mjs
+          node --check tools/common_engine_policy_contract_test.mjs
       - name: Enforce Waseda/common ownership boundary
         run: node tools/common_engine_compat_ownership_test.mjs
       - name: Enforce extraction readiness classification
@@ -74,5 +79,7 @@ jobs:
           ]);
           console.log('pure-helper extraction exact-head checkpoint: PASS');
           JS
+      - name: Enforce school-neutral policy contract
+        run: node tools/common_engine_policy_contract_test.mjs
       - name: Diff hygiene
         run: git diff --check
