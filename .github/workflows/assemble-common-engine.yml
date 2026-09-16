@@ -8,6 +8,7 @@ on:
     paths:
       - src/waseda-bootstrap/**
       - tools/assemble_waseda.py
+      - tools/refactor_waseda_persistence_boundary.py
       - .github/workflows/assemble-common-engine.yml
 
 permissions:
@@ -27,6 +28,18 @@ jobs:
           git fetch origin main --quiet
           test "$(git rev-parse origin/main)" = "531d505c19a86eaa2c8bbc4b25179de8089ab585"
 
+      - name: Apply reviewed Waseda persistence boundary
+        run: |
+          python3 tools/refactor_waseda_persistence_boundary.py
+          cp src/waseda-bootstrap/15-waseda-persistence.js /tmp/waseda-persistence.js
+          cp src/waseda-bootstrap/20-engine-candidate.js /tmp/waseda-engine-candidate.js
+          cp src/waseda-bootstrap/30-compat-runtime.js /tmp/waseda-compat-runtime.js
+          python3 tools/refactor_waseda_persistence_boundary.py
+          cmp src/waseda-bootstrap/15-waseda-persistence.js /tmp/waseda-persistence.js
+          cmp src/waseda-bootstrap/20-engine-candidate.js /tmp/waseda-engine-candidate.js
+          cmp src/waseda-bootstrap/30-compat-runtime.js /tmp/waseda-compat-runtime.js
+          echo "persistence boundary transform idempotence: PASS"
+
       - name: Assemble production artifact from source parts
         run: python3 tools/assemble_waseda.py --write
 
@@ -42,14 +55,15 @@ jobs:
           git diff --exit-code 531d505c19a86eaa2c8bbc4b25179de8089ab585...HEAD -- progress-sync.js
           git diff --check
 
-      - name: Commit generated artifact and refreshed manifest
+      - name: Commit generated artifact and persistence boundary
         run: |
-          if [ -z "$(git status --porcelain -- index.html src/waseda-bootstrap/manifest.json)" ]; then
-            echo "Generated Waseda artifact already up to date"
+          CHANGED="$(git status --porcelain -- index.html src/waseda-bootstrap/manifest.json src/waseda-bootstrap/15-waseda-persistence.js src/waseda-bootstrap/20-engine-candidate.js src/waseda-bootstrap/30-compat-runtime.js)"
+          if [ -z "$CHANGED" ]; then
+            echo "Generated Waseda artifact and persistence boundary already up to date"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add index.html src/waseda-bootstrap/manifest.json
-          git commit -m "build: assemble Waseda app from engine sources"
+          git add index.html src/waseda-bootstrap/manifest.json src/waseda-bootstrap/15-waseda-persistence.js src/waseda-bootstrap/20-engine-candidate.js src/waseda-bootstrap/30-compat-runtime.js
+          git commit -m "refactor: route Waseda persistence through adapter boundary"
           git push origin HEAD:refactor/waseda-common-engine-v1
