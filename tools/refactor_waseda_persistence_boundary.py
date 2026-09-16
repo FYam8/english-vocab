@@ -87,6 +87,35 @@ def main() -> None:
         'active-session load adapter',
     )
 
+    # The schema/ID migration policy is Waseda-specific. Move the exact existing
+    # function body into the Waseda persistence adapter, leaving only a generic
+    # engine delegation point. No migration rule is rewritten in this step.
+    migration_wrapper = 'function migrate(raw){return wasedaMigrateState(raw)}\n'
+    if 'function wasedaMigrateState(raw){' not in persistence:
+        start_marker = 'function migrate(raw){\n'
+        end_marker = 'function loadState(){\n'
+        if engine.count(start_marker) != 1 or engine.count(end_marker) != 1:
+            raise SystemExit("Could not identify a unique Waseda migration block")
+        start = engine.index(start_marker)
+        end = engine.index(end_marker, start)
+        migration = engine[start:end]
+        required_migration_markers = [
+            's.schemaVersion=2;v=2;',
+            's.schemaVersion=6;v=6;',
+            'const oldId="w3186341920",newId="p0431020501";',
+            's.schemaVersion=7;v=7;',
+            's.words[id]=Object.assign(defaultProgress(),p);',
+        ]
+        for needle in required_migration_markers:
+            if needle not in migration:
+                raise SystemExit(f"Waseda migration block missing reviewed rule: {needle}")
+        migration = migration.replace('function migrate(raw){', 'function wasedaMigrateState(raw){', 1)
+        persistence = persistence.rstrip() + '\n\n' + migration.rstrip() + '\n'
+        engine = engine[:start] + migration_wrapper + engine[end:]
+    else:
+        if migration_wrapper not in engine:
+            raise SystemExit("Waseda migration adapter exists but engine delegation wrapper is missing")
+
     if 'localStorage.getItem(STORAGE_KEY)' in engine or 'localStorage.setItem(STORAGE_KEY' in engine:
         raise SystemExit("main-state storage still bypasses Waseda persistence adapter")
     for forbidden in [
@@ -96,6 +125,16 @@ def main() -> None:
     ]:
         if forbidden in compat:
             raise SystemExit(f"active-session storage still bypasses adapter: {forbidden}")
+
+    if 'const oldId="w3186341920",newId="p0431020501";' in engine:
+        raise SystemExit("Waseda fixed-ID migration policy still lives in engine candidate")
+    for required in [
+        'function wasedaMigrateState(raw){',
+        'const oldId="w3186341920",newId="p0431020501";',
+        's.schemaVersion=7;v=7;',
+    ]:
+        if required not in persistence:
+            raise SystemExit(f"Waseda persistence adapter lost migration rule: {required}")
 
     PERSISTENCE.write_text(persistence, encoding="utf-8")
     ENGINE.write_text(engine, encoding="utf-8")
