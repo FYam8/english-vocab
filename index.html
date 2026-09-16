@@ -1495,6 +1495,19 @@ function v75UpsertQuestionHistory(){
   const i=session.questionHistory.findIndex(x=>x.questionInstanceId===snap.questionInstanceId);
   if(i>=0)session.questionHistory[i]=snap;else session.questionHistory.push(snap);
 }
+/*
+ * Waseda-only session planning policy adapter.
+ * First reviewed group: foundation-reason precedence and exact learner-facing copy.
+ * Do not move these strings or Waseda-specific predicates into the common engine.
+ */
+const WASEDA_PLANNING_POLICY=Object.freeze({
+  foundationReason(v,p,t){
+    if(isWeakProgress(p))return "挑戦前の基礎確認：最近の正誤履歴で苦手判定となっている重要語です。";
+    if(p.recentMistakeUntil&&new Date(p.recentMistakeUntil).getTime()>t)return "挑戦前の基礎確認：最近間違えた重要語のため再確認します。";
+    if(p.nextReview&&new Date(p.nextReview).getTime()<=t)return "挑戦前の基礎確認：復習期限を迎えた重要語です。";
+    return "挑戦前の基礎確認：75点挑戦を支える基礎語を再確認します。";
+  }
+});
 
 function v75ChallengeScore(v){
   const p=getProgress(v.id),t=now();
@@ -1507,10 +1520,7 @@ function v75ChallengeScore(v){
 }
 function v75FoundationReason(v){
   const p=getProgress(v.id),t=now();
-  if(isWeakProgress(p))return "挑戦前の基礎確認：最近の正誤履歴で苦手判定となっている重要語です。";
-  if(p.recentMistakeUntil&&new Date(p.recentMistakeUntil).getTime()>t)return "挑戦前の基礎確認：最近間違えた重要語のため再確認します。";
-  if(p.nextReview&&new Date(p.nextReview).getTime()<=t)return "挑戦前の基礎確認：復習期限を迎えた重要語です。";
-  return "挑戦前の基礎確認：75点挑戦を支える基礎語を再確認します。";
+  return WASEDA_PLANNING_POLICY.foundationReason(v,p,t);
 }
 function buildChallengeSessionPlan(year,requested){
   const y=year==="all"?null:Number(year),t=now();

@@ -10,10 +10,7 @@ function v75ChallengeScore(v){
 }
 function v75FoundationReason(v){
   const p=getProgress(v.id),t=now();
-  if(isWeakProgress(p))return "挑戦前の基礎確認：最近の正誤履歴で苦手判定となっている重要語です。";
-  if(p.recentMistakeUntil&&new Date(p.recentMistakeUntil).getTime()>t)return "挑戦前の基礎確認：最近間違えた重要語のため再確認します。";
-  if(p.nextReview&&new Date(p.nextReview).getTime()<=t)return "挑戦前の基礎確認：復習期限を迎えた重要語です。";
-  return "挑戦前の基礎確認：75点挑戦を支える基礎語を再確認します。";
+  return WASEDA_PLANNING_POLICY.foundationReason(v,p,t);
 }
 function buildChallengeSessionPlan(year,requested){
   const y=year==="all"?null:Number(year),t=now();
