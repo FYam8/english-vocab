@@ -110,5 +110,12 @@
     "session."
   ],
   "firstPromotion": "v75WeightedWithoutReplacement",
-  "firstPromotionStatus": "promoted"
+  "firstPromotionStatus": "promoted",
+  "promotionValidation": {
+    "requireExactBranchHead": true,
+    "requireSyntheticMerge": true,
+    "requireTwoPassCompatibility": true,
+    "requireOwnershipGuard": true,
+    "allowNextPromotionBeforeGreen": false
+  }
 }
