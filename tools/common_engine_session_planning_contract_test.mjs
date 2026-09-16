@@ -107,15 +107,41 @@ assert.equal(reasons.mustRemainOutsideCommonEngine,true);
 
 assert.equal(contract.challengeSessionComposition.requiredChallengeFraction,0.8);
 assert.equal(contract.challengeSessionComposition.foundationExceptionFractionCap,0.2);
-for (const snippet of [
-  'const required=Math.ceil(desired*.8);',
-  'const exceptionCap=Math.floor(desired*.2);',
-  'const challenge=VOCAB.filter(v=>(v.studyLayer||"core")==="challenge"',
-  'if(layer==="reference"||layer==="challenge")return false;',
-  'return isWeakProgress(p)||due||recent;',
-  'v=>schedulerScore(v,"recommended")',
-  'const combined=shuffle([...challengePicked,...exceptions]).slice(0,desired);'
-]) assert.ok(planning.includes(snippet), `Waseda challenge composition drifted: ${snippet}`);
+const compositionAdapted = policy.includes('isChallengeEntity(v){');
+if (compositionAdapted) {
+  for (const snippet of [
+    'isChallengeEntity(v){return (v.studyLayer||"core")==="challenge"}',
+    'return layer!=="reference"&&layer!=="challenge";',
+    'return isWeakProgress(p)||due||recent;',
+    'requiredChallengeCount(desired){return Math.ceil(desired*.8)}',
+    'foundationExceptionCap(desired){return Math.floor(desired*.2)}'
+  ]) assert.ok(policy.includes(snippet), `Waseda challenge composition adapter drifted: ${snippet}`);
+  for (const snippet of [
+    'WASEDA_PLANNING_POLICY.isChallengeEntity(v)&&(!y||v.years.includes(y))',
+    'const required=WASEDA_PLANNING_POLICY.requiredChallengeCount(desired);',
+    'if(!WASEDA_PLANNING_POLICY.isFoundationLayerEligible(v))return false;',
+    'if(y&&!v.years.includes(y))return false;',
+    'const p=getProgress(v.id);',
+    'return WASEDA_PLANNING_POLICY.isFoundationStateEligible(p,t);',
+    'const exceptionCap=WASEDA_PLANNING_POLICY.foundationExceptionCap(desired);',
+    'v=>schedulerScore(v,"recommended")',
+    'const combined=shuffle([...challengePicked,...exceptions]).slice(0,desired);'
+  ]) assert.ok(planning.includes(snippet), `Waseda challenge composition delegation drifted: ${snippet}`);
+  const block=planning.slice(planning.indexOf('function buildChallengeSessionPlan(year,requested){'),planning.indexOf('function buildSessionPlan(mode,year,size){'));
+  assert.ok(block.indexOf('if(!WASEDA_PLANNING_POLICY.isFoundationLayerEligible(v))return false;') < block.indexOf('if(y&&!v.years.includes(y))return false;'));
+  assert.ok(block.indexOf('if(y&&!v.years.includes(y))return false;') < block.indexOf('const p=getProgress(v.id);'));
+  assert.ok(block.indexOf('const p=getProgress(v.id);') < block.indexOf('return WASEDA_PLANNING_POLICY.isFoundationStateEligible(p,t);'));
+} else {
+  for (const snippet of [
+    'const required=Math.ceil(desired*.8);',
+    'const exceptionCap=Math.floor(desired*.2);',
+    'const challenge=VOCAB.filter(v=>(v.studyLayer||"core")==="challenge"',
+    'if(layer==="reference"||layer==="challenge")return false;',
+    'return isWeakProgress(p)||due||recent;',
+    'v=>schedulerScore(v,"recommended")',
+    'const combined=shuffle([...challengePicked,...exceptions]).slice(0,desired);'
+  ]) assert.ok(planning.includes(snippet), `Waseda challenge composition drifted: ${snippet}`);
+}
 
 assert.equal(contract.sessionPlanPolicy.unlimitedSentinelSize,0);
 assert.equal(contract.sessionPlanPolicy.challengeMode,'75');

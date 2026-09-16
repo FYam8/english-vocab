@@ -111,6 +111,16 @@
     "rikkyoRuntimeUnchanged": true,
     "approvedGroup": "challenge-session-composition-policy-adapter"
   },
+  "thirdTransformPreparation": {
+    "status": "prepared-no-runtime-mutation",
+    "preparedOnTopOf": "4e811c193f3dc11ee083fe36c8da27575d648030",
+    "transformScript": "tools/extract_waseda_challenge_session_composition_policy_adapter.py",
+    "adapterTest": "tools/waseda_challenge_session_composition_policy_adapter_test.mjs",
+    "dualStateContractTestsRequired": true,
+    "dedicatedTransformWorkflowEnabled": false,
+    "productionMainUnchanged": true,
+    "rikkyoRuntimeUnchanged": true
+  },
   "forbidden": [
     "moving Waseda challenge composition policy into the common engine",
     "moving getProgress ahead of foundation layer/year exclusion checks",
