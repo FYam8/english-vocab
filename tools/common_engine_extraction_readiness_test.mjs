@@ -13,6 +13,7 @@ assert.ok(Array.isArray(readiness.policyInjectionRequired) && readiness.policyIn
 assert.ok(Array.isArray(readiness.blockedTokensForReadyHelpers));
 assert.ok(['pending', 'promoted'].includes(readiness.firstPromotionStatus));
 assert.ok(['pending', 'promoted'].includes(readiness.secondPromotionStatus));
+assert.ok(['pending', 'promoted'].includes(readiness.thirdPromotionStatus));
 const validation = readiness.promotionValidation || {};
 assert.equal(validation.requireExactBranchHead, true, 'helper promotion must require exact branch-head validation');
 assert.equal(validation.requireSyntheticMerge, true, 'helper promotion must require synthetic-merge validation');
@@ -62,6 +63,13 @@ function functionBlock(source, symbol) {
 function assertSchoolNeutral(block, symbol) {
   for (const token of readiness.blockedTokensForReadyHelpers) {
     assert.ok(!block.includes(token), `${symbol} is not school-neutral yet; blocked token: ${token}`);
+  }
+}
+
+function assertValidationComplete(name, record) {
+  assert.match(String(record.validatedHead || ''), /^[0-9a-f]{40}$/, `${name} must record the exact validated head`);
+  for (const key of ['branchTwoPass', 'syntheticMergeTwoPass', 'branchOwnership', 'syntheticMergeOwnership']) {
+    assert.equal(record[key], 'success', `${name} validation incomplete: ${key}`);
   }
 }
 
@@ -131,12 +139,7 @@ if (readiness.firstPromotionStatus === 'pending') {
   }
   assert.ok(!read(`${ROOT}/${promoted.previousSource}`).includes(`function ${promoted.symbol}(`), 'promoted first helper remains duplicated in policy source');
 }
-
-const firstValidation = readiness.firstPromotionValidation || {};
-assert.match(String(firstValidation.validatedHead || ''), /^[0-9a-f]{40}$/, 'first promotion must record the exact validated head');
-for (const key of ['branchTwoPass', 'syntheticMergeTwoPass', 'branchOwnership', 'syntheticMergeOwnership']) {
-  assert.equal(firstValidation[key], 'success', `first promotion validation incomplete: ${key}`);
-}
+assertValidationComplete('first promotion', readiness.firstPromotionValidation || {});
 
 assert.equal(readiness.secondPromotion, 'v76Clamp', 'second promotion changed without explicit review');
 if (readiness.secondPromotionStatus === 'pending') {
@@ -153,8 +156,33 @@ if (readiness.secondPromotionStatus === 'pending') {
   assert.equal(promoted.previousSource, '35-v76-memory-runtime.js');
   assert.equal(promoted.target, '20-engine-candidate.js');
   assert.equal(promoted.promotionType, 'definition-move-only; name and function body unchanged');
-  assertSchoolNeutral(functionBlock(read(`${ROOT}/${promoted.target}`), promoted.symbol), promoted.symbol);
+  const block = functionBlock(read(`${ROOT}/${promoted.target}`), promoted.symbol);
+  assert.equal(block, 'function v76Clamp(x,lo,hi){return Math.max(lo,Math.min(hi,Number(x)))}', 'promoted v76Clamp body changed');
+  assertSchoolNeutral(block, promoted.symbol);
   assert.ok(!read(`${ROOT}/${promoted.previousSource}`).includes(`function ${promoted.symbol}(`), 'promoted second helper remains duplicated in v7.6 source');
+}
+assertValidationComplete('second promotion', readiness.secondPromotionValidation || {});
+
+assert.equal(readiness.thirdPromotion, 'v76SeedStability', 'third promotion changed without explicit review');
+if (readiness.thirdPromotionStatus === 'pending') {
+  const third = readiness.readySchoolNeutralHelpers.find((x) => x.symbol === readiness.thirdPromotion);
+  assert.ok(third, 'pending thirdPromotion must remain classified as ready');
+  assert.equal(third.source, '35-v76-memory-runtime.js');
+  assert.equal(third.target, '20-engine-candidate.js');
+  const block = functionBlock(read(`${ROOT}/${third.source}`), third.symbol);
+  assert.equal(block, 'function v76SeedStability(mastery){const i=Math.max(0,Math.min(4,Math.round(Number(mastery)||0)));return [0.75,1.5,4,14,30][i]}', 'pending v76SeedStability body changed');
+  assertSchoolNeutral(block, third.symbol);
+  assert.ok(!read(`${ROOT}/${third.target}`).includes(`function ${third.symbol}(`), 'pending third promotion already moved');
+} else {
+  const promoted = readiness.promotedSchoolNeutralHelpers.find((x) => x.symbol === readiness.thirdPromotion);
+  assert.ok(promoted, 'promoted thirdPromotion must be recorded');
+  assert.equal(promoted.previousSource, '35-v76-memory-runtime.js');
+  assert.equal(promoted.target, '20-engine-candidate.js');
+  assert.equal(promoted.promotionType, 'definition-move-only; name and function body unchanged');
+  const block = functionBlock(read(`${ROOT}/${promoted.target}`), promoted.symbol);
+  assert.equal(block, 'function v76SeedStability(mastery){const i=Math.max(0,Math.min(4,Math.round(Number(mastery)||0)));return [0.75,1.5,4,14,30][i]}', 'promoted v76SeedStability body changed');
+  assertSchoolNeutral(block, promoted.symbol);
+  assert.ok(!read(`${ROOT}/${promoted.previousSource}`).includes(`function ${promoted.symbol}(`), 'promoted third helper remains duplicated in v7.6 source');
 }
 
 console.log('Common-engine extraction readiness classification: PASS');
