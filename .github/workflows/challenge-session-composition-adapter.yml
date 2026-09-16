@@ -91,6 +91,7 @@ jobs:
 
       - name: Commit only approved generated changes
         run: |
+          rm -rf tools/__pycache__
           CHANGED="$(git status --porcelain -- index.html src/waseda-bootstrap/manifest.json src/waseda-bootstrap/31a-waseda-planning-policy.js src/waseda-bootstrap/32-session-planning-runtime.js)"
           if [ -z "$CHANGED" ]; then
             echo "Challenge-session composition adapter already applied"
