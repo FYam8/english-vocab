@@ -40,6 +40,9 @@ jobs:
       - name: Require deterministic Waseda source assembly
         run: |
           python3 tools/assemble_waseda.py --check
+          node --check src/common-engine/session-orchestration.js
+          node tools/common_engine_session_orchestration_test.mjs
+          node tools/waseda_session_orchestration_parity_test.mjs
           python3 - <<'PY'
           from pathlib import Path
           p=Path('src/waseda-bootstrap/15-waseda-persistence.js').read_text(encoding='utf-8')

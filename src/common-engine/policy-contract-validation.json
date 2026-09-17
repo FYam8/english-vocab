@@ -50,7 +50,7 @@
   },
   "nextBoundary": {
     "name": "session-planning-policy-adapter",
-    "status": "contract-definition-only",
-    "allowRuntimeMutation": false
+    "status": "validated-runtime-wiring",
+    "allowRuntimeMutation": true
   }
 }

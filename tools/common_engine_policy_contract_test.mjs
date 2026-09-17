@@ -104,8 +104,8 @@ if (planningPolicy) {
 } else {
   assert.ok(planning.includes('75点挑戦を支える基礎語'));
 }
-assert.ok(planning.includes('if(mode==="75")'));
-assert.ok(planning.includes('(v.studyLayer||"core")==="challenge"'));
+assert.ok(planningPolicy.includes('isChallengeMode(mode){return mode==="75"}'));
+assert.ok(planningPolicy.includes('isChallengeEntity(v){return (v.studyLayer||"core")==="challenge"}'));
 
 const rikkyo = contract.rikkyoAuditedMapping;
 assert.equal(rikkyo.repository, 'FYam8/rikkyo-uk-vocab');

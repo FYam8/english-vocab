@@ -8,14 +8,15 @@ const session = read('src/waseda-bootstrap/31-waseda-session-runtime.js');
 const policyPath = 'src/waseda-bootstrap/31a-waseda-planning-policy.js';
 const policy = fs.existsSync(policyPath) ? read(policyPath) : '';
 const planning = read('src/waseda-bootstrap/32-session-planning-runtime.js');
+const commonSession = read('src/common-engine/session-orchestration.js');
 const validation = JSON.parse(read('src/common-engine/policy-contract-validation.json'));
 
 assert.equal(contract.format, 'waseda-session-planning-policy-contract/v1');
-assert.equal(contract.status, 'contract-only-no-runtime-wiring');
+assert.equal(contract.status, 'validated-runtime-wiring');
 assert.equal(contract.reviewedSourceHead, '727783e9adc53c9caa55201bcee4817cd0c1373f');
 assert.equal(contract.productionBaseline, '531d505c19a86eaa2c8bbc4b25179de8089ab585');
 assert.equal(validation.nextBoundary?.name, 'session-planning-policy-adapter');
-assert.equal(validation.nextBoundary?.allowRuntimeMutation, false);
+assert.equal(validation.nextBoundary?.allowRuntimeMutation, true);
 
 assert.deepEqual(contract.baseSelectionPolicy.priorityScore, {S:90,A:48,B:24,C:8});
 assert.deepEqual(contract.baseSelectionPolicy.levelScore, {'60':50,'70':24,'75':8});
@@ -147,30 +148,31 @@ assert.equal(contract.sessionPlanPolicy.unlimitedSentinelSize,0);
 assert.equal(contract.sessionPlanPolicy.challengeMode,'75');
 assert.equal(contract.sessionPlanPolicy.randomMode,'random');
 for (const snippet of [
-  'if(size===0)return {unlimited:true,candidatePoolIds:pool.map(v=>v.id),baseQueueIds:[],actualSessionSize:0};',
-  'if(mode==="75")return Object.assign({unlimited:false,candidatePoolIds:[]},buildChallengeSessionPlan(year,size));',
-  'mode==="random"?shuffle(pool).slice(0,n):v75WeightedWithoutReplacement(pool,n,v=>schedulerScore(v,mode))'
-]) assert.ok(planning.includes(snippet), `Waseda session-plan policy drifted: ${snippet}`);
+  'VOCABULARY_SESSION_ENGINE.buildPlan({',
+  'isSpecialMode:m=>WASEDA_PLANNING_POLICY.isChallengeMode(m)',
+  'isRandomMode:m=>WASEDA_PLANNING_POLICY.isRandomMode(m)',
+  'score:(v,m)=>schedulerScore(v,m)'
+]) assert.ok(planning.includes(snippet), `Waseda session-plan delegation drifted: ${snippet}`);
+for (const snippet of ['if(options.size===options.unlimitedSize){','options.buildSpecialPlan(options.year,options.size)','options.isRandomMode(options.mode)'])
+  assert.ok(commonSession.includes(snippet), `common session-plan orchestration drifted: ${snippet}`);
 
 assert.equal(contract.retryPolicy.gapAnswersPrioritySOrLevel60,6);
 assert.equal(contract.retryPolicy.gapAnswersOther,8);
 for (const snippet of [
   'if(!pending.isRetry&&(session.retryCounts[v.id]||0)===0){',
-  'const gap=(v.priority==="S"||v.level===60)?6:8;',
+  'const gap=WASEDA_PLANNING_POLICY.retryGap(v);',
   'session.retryQueue.push({wordId:v.id,dueAfterTotal:session.totalAnswered+gap});',
   '}else if(pending.isRetry){',
   'session.blockedIds.add(v.id);'
 ]) assert.ok(session.includes(snippet), `Waseda retry scheduling policy drifted: ${snippet}`);
 for (const snippet of [
-  'r.dueAfterTotal<=session.totalAnswered&&!session.blockedIds.has(r.wordId)',
-  '.sort((a,b)=>a.dueAfterTotal-b.dueAfterTotal)[0]||null;',
-  'const recent=new Set(session.recentIds.slice(-6));',
-  'if(session.mode==="75")pool=pool.filter(v=>(v.studyLayer||"core")==="challenge");',
-  'const due=v75DueRetry();',
-  'if(session.unlimited){',
-  'if(session.baseCursor<session.baseQueueIds.length){',
-  'A retry that has not reached its 6/8-answer spacing is deferred to nextReview.'
-]) assert.ok(planning.includes(snippet), `Waseda queue/retry policy drifted: ${snippet}`);
+  'VOCABULARY_SESSION_ENGINE.dueRetry',
+  'VOCABULARY_SESSION_ENGINE.pickUnlimitedBase',
+  'recentWindow:WASEDA_PLANNING_POLICY.unlimitedRecentWindow',
+  'VOCABULARY_SESSION_ENGINE.nextItem'
+]) assert.ok(planning.includes(snippet), `Waseda queue/retry delegation drifted: ${snippet}`);
+for (const snippet of ['item.dueAfterTotal<=totalAnswered&&!isBlocked(item.wordId)','recentIds.slice(-options.recentWindow)','if(state.unlimited){','if(state.baseCursor<state.baseQueueIds.length){'])
+  assert.ok(commonSession.includes(snippet), `common queue orchestration drifted: ${snippet}`);
 
 assert.equal(contract.unlimitedQueuePolicy.recentExclusionWindow,6);
 assert.deepEqual(contract.retryPolicy.nextItemPrecedence,['dueRetry','unlimitedBase','finiteBaseQueue','endSession']);

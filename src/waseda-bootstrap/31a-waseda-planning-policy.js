@@ -29,5 +29,9 @@ const WASEDA_PLANNING_POLICY=Object.freeze({
     return isWeakProgress(p)||due||recent;
   },
   requiredChallengeCount(desired){return Math.ceil(desired*.8)},
-  foundationExceptionCap(desired){return Math.floor(desired*.2)}
+  foundationExceptionCap(desired){return Math.floor(desired*.2)},
+  isChallengeMode(mode){return mode==="75"},
+  isRandomMode(mode){return mode==="random"},
+  retryGap(v){return v.priority==="S"||v.level===60?6:8},
+  unlimitedRecentWindow:6
 });

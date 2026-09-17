@@ -34,40 +34,46 @@ function buildChallengeSessionPlan(year,requested){
 }
 function buildSessionPlan(mode,year,size){
   const pool=filterPool(mode,year);
-  if(size===0)return {unlimited:true,candidatePoolIds:pool.map(v=>v.id),baseQueueIds:[],actualSessionSize:0};
-  if(mode==="75")return Object.assign({unlimited:false,candidatePoolIds:[]},buildChallengeSessionPlan(year,size));
-  const n=Math.min(size,pool.length);
-  const picked=mode==="random"?shuffle(pool).slice(0,n):v75WeightedWithoutReplacement(pool,n,v=>schedulerScore(v,mode));
-  return {unlimited:false,candidatePoolIds:[],baseQueueIds:picked.map(v=>v.id),actualSessionSize:picked.length,challengeCount:picked.filter(v=>(v.studyLayer||"core")==="challenge").length,baseReasons:{}};
+  const plan=VOCABULARY_SESSION_ENGINE.buildPlan({
+    mode,year,size,pool,unlimitedSize:0,
+    getId:v=>v.id,
+    isSpecialMode:m=>WASEDA_PLANNING_POLICY.isChallengeMode(m),
+    buildSpecialPlan:buildChallengeSessionPlan,
+    isRandomMode:m=>WASEDA_PLANNING_POLICY.isRandomMode(m),
+    shuffle,
+    weightedWithoutReplacement:v75WeightedWithoutReplacement,
+    score:(v,m)=>schedulerScore(v,m),
+    isSpecialEntity:v=>WASEDA_PLANNING_POLICY.isChallengeEntity(v)
+  });
+  if(Object.prototype.hasOwnProperty.call(plan,"specialCount")){
+    plan.challengeCount=plan.specialCount;
+    delete plan.specialCount;
+  }
+  return plan;
 }
 function v75DueRetry(){
-  return session.retryQueue.filter(r=>r.dueAfterTotal<=session.totalAnswered&&!session.blockedIds.has(r.wordId)).sort((a,b)=>a.dueAfterTotal-b.dueAfterTotal)[0]||null;
+  return VOCABULARY_SESSION_ENGINE.dueRetry(session.retryQueue,session.totalAnswered,id=>session.blockedIds.has(id));
 }
 function v75PickUnlimitedBase(){
-  let pool=session.candidatePoolIds.map(id=>VOCAB_BY_ID.get(id)).filter(Boolean).filter(v=>!session.blockedIds.has(v.id));
-  if(session.mode==="75")pool=pool.filter(v=>(v.studyLayer||"core")==="challenge");
-  if(!pool.length)return null;
-  const recent=new Set(session.recentIds.slice(-6));
-  let candidates=pool.filter(v=>!recent.has(v.id));if(!candidates.length)candidates=pool;
-  const weights=candidates.map(v=>session.mode==="75"?v75ChallengeScore(v):schedulerScore(v,session.mode));
-  return weightedChoice(candidates,weights);
+  return VOCABULARY_SESSION_ENGINE.pickUnlimitedBase({
+    candidateIds:session.candidatePoolIds,
+    resolve:id=>VOCAB_BY_ID.get(id),
+    isBlocked:id=>session.blockedIds.has(id),
+    getId:v=>v.id,
+    restrictPool:(pool,mode)=>WASEDA_PLANNING_POLICY.isChallengeMode(mode)?pool.filter(v=>WASEDA_PLANNING_POLICY.isChallengeEntity(v)):pool,
+    mode:session.mode,
+    recentIds:session.recentIds,
+    recentWindow:WASEDA_PLANNING_POLICY.unlimitedRecentWindow,
+    score:(v,mode)=>WASEDA_PLANNING_POLICY.isChallengeMode(mode)?v75ChallengeScore(v):schedulerScore(v,mode),
+    weightedChoice
+  });
 }
 function v75NextSessionItem(){
-  const due=v75DueRetry();
-  if(due){
-    session.retryQueue=session.retryQueue.filter(r=>r!==due);
-    session.retryCounts[due.wordId]=(session.retryCounts[due.wordId]||0)+1;
-    return {v:VOCAB_BY_ID.get(due.wordId),isRetry:true};
-  }
-  if(session.unlimited){
-    const v=v75PickUnlimitedBase();
-    if(v){session.generatedBaseIds.push(v.id);return {v,isRetry:false}}
-    return null;
-  }
-  if(session.baseCursor<session.baseQueueIds.length){
-    const id=session.baseQueueIds[session.baseCursor++];
-    return {v:VOCAB_BY_ID.get(id),isRetry:false,reason:session.baseReasons&&session.baseReasons[id]||""};
-  }
-  // A retry that has not reached its 6/8-answer spacing is deferred to nextReview.
-  return null;
+  return VOCABULARY_SESSION_ENGINE.nextItem({
+    state:session,
+    dueRetry:v75DueRetry,
+    pickUnlimitedBase:v75PickUnlimitedBase,
+    resolve:id=>VOCAB_BY_ID.get(id),
+    getId:v=>v.id
+  });
 }

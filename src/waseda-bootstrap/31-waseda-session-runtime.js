@@ -168,7 +168,7 @@ function v75ApplySessionOutcome(v,pending,p){
     session.missed.add(v.id);
     if(isWeakProgress(p))session.weak.add(v.id);
     if(!pending.isRetry&&(session.retryCounts[v.id]||0)===0){
-      const gap=(v.priority==="S"||v.level===60)?6:8;
+      const gap=WASEDA_PLANNING_POLICY.retryGap(v);
       session.retryQueue.push({wordId:v.id,dueAfterTotal:session.totalAnswered+gap});
     }else if(pending.isRetry){
       v75RemoveRetry(v.id);

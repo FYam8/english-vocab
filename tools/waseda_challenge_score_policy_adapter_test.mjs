@@ -11,7 +11,7 @@ const validation = JSON.parse(read('src/common-engine/session-planning-contract-
 
 assert.equal(validation.allowSecondPlanningAdapterGroupIntroduction, true);
 assert.equal(validation.secondApprovedGroup, 'challenge-score-base-policy-adapter');
-assert.equal(validation.allowFullPlanningRuntimeMutation, false);
+assert.equal(validation.allowFullPlanningRuntimeMutation, true);
 assert.ok(policySource.includes('challengeScore(v,p,t){'));
 assert.ok(planning.includes('return WASEDA_PLANNING_POLICY.challengeScore(v,p,t);'));
 assert.equal(manifest.boundaries?.wasedaChallengeScorePolicyV75, '31a-waseda-planning-policy.js');

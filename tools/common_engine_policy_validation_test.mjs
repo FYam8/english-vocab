@@ -58,7 +58,7 @@ assert.equal(scoringAdapter.productionMainUnchanged, true);
 assert.equal(scoringAdapter.rikkyoRuntimeUnchanged, true);
 
 assert.equal(validation.nextBoundary?.name, contract.thirdRuntimeBoundary.name);
-assert.equal(validation.nextBoundary?.status, 'contract-definition-only');
-assert.equal(validation.nextBoundary?.allowRuntimeMutation, false);
+assert.equal(validation.nextBoundary?.status, 'validated-runtime-wiring');
+assert.equal(validation.nextBoundary?.allowRuntimeMutation, true);
 
 console.log('Common-engine policy validation checkpoint: PASS');

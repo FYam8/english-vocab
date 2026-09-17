@@ -9,7 +9,7 @@ const manifest = JSON.parse(read('src/waseda-bootstrap/manifest.json'));
 const validation = JSON.parse(read('src/common-engine/session-planning-contract-validation.json'));
 
 assert.equal(validation.allowFirstPlanningAdapterGroupIntroduction, true);
-assert.equal(validation.allowFullPlanningRuntimeMutation, false);
+assert.equal(validation.allowFullPlanningRuntimeMutation, true);
 assert.equal(validation.firstApprovedGroup, 'foundation-reason-policy-adapter');
 assert.ok(fs.existsSync(policyPath), 'Waseda planning policy adapter source missing');
 const policySource = read(policyPath);

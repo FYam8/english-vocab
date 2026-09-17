@@ -11,7 +11,7 @@ const contract = JSON.parse(read('src/common-engine/challenge-session-compositio
 
 assert.equal(validation.allowThirdPlanningAdapterGroupIntroduction, true);
 assert.equal(validation.thirdApprovedGroup, 'challenge-session-composition-policy-adapter');
-assert.equal(validation.allowFullPlanningRuntimeMutation, false);
+assert.equal(validation.allowFullPlanningRuntimeMutation, true);
 assert.equal(contract.format, 'waseda-challenge-session-composition-policy-contract/v1');
 assert.equal(contract.exactBehavior.mustNotCreateProgressForLayerOrYearExcludedEntities, true);
 
@@ -52,18 +52,17 @@ const stateI = block.indexOf('return WASEDA_PLANNING_POLICY.isFoundationStateEli
 assert.ok(layerI >= 0 && layerI < yearI && yearI < progressI && progressI < stateI,
   'foundation evaluation order changed; excluded entities may acquire default progress');
 
-for (const untouched of [
+for (const delegated of [
   'function buildSessionPlan(mode,year,size){',
-  'if(size===0)return {unlimited:true,candidatePoolIds:pool.map(v=>v.id),baseQueueIds:[],actualSessionSize:0};',
-  'if(mode==="75")return Object.assign({unlimited:false,candidatePoolIds:[]},buildChallengeSessionPlan(year,size));',
+  'VOCABULARY_SESSION_ENGINE.buildPlan({',
+  'isSpecialMode:m=>WASEDA_PLANNING_POLICY.isChallengeMode(m)',
   'function v75DueRetry(){',
-  'r.dueAfterTotal<=session.totalAnswered&&!session.blockedIds.has(r.wordId)',
+  'VOCABULARY_SESSION_ENGINE.dueRetry',
   'function v75PickUnlimitedBase(){',
-  'if(session.mode==="75")pool=pool.filter(v=>(v.studyLayer||"core")==="challenge");',
-  'const recent=new Set(session.recentIds.slice(-6));',
+  'recentWindow:WASEDA_PLANNING_POLICY.unlimitedRecentWindow',
   'function v75NextSessionItem(){',
-  'const due=v75DueRetry();'
-]) assert.ok(planning.includes(untouched), `out-of-scope queue/planning behavior changed: ${untouched}`);
+  'VOCABULARY_SESSION_ENGINE.nextItem({'
+]) assert.ok(planning.includes(delegated), `queue/planning delegation changed: ${delegated}`);
 
 assert.equal(manifest.boundaries?.wasedaPlanningChallengeCompositionPolicyV75, '31a-waseda-planning-policy.js');
 for (const forbidden of ['localStorage','waseshibu_vocab_state','progress-sync','rikkyo-uk-vocab']) {

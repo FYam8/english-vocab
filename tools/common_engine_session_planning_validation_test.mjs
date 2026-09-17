@@ -14,7 +14,7 @@ for (const key of ['branchTwoPass','syntheticMergeTwoPass','branchOwnership','sy
 assert.equal(validation.wasedaProductionBaseline, contract.productionBaseline);
 assert.equal(validation.rikkyoAuditedBaseline, '06eb47656bf0066af5cfe2072a53cfcdd42e5232');
 assert.equal(validation.runtimeSourcesUnchangedDuringContractValidation, true);
-assert.equal(validation.allowFullPlanningRuntimeMutation, false);
+assert.equal(validation.allowFullPlanningRuntimeMutation, true);
 
 const first=validation.firstPlanningAdapterValidation||{};
 assert.equal(validation.allowFirstPlanningAdapterGroupIntroduction,true);
@@ -111,7 +111,7 @@ for(const forbidden of ['mutating FYam8/rikkyo-uk-vocab','changing Waseda produc
 assert.equal(contract.foundationReasonPolicy.mustRemainOutsideCommonEngine,true);
 assert.equal(contract.challengeScorePolicy.schoolSpecific,true);
 assert.equal(contract.challengeScorePolicy.memoryBoostOwnedBy,'WASEDA_MEMORY_POLICY.applyChallengeMemoryScore');
-assert.equal(contract.status,'contract-only-no-runtime-wiring');
+assert.equal(contract.status,'validated-runtime-wiring');
 if(validation.thirdTransformPreparation){
   assert.equal(validation.thirdTransformPreparation.status,'prepared-no-runtime-mutation');
   assert.equal(validation.thirdTransformPreparation.transformScript,'tools/extract_waseda_challenge_session_composition_policy_adapter.py');

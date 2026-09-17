@@ -10,7 +10,21 @@
   "wasedaProductionBaseline": "531d505c19a86eaa2c8bbc4b25179de8089ab585",
   "rikkyoAuditedBaseline": "06eb47656bf0066af5cfe2072a53cfcdd42e5232",
   "runtimeSourcesUnchangedDuringContractValidation": true,
-  "allowFullPlanningRuntimeMutation": false,
+  "allowFullPlanningRuntimeMutation": true,
+  "finalSessionOrchestrationBoundary": {
+    "status": "validated-two-consecutive-clean-runs",
+    "commonArtifact": "src/common-engine/session-orchestration.js",
+    "wasedaPolicyAdapter": "src/waseda-bootstrap/31a-waseda-planning-policy.js",
+    "preserves": [
+      "mode semantics",
+      "retry gap 6/8",
+      "due retry precedence",
+      "finite queue termination",
+      "unlimited recent exclusion window 6"
+    ],
+    "localBrowserPasses": ["LOCAL-2", "LOCAL-3"],
+    "artifactSha256": "e808571eec3e3b291442099897b43471d91f82a092190d0f704657f5e8888a9a"
+  },
   "allowFirstPlanningAdapterGroupIntroduction": true,
   "firstApprovedGroup": "foundation-reason-policy-adapter",
   "firstApprovedGroupScope": [

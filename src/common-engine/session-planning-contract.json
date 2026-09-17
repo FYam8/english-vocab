@@ -1,6 +1,6 @@
 {
   "format": "waseda-session-planning-policy-contract/v1",
-  "status": "contract-only-no-runtime-wiring",
+  "status": "validated-runtime-wiring",
   "reviewedSourceHead": "727783e9adc53c9caa55201bcee4817cd0c1373f",
   "productionBaseline": "531d505c19a86eaa2c8bbc4b25179de8089ab585",
   "purpose": "Freeze the exact current Waseda selection, challenge-session and retry/queue semantics before introducing a Waseda-only planning adapter. This contract must not change runtime behavior, Rikkyo runtime or either public deployment.",
