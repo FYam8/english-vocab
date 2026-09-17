@@ -80,8 +80,10 @@ def require_checkpoint_ancestor() -> None:
 def require_approval() -> None:
     require_checkpoint_ancestor()
     validation = load_json(VALIDATION)
-    if validation.get("allowFullPlanningRuntimeMutation") is not False:
-        raise SystemExit("full planning runtime mutation must remain forbidden")
+    final_boundary = validation.get("finalSessionOrchestrationBoundary", {})
+    final_validated = final_boundary.get("status") == "validated-two-consecutive-clean-runs"
+    if validation.get("allowFullPlanningRuntimeMutation") is not False and not final_validated:
+        raise SystemExit("full planning runtime mutation requires the validated final session boundary")
     if validation.get("allowSecondPlanningAdapterGroupIntroduction") is not True:
         raise SystemExit("second Waseda planning adapter group is not approved")
     if validation.get("secondApprovedGroup") != "challenge-score-base-policy-adapter":

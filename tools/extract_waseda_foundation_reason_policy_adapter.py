@@ -69,8 +69,10 @@ def require_approval() -> None:
     for key in ["branchTwoPass", "syntheticMergeTwoPass", "branchOwnership", "syntheticMergeOwnership", "assemble"]:
         if validation.get(key) != "success":
             raise SystemExit(f"session-planning contract validation incomplete: {key}")
-    if validation.get("allowFullPlanningRuntimeMutation") is not False:
-        raise SystemExit("full planning runtime mutation must remain forbidden")
+    final_boundary = validation.get("finalSessionOrchestrationBoundary", {})
+    final_validated = final_boundary.get("status") == "validated-two-consecutive-clean-runs"
+    if validation.get("allowFullPlanningRuntimeMutation") is not False and not final_validated:
+        raise SystemExit("full planning runtime mutation requires the validated final session boundary")
     if validation.get("allowFirstPlanningAdapterGroupIntroduction") is not True:
         raise SystemExit("first planning adapter group is not approved")
     if validation.get("firstApprovedGroup") != "foundation-reason-policy-adapter":

@@ -70,8 +70,10 @@ def write_json(path: Path, value: dict) -> None:
 def require_approval() -> None:
     validation = load_json(VALIDATION)
     contract = load_json(CONTRACT)
-    if validation.get("allowFullPlanningRuntimeMutation") is not False:
-        raise SystemExit("full planning runtime mutation must remain forbidden")
+    final_boundary = validation.get("finalSessionOrchestrationBoundary", {})
+    final_validated = final_boundary.get("status") == "validated-two-consecutive-clean-runs"
+    if validation.get("allowFullPlanningRuntimeMutation") is not False and not final_validated:
+        raise SystemExit("full planning runtime mutation requires the validated final session boundary")
     if validation.get("allowThirdPlanningAdapterGroupIntroduction") is not True:
         raise SystemExit("third planning adapter group is not approved")
     if validation.get("thirdApprovedGroup") != "challenge-session-composition-policy-adapter":
@@ -120,16 +122,30 @@ def validate_applied(policy: str, planning: str, manifest: dict) -> None:
     if not (layer_i < year_i < progress_i < state_i):
         raise SystemExit("foundation filter ordering changed; excluded entities could acquire default progress")
 
-    for untouched in [
-        'if(size===0)return {unlimited:true,candidatePoolIds:pool.map(v=>v.id),baseQueueIds:[],actualSessionSize:0};',
-        'if(mode==="75")return Object.assign({unlimited:false,candidatePoolIds:[]},buildChallengeSessionPlan(year,size));',
-        'return session.retryQueue.filter(r=>r.dueAfterTotal<=session.totalAnswered&&!session.blockedIds.has(r.wordId)).sort((a,b)=>a.dueAfterTotal-b.dueAfterTotal)[0]||null;',
-        'if(session.mode==="75")pool=pool.filter(v=>(v.studyLayer||"core")==="challenge");',
-        'const recent=new Set(session.recentIds.slice(-6));',
-        'const due=v75DueRetry();',
-    ]:
-        if untouched not in planning:
-            raise SystemExit(f"out-of-scope planning behavior changed: {untouched}")
+    final_boundary = load_json(VALIDATION).get("finalSessionOrchestrationBoundary", {})
+    if final_boundary.get("status") == "validated-two-consecutive-clean-runs":
+        delegated = [
+            'VOCABULARY_SESSION_ENGINE.buildPlan({',
+            'isSpecialMode:m=>WASEDA_PLANNING_POLICY.isChallengeMode(m)',
+            'VOCABULARY_SESSION_ENGINE.dueRetry',
+            'VOCABULARY_SESSION_ENGINE.pickUnlimitedBase',
+            'recentWindow:WASEDA_PLANNING_POLICY.unlimitedRecentWindow',
+            'VOCABULARY_SESSION_ENGINE.nextItem({',
+        ]
+        for token in delegated:
+            if token not in planning:
+                raise SystemExit(f"final session orchestration delegation changed: {token}")
+    else:
+        for untouched in [
+            'if(size===0)return {unlimited:true,candidatePoolIds:pool.map(v=>v.id),baseQueueIds:[],actualSessionSize:0};',
+            'if(mode==="75")return Object.assign({unlimited:false,candidatePoolIds:[]},buildChallengeSessionPlan(year,size));',
+            'return session.retryQueue.filter(r=>r.dueAfterTotal<=session.totalAnswered&&!session.blockedIds.has(r.wordId)).sort((a,b)=>a.dueAfterTotal-b.dueAfterTotal)[0]||null;',
+            'if(session.mode==="75")pool=pool.filter(v=>(v.studyLayer||"core")==="challenge");',
+            'const recent=new Set(session.recentIds.slice(-6));',
+            'const due=v75DueRetry();',
+        ]:
+            if untouched not in planning:
+                raise SystemExit(f"out-of-scope planning behavior changed: {untouched}")
 
     boundaries = manifest.get("boundaries", {})
     if boundaries.get("wasedaPlanningPolicyV75") != POLICY_NAME:
