@@ -1,0 +1,110 @@
+name: Introduce Waseda challenge-session composition adapter
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - refactor/waseda-common-engine-v1
+    paths:
+      - src/common-engine/challenge-session-composition-contract.json
+      - src/common-engine/session-planning-contract-validation.json
+      - tools/extract_waseda_challenge_session_composition_policy_adapter.py
+      - tools/waseda_challenge_session_composition_policy_adapter_test.mjs
+      - tools/common_engine_session_planning_contract_test.mjs
+      - tools/common_engine_session_planning_validation_test.mjs
+      - .github/workflows/challenge-session-composition-adapter.yml
+
+permissions:
+  contents: write
+
+jobs:
+  challenge-session-composition:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Stop if Waseda production baseline moved
+        run: |
+          git fetch origin main --quiet
+          test "$(git rev-parse origin/main)" = "531d505c19a86eaa2c8bbc4b25179de8089ab585"
+          git merge-base --is-ancestor 2fe755b94aca821562f7301c57fad905e9efa9e4 HEAD
+
+      - name: Verify approved contract and pre-transform state
+        run: |
+          python3 -m py_compile tools/extract_waseda_challenge_session_composition_policy_adapter.py
+          node --check tools/waseda_challenge_session_composition_policy_adapter_test.mjs
+          node tools/common_engine_session_planning_contract_test.mjs
+          node tools/common_engine_session_planning_validation_test.mjs
+          node tools/waseda_foundation_reason_policy_adapter_test.mjs
+          node tools/waseda_challenge_score_policy_adapter_test.mjs
+
+      - name: Snapshot all out-of-scope runtime sources
+        run: |
+          mkdir -p /tmp/waseda-third-boundary
+          for f in 15-waseda-persistence.js 20-engine-candidate.js 30-compat-runtime.js 31-waseda-session-runtime.js 33-v75-ui-runtime.js 34-waseda-memory-policy.js 35-v76-memory-runtime.js 36-v76-engine-integration.js 37-v76-waseda-ui-runtime.js 40-runtime-bootstrap-tail.js; do
+            cp "src/waseda-bootstrap/$f" "/tmp/waseda-third-boundary/$f"
+          done
+          cp progress-sync.js /tmp/waseda-third-boundary/progress-sync.js
+
+      - name: Apply only approved challenge-session composition adapter
+        run: |
+          python3 tools/extract_waseda_challenge_session_composition_policy_adapter.py
+          node --check src/waseda-bootstrap/31a-waseda-planning-policy.js
+          node --check src/waseda-bootstrap/32-session-planning-runtime.js
+          node tools/common_engine_session_planning_contract_test.mjs
+          node tools/common_engine_session_planning_validation_test.mjs
+          node tools/waseda_foundation_reason_policy_adapter_test.mjs
+          node tools/waseda_challenge_score_policy_adapter_test.mjs
+          node tools/waseda_challenge_session_composition_policy_adapter_test.mjs
+
+      - name: Prove transform idempotence
+        run: |
+          cp src/waseda-bootstrap/31a-waseda-planning-policy.js /tmp/waseda-third-policy.js
+          cp src/waseda-bootstrap/32-session-planning-runtime.js /tmp/waseda-third-planning.js
+          cp src/waseda-bootstrap/manifest.json /tmp/waseda-third-manifest.json
+          python3 tools/extract_waseda_challenge_session_composition_policy_adapter.py
+          cmp src/waseda-bootstrap/31a-waseda-planning-policy.js /tmp/waseda-third-policy.js
+          cmp src/waseda-bootstrap/32-session-planning-runtime.js /tmp/waseda-third-planning.js
+          cmp src/waseda-bootstrap/manifest.json /tmp/waseda-third-manifest.json
+
+      - name: Prove out-of-scope runtime stayed byte-identical
+        run: |
+          for f in 15-waseda-persistence.js 20-engine-candidate.js 30-compat-runtime.js 31-waseda-session-runtime.js 33-v75-ui-runtime.js 34-waseda-memory-policy.js 35-v76-memory-runtime.js 36-v76-engine-integration.js 37-v76-waseda-ui-runtime.js 40-runtime-bootstrap-tail.js; do
+            cmp "src/waseda-bootstrap/$f" "/tmp/waseda-third-boundary/$f"
+          done
+          cmp progress-sync.js /tmp/waseda-third-boundary/progress-sync.js
+
+      - name: Assemble reviewed Waseda artifact
+        run: |
+          python3 tools/assemble_waseda.py --write
+          node tools/waseda_challenge_session_composition_policy_adapter_test.mjs
+          git diff --check
+
+      - name: Protect Waseda cloud and production isolation
+        run: |
+          git diff --exit-code 531d505c19a86eaa2c8bbc4b25179de8089ab585...HEAD -- progress-sync.js
+          git fetch origin main --quiet
+          test "$(git rev-parse origin/main)" = "531d505c19a86eaa2c8bbc4b25179de8089ab585"
+
+      - name: Commit only approved generated changes
+        run: |
+          rm -rf tools/__pycache__
+          CHANGED="$(git status --porcelain -- index.html src/waseda-bootstrap/manifest.json src/waseda-bootstrap/31a-waseda-planning-policy.js src/waseda-bootstrap/32-session-planning-runtime.js)"
+          if [ -z "$CHANGED" ]; then
+            echo "Challenge-session composition adapter already applied"
+            exit 0
+          fi
+          EXTRA="$(git status --porcelain | grep -vE ' (index.html|src/waseda-bootstrap/manifest.json|src/waseda-bootstrap/31a-waseda-planning-policy.js|src/waseda-bootstrap/32-session-planning-runtime.js)$' || true)"
+          if [ -n "$EXTRA" ]; then
+            echo "Unexpected modified files:"
+            echo "$EXTRA"
+            exit 1
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html src/waseda-bootstrap/manifest.json src/waseda-bootstrap/31a-waseda-planning-policy.js src/waseda-bootstrap/32-session-planning-runtime.js
+          git commit -m "refactor: introduce Waseda challenge session composition adapter"
+          git push origin HEAD:refactor/waseda-common-engine-v1

@@ -1,10 +1,17 @@
 from pathlib import Path
 
 INDEX = Path('index.html')
+SOURCE_MANIFEST = Path('src/waseda-bootstrap/manifest.json')
 SOURCE = Path('tools/v76_memory_scheduler.js')
 MARKER = '/* V75_USER_TEST_REMEDIATION_END */'
 START = '/* V76_MEMORY_CURVE_SCHEDULER_START */'
 END = '/* V76_MEMORY_CURVE_SCHEDULER_END */'
+
+if SOURCE_MANIFEST.is_file():
+    raise SystemExit(
+        'Refusing legacy v7.6 direct index patch because the Waseda app is now source-owned. '
+        'Make scheduler changes in src/waseda-bootstrap and rebuild with tools/assemble_waseda.py.'
+    )
 
 html = INDEX.read_text(encoding='utf-8')
 source = SOURCE.read_text(encoding='utf-8').strip()

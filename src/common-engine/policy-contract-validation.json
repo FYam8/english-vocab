@@ -1,0 +1,56 @@
+{
+  "format": "common-vocab-engine-policy-validation/v1",
+  "contractPath": "src/common-engine/policy-contract.json",
+  "validatedContractHead": "1bf81756143d1a2cb27f7487927fcbc0fc7d63a9",
+  "branchTwoPass": "success",
+  "syntheticMergeTwoPass": "success",
+  "branchOwnership": "success",
+  "syntheticMergeOwnership": "success",
+  "wasedaProductionBaseline": "531d505c19a86eaa2c8bbc4b25179de8089ab585",
+  "rikkyoAuditedBaseline": "06eb47656bf0066af5cfe2072a53cfcdd42e5232",
+  "approvedRuntimeBoundary": "memory-scheduler-policy-adapter",
+  "approvalScope": "Introduce only reviewed Waseda policy adapter boundaries while preserving exact Waseda scheduler outputs and persistence; do not mutate Rikkyo or production main.",
+  "allowWasedaAdapterIntroduction": true,
+  "allowWasedaScoringAdapterIntroduction": true,
+  "allowRikkyoRuntimeMutation": false,
+  "allowProductionMainMutation": false,
+  "allowSharedRuntimeArtifactRelease": false,
+  "wasedaMemoryPolicyAdapterValidation": {
+    "validatedHead": "7ccde7dd797dd931721c9dcd1befe6fdb380c6bc",
+    "branchTwoPass": "success",
+    "syntheticMergeTwoPass": "success",
+    "branchOwnership": "success",
+    "syntheticMergeOwnership": "success",
+    "artifactSha256": "520e3f324f25f9d5f07e348eb618f2b62fa6bddc2f890e33704b5ac9719a07a5",
+    "productionMainUnchanged": true,
+    "rikkyoRuntimeUnchanged": true
+  },
+  "wasedaMemoryScoringPolicyContractValidation": {
+    "validatedHead": "2141d56b248e745540d16e3ccaa56eca9968c5c8",
+    "branchTwoPass": "success",
+    "syntheticMergeTwoPass": "success",
+    "branchOwnership": "success",
+    "syntheticMergeOwnership": "success",
+    "artifactSha256BeforeScoringAdapter": "520e3f324f25f9d5f07e348eb618f2b62fa6bddc2f890e33704b5ac9719a07a5",
+    "productionMainUnchanged": true,
+    "rikkyoRuntimeUnchanged": true,
+    "approvedBoundary": "memory-priority-scoring-policy-adapter"
+  },
+  "wasedaMemoryScoringPolicyAdapterValidation": {
+    "validatedHead": "d2fec5e326564b5af46406fd3360887ad9ce5d9a",
+    "runtimeTransformHead": "460e2b78d6c6800d4beef6956e8e6104c122edca",
+    "branchTwoPass": "success",
+    "syntheticMergeTwoPass": "success",
+    "branchOwnership": "success",
+    "syntheticMergeOwnership": "success",
+    "artifactSha256": "5315e82069688b7bef265d2057e618f88afa1cdc2b31b051f7746ae8000d8463",
+    "productionMainUnchanged": true,
+    "rikkyoRuntimeUnchanged": true,
+    "validatedBoundary": "memory-priority-scoring-policy-adapter"
+  },
+  "nextBoundary": {
+    "name": "session-planning-policy-adapter",
+    "status": "validated-runtime-wiring",
+    "allowRuntimeMutation": true
+  }
+}

@@ -3,6 +3,7 @@ import json, re, sys
 
 ROOT=Path(__file__).resolve().parents[1]
 INDEX=ROOT/'index.html'
+SOURCE_MANIFEST=ROOT/'src'/'waseda-bootstrap'/'manifest.json'
 OVERRIDE_PARTS=sorted((ROOT/'tools').glob('v75_override.part*.js'))
 OLD_DATA='2019-2026-v7.4-ja-translation-audited'
 NEW_DATA='2019-2026-v7.5-user-test-remediation'
@@ -61,6 +62,11 @@ def audit(text):
 
 
 def main():
+    if SOURCE_MANIFEST.is_file():
+        raise RuntimeError(
+            'Refusing legacy v7.5 direct index patch because the Waseda app is now source-owned. '
+            'Make the equivalent change in src/waseda-bootstrap and rebuild with tools/assemble_waseda.py.'
+        )
     text=INDEX.read_text(encoding='utf-8')
     if not OVERRIDE_PARTS: raise RuntimeError('override parts missing')
     override=''.join(x.read_text(encoding='utf-8') for x in OVERRIDE_PARTS).rstrip()

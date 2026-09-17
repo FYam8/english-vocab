@@ -1,0 +1,284 @@
+{
+  "format": "common-vocab-engine-policy-contract/v1",
+  "status": "second-runtime-boundary-validated-next-contract-defined",
+  "masterRepository": "FYam8/english-vocab",
+  "engineCandidateStatus": "mixed-not-exportable",
+  "purpose": "Define the school-neutral engine boundary after pure-helper extraction, without changing Waseda production behavior or replacing Rikkyo's existing FSRS/storage architecture.",
+  "principles": [
+    "The common engine must not own a school's storage key, database name, cloud endpoint, app id, export format, branding, score-band names, UI copy, or migration rules.",
+    "Scheduler strategy is injected. Waseda's current forgetting-curve model and Rikkyo's FSRS-6 model are separate valid adapter implementations; neither scheduler is silently reinterpreted as the other.",
+    "Item identity is supplied by the school adapter and remains stable. The common engine must not rewrite Waseda vocabulary ids or Rikkyo rik-* stable ids.",
+    "Question and planning behavior may share orchestration, but school-specific modes, score bands, study-layer meanings, priority policy, challenge policy and retry spacing remain adapter policy until explicitly normalized.",
+    "Persistence and cloud synchronization are separate boundaries from learning-policy extraction.",
+    "UI explanation strings remain outside the common engine."
+  ],
+  "interfaces": {
+    "entityAdapter": {
+      "requiredCapabilities": [
+        "getStableId",
+        "isQuizEligible",
+        "getQuestionCapabilities"
+      ],
+      "optionalSignals": [
+        "prioritySignal",
+        "studyLaneSignal",
+        "scheduleTags",
+        "frequencySignal"
+      ],
+      "engineMustNotRequireRawFields": [
+        "priority",
+        "level",
+        "studyLayer",
+        "yearCount",
+        "frequency"
+      ]
+    },
+    "memorySchedulerAdapter": {
+      "requiredMethods": [
+        "getDueAt",
+        "isDue",
+        "applyOutcome",
+        "urgencyScore"
+      ],
+      "schedulerStateIsOpaqueToEngine": true,
+      "engineMustNotInterpret": [
+        "Waseda memoryModel object",
+        "Rikkyo ts-fsrs Card object"
+      ]
+    },
+    "planningPolicy": {
+      "requiredMethods": [
+        "eligibleForMode",
+        "scoreCandidate",
+        "buildSpecialPlan",
+        "retryDecision"
+      ],
+      "engineOwns": [
+        "generic weighted selection orchestration",
+        "generic queue traversal orchestration once school state has been adapted"
+      ],
+      "adapterOwns": [
+        "mode semantics",
+        "priority weights",
+        "challenge/foundation policy",
+        "retry spacing",
+        "school-facing reason text"
+      ]
+    },
+    "timePolicy": {
+      "requiredMethods": [
+        "now",
+        "learningDayId"
+      ],
+      "engineMustNotHardCodeTimeZone": true
+    }
+  },
+  "wasedaCurrentMapping": {
+    "persistenceOwnedElsewhere": [
+      "WASEDA_APP_CONFIG",
+      "wasedaMigrateState",
+      "waseshibu_vocab_state",
+      "waseshibu_vocab_active_session_v1",
+      "progress-sync.js"
+    ],
+    "memorySchedulerPolicy": {
+      "symbols": [
+        "v76TargetRetention",
+        "v76ReviewIntervalDays",
+        "v76UpdateMemoryAfterOutcome",
+        "schedulerScore v7.6 override"
+      ],
+      "retention": {
+        "default": 0.9,
+        "prioritySOrWeak": 0.92,
+        "prioritySAndWeak": 0.93
+      },
+      "reviewIntervalBoundsDays": [0.75, 60],
+      "retryCorrectIntervalDays": 1,
+      "missIntervalMinutes": 15,
+      "reviewUrgencyBoost": {
+        "gapScale": 900,
+        "floor": 90
+      },
+      "examUrgency": {
+        "windowDays": 30,
+        "prioritySScale": 80,
+        "weakScale": 100,
+        "memoryGapScale": 300
+      },
+      "challengeMemoryBoost": {
+        "gapScale": 700,
+        "floor": 70
+      },
+      "mustRemainBehaviorallyIdenticalDuringAdapterIntroduction": true
+    },
+    "planningPolicy": {
+      "symbols": [
+        "v75ChallengeScore",
+        "v75FoundationReason",
+        "buildChallengeSessionPlan",
+        "buildSessionPlan",
+        "v75DueRetry",
+        "v75PickUnlimitedBase",
+        "v75NextSessionItem"
+      ],
+      "knownSchoolAssumptions": [
+        "60/70/75 score bands",
+        "S/A/B/C priority",
+        "core/diagnostic/challenge/reference studyLayer",
+        "75-point challenge mode",
+        "Japanese Waseda-facing reason strings"
+      ]
+    }
+  },
+  "rikkyoAuditedMapping": {
+    "repository": "FYam8/rikkyo-uk-vocab",
+    "auditedCommit": "06eb47656bf0066af5cfe2072a53cfcdd42e5232",
+    "scheduler": {
+      "algorithm": "FSRS-6",
+      "package": "ts-fsrs",
+      "packageVersion": "5.4.2",
+      "desiredRetention": 0.9,
+      "enableFuzz": false,
+      "enableShortTerm": false,
+      "currentFunctions": [
+        "newCard",
+        "schedule",
+        "applyStudyAnswer"
+      ],
+      "mustNotBeReplacedByWasedaMemoryModel": true
+    },
+    "learningIdentity": "stableId x skillKey",
+    "skillKeys": [
+      "meaningRecognition",
+      "formProduction"
+    ],
+    "stages": [
+      "learning",
+      "review",
+      "relearning",
+      "provisional",
+      "acquisitionCandidate"
+    ],
+    "lanes": [
+      "learning",
+      "relearning",
+      "provisional",
+      "review",
+      "acquisition"
+    ],
+    "planningFunctions": [
+      "buildQueue",
+      "ensurePlan"
+    ],
+    "persistenceMustRemainSchoolSpecific": true
+  },
+  "forbiddenCommonEngineAssumptions": [
+    "waseshibu_",
+    "rikkyo-uk-vocab",
+    "priority === S",
+    "mode === 75",
+    "studyLayer === challenge",
+    "studyLayer === diagnostic",
+    "Europe/London as an engine default",
+    "Japanese school-facing explanation text",
+    "direct localStorage access",
+    "direct IndexedDB database names",
+    "cloud API endpoints",
+    "cross-school export acceptance"
+  ],
+  "firstRuntimeBoundary": {
+    "name": "memory-scheduler-policy-adapter",
+    "status": "introduced-and-exact-head-validated",
+    "validatedHead": "7ccde7dd797dd931721c9dcd1befe6fdb380c6bc",
+    "scope": [
+      "v76TargetRetention",
+      "v76ReviewIntervalDays",
+      "v76UpdateMemoryAfterOutcome",
+      "memory-related part of the v7.6 schedulerScore override"
+    ],
+    "implementationOrder": [
+      "Introduce a Waseda memory-policy adapter that returns the exact current Waseda values and does not change persistence.",
+      "Make the current Waseda memory runtime delegate to that adapter while preserving function outputs and state writes.",
+      "Run branch-head and synthetic-merge two-pass existing-user parity and ownership gates.",
+      "Define the common scheduler-adapter surface around opaque scheduler state.",
+      "Map Rikkyo FSRS-6 to that surface without changing its Card state, stages, learning steps or desired retention."
+    ],
+    "forbiddenFirstStep": [
+      "moving v76TargetRetention directly into the common engine with S-priority logic",
+      "making Rikkyo use Waseda memoryModel",
+      "making Waseda use ts-fsrs during this boundary step",
+      "changing Waseda schemaVersion or localStorage keys",
+      "changing Rikkyo stableId x skillKey identity",
+      "changing either public deployment"
+    ]
+  },
+  "secondRuntimeBoundary": {
+    "name": "memory-priority-scoring-policy-adapter",
+    "status": "introduced-and-exact-head-validated",
+    "validatedHead": "d2fec5e326564b5af46406fd3360887ad9ce5d9a",
+    "artifactSha256": "5315e82069688b7bef265d2057e618f88afa1cdc2b31b051f7746ae8000d8463",
+    "scope": [
+      "memory retrievability boost inside the v7.6 schedulerScore override",
+      "30-day exam urgency and its S-priority/weak-item weights",
+      "memory-gap exam urgency inside the v7.6 schedulerScore override",
+      "memory retrievability boost inside the v7.6 v75ChallengeScore override"
+    ],
+    "exactCurrentValues": {
+      "reviewGapScale": 900,
+      "reviewGapFloor": 90,
+      "examWindowDays": 30,
+      "examPrioritySScale": 80,
+      "examWeakScale": 100,
+      "examMemoryGapScale": 300,
+      "challengeGapScale": 700,
+      "challengeGapFloor": 70
+    },
+    "implementationOrder": [
+      "Keep the exact current scoring constants and predicates in the Waseda memory-policy adapter; do not move them into the common engine.",
+      "Make the v7.6 schedulerScore and v75ChallengeScore overrides delegate only their memory/exam additions to the Waseda adapter while preserving the original base scores and evaluation order.",
+      "Run exact branch-head and synthetic-merge two-pass existing-user parity, ownership, deterministic assembly and cloud guards.",
+      "Only after this boundary is green, continue to the Waseda planning-policy boundary."
+    ],
+    "forbiddenSecondStep": [
+      "moving S-priority, weak-item, exam-window or challenge score constants into the common engine",
+      "changing v76ExamDaysLeft behavior or examDate persistence",
+      "changing the base schedulerScore or base v75ChallengeScore behavior",
+      "changing Waseda storage, stable ids, progress-sync.js or UI copy",
+      "changing Rikkyo FSRS, stableId x skillKey state, planning lanes or persistence",
+      "deploying either public app"
+    ]
+  },
+  "thirdRuntimeBoundary": {
+    "name": "session-planning-policy-adapter",
+    "status": "blocked-until-contract-exact-head-green",
+    "scope": [
+      "v75ChallengeScore base Waseda priority/year/frequency/mastery scoring",
+      "v75FoundationReason school-facing Japanese reason text",
+      "buildChallengeSessionPlan Waseda 75-point challenge/foundation composition",
+      "buildSessionPlan Waseda mode semantics",
+      "v75DueRetry/v75PickUnlimitedBase/v75NextSessionItem retry and queue policy"
+    ],
+    "implementationOrder": [
+      "Freeze the exact current Waseda planning inputs, outputs, score constants, reason strings and retry-spacing semantics in a reviewed contract.",
+      "Introduce a Waseda planning-policy adapter without changing the session object, queue order or learner-visible reason text.",
+      "Delegate one planning function group at a time and run exact-head plus synthetic-merge two-pass parity after each reviewed boundary.",
+      "Only after Waseda planning policy is isolated may generic planning orchestration move into the common engine."
+    ],
+    "forbiddenThirdStep": [
+      "putting mode 75, S/A/B/C, challenge/diagnostic layer meanings or Japanese reason text into the common engine",
+      "changing retry spacing or queue order while extracting policy",
+      "changing Rikkyo buildQueue/ensurePlan behavior",
+      "changing either school's persistence",
+      "deploying either public app"
+    ]
+  },
+  "gates": {
+    "runtimeWiringAllowedBeforeContractGreen": false,
+    "requireExactBranchHead": true,
+    "requireSyntheticMerge": true,
+    "requireTwoPassCompatibility": true,
+    "requireOwnershipGuard": true,
+    "requireWasedaProductionMainUnchanged": true
+  }
+}

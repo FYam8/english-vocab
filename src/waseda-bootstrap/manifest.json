@@ -1,0 +1,124 @@
+{
+  "format": "waseda-vocab-source-assembly/v2",
+  "source": "index.html",
+  "assemblyOrder": [
+    "00-shell-prefix.html",
+    "10-waseda-data.js",
+    "15-waseda-persistence.js",
+    "20-engine-candidate.js",
+    "../common-engine/session-orchestration.js",
+    "30-compat-runtime.js",
+    "31-waseda-session-runtime.js",
+    "31a-waseda-planning-policy.js",
+    "32-session-planning-runtime.js",
+    "33-v75-ui-runtime.js",
+    "34-waseda-memory-policy.js",
+    "35-v76-memory-runtime.js",
+    "36-v76-engine-integration.js",
+    "37-v76-waseda-ui-runtime.js",
+    "40-runtime-bootstrap-tail.js",
+    "90-shell-suffix.html"
+  ],
+  "parts": {
+    "00-shell-prefix.html": {
+      "bytes": 18920,
+      "sha256": "124bb350175c2863dc661365a875648c60590a2b09d28c9b75ff19a4a61615e1"
+    },
+    "10-waseda-data.js": {
+      "bytes": 708873,
+      "sha256": "2126f14b5b7e1cf537a3ef2671073b83852a9a83a3a17f5089b5ab416cfa5390"
+    },
+    "15-waseda-persistence.js": {
+      "bytes": 4062,
+      "sha256": "73f3dcf5cf3974394038c902e56943f10ecc320fcdeb53052317dcbf75335211"
+    },
+    "20-engine-candidate.js": {
+      "bytes": 45402,
+      "sha256": "a1298c0ceacd4e908d9b04790c2d6a6789fbfde2e6eab58786d632adc40a19ec"
+    },
+    "../common-engine/session-orchestration.js": {
+      "bytes": 2535,
+      "sha256": "e0510dcae081e852f9002bc5d7f8f1af3aa1af2c57e0254030eacb61d62974b6"
+    },
+    "30-compat-runtime.js": {
+      "bytes": 4647,
+      "sha256": "7ae89188f178b358eb78a65f7159395d8027aa08fb6e918a1d7d5c7c7e5fea84"
+    },
+    "31-waseda-session-runtime.js": {
+      "bytes": 9086,
+      "sha256": "c574193cfae6b542f2d89f9282c106457093e84b44ac048d5da98fe0c6b38467"
+    },
+    "31a-waseda-planning-policy.js": {
+      "bytes": 2026,
+      "sha256": "d6639c2e16bab8eacbd7ede27a87fc9e7aed8f7ff2140f92341979deb1df3624"
+    },
+    "32-session-planning-runtime.js": {
+      "bytes": 3676,
+      "sha256": "643bd528980b0a00103ff9dde07327809b1353b1c8159642bc42103a3359bc0c"
+    },
+    "33-v75-ui-runtime.js": {
+      "bytes": 45060,
+      "sha256": "e18d032d012ed8d6aa25524b80c10c438b6de371c6919b3c842cd9ea10fe5d9c"
+    },
+    "34-waseda-memory-policy.js": {
+      "bytes": 1562,
+      "sha256": "b6260fc954acb3b495a172c6709c5bb14ad4f3652802e11cf7ace95851543f62"
+    },
+    "35-v76-memory-runtime.js": {
+      "bytes": 4840,
+      "sha256": "384e3bcc818219c932ed51dd971e3e9886eaec6454f621a2d899a380ed9bf4c9"
+    },
+    "36-v76-engine-integration.js": {
+      "bytes": 2649,
+      "sha256": "81a84fa3c487cbc11eedff6d11a71f11761ac21967bc561c89c031885dc3adf9"
+    },
+    "37-v76-waseda-ui-runtime.js": {
+      "bytes": 2688,
+      "sha256": "8f79826041b60445c99be3555b5dc1d13f439581866ed3b184bb9b82f33b004e"
+    },
+    "40-runtime-bootstrap-tail.js": {
+      "bytes": 100,
+      "sha256": "c75daac3527b417e35721f974b3407f8fd99521c11943ec089868d2ac3cb99f0"
+    },
+    "90-shell-suffix.html": {
+      "bytes": 82,
+      "sha256": "89bfca9e9c40aa28dcbe0554737c4db5a03ecb14b9a1f23beca2ddd50fafb75c"
+    }
+  },
+  "boundaries": {
+    "wasedaData": "10-waseda-data.js",
+    "wasedaPersistenceAdapterSeed": "15-waseda-persistence.js",
+    "engineCandidate": "20-engine-candidate.js",
+    "commonSessionOrchestration": "../common-engine/session-orchestration.js",
+    "runtimeBootstrapTail": "40-runtime-bootstrap-tail.js",
+    "compatibilityRuntimeV75Prelude": "30-compat-runtime.js",
+    "wasedaSessionRuntimeV75": "31-waseda-session-runtime.js",
+    "sessionPlanningRuntimeV75": "32-session-planning-runtime.js",
+    "uiRuntimeV75": "33-v75-ui-runtime.js",
+    "memorySchedulerCoreV76": "35-v76-memory-runtime.js",
+    "memorySchedulerIntegrationV76": "36-v76-engine-integration.js",
+    "memorySchedulerWasedaUiV76": "37-v76-waseda-ui-runtime.js",
+    "wasedaMemoryPolicyV76": "34-waseda-memory-policy.js",
+    "wasedaMemoryScoringPolicyV76": "34-waseda-memory-policy.js",
+    "wasedaPlanningPolicyV75": "31a-waseda-planning-policy.js",
+    "wasedaChallengeScorePolicyV75": "31a-waseda-planning-policy.js",
+    "wasedaPlanningChallengeCompositionPolicyV75": "31a-waseda-planning-policy.js"
+  },
+  "notes": [
+    "This remains a byte-exact mechanical split; browser behavior and persistence semantics are unchanged.",
+    "15-waseda-persistence.js is the first explicit Waseda-only adapter seed because it owns the production schema and localStorage namespace.",
+    "20-engine-candidate.js is only a candidate boundary and is not yet claimed to be fully school-neutral.",
+    "30/35/40 are a byte-preserving mechanical decomposition of the reviewed compatibility runtime: v7.5 compatibility, v7.6 memory scheduler, then bootstrap tail. No runtime semantics are changed by this split.",
+    "30/31/32/33 are a byte-preserving decomposition of the reviewed v7.5 compatibility runtime into prelude, Waseda session state, session planning, and UI/question behavior. Ownership is descriptive only; runtime order is unchanged.",
+    "35/36/37 are a byte-preserving decomposition of the reviewed v7.6 block into scheduler core, engine integration overrides, and Waseda UI/settings integration. No scheduler semantics are changed by this split.",
+    "34-waseda-memory-policy.js owns the current Waseda target-retention, review-interval, diagnostic-first-pass and retry/miss interval policy. 35-v76-memory-runtime.js delegates to it without changing learner persistence or scheduler outputs.",
+    "34-waseda-memory-policy.js also owns the exact current v7.6 review-gap, exam-urgency and challenge-memory scoring formulas. 36-v76-engine-integration.js delegates to those Waseda-only methods while preserving base score calculation and evaluation order.",
+    "31a-waseda-planning-policy.js owns the exact Waseda v7.5 foundation-reason precedence and Japanese learner-facing copy. 32-session-planning-runtime.js delegates only v75FoundationReason to it; challenge scoring, session composition, retry spacing and queue order are unchanged.",
+    "31a-waseda-planning-policy.js also owns the exact Waseda v7.5 challenge base-score formula. 32-session-planning-runtime.js delegates only v75ChallengeScore to it; challenge-session composition, retry spacing and queue order are unchanged, and the later v7.6 memory boost remains in 36-v76-engine-integration.js.",
+    "31a-waseda-planning-policy.js also owns the exact Waseda challenge-session layer predicates and 80/20 composition ratios. 32-session-planning-runtime.js keeps year filtering before getProgress and reason attachment unchanged.",
+    "../common-engine/session-orchestration.js owns only school-neutral plan and queue traversal. Waseda mode meanings, scoring, retry gap 6/8, recent window 6 and challenge restrictions remain in WASEDA_PLANNING_POLICY callbacks."
+  ],
+  "baselineSourceGitBlobSha": "bb77a0c54153502e25bccb1ed89ca33b29b45c83",
+  "baselineSourceSha256": "a6e58a9321d4e739216957fcbfaa0cf7f1d1621ca0f0bb88a03507da81bf452f",
+  "artifactSha256": "e808571eec3e3b291442099897b43471d91f82a092190d0f704657f5e8888a9a"
+}

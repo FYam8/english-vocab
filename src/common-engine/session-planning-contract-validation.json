@@ -1,0 +1,157 @@
+{
+  "format": "waseda-session-planning-policy-validation/v1",
+  "contractPath": "src/common-engine/session-planning-contract.json",
+  "validatedContractHead": "ac052208a09ff27926ec785c6ba2d9c4286ad47e",
+  "branchTwoPass": "success",
+  "syntheticMergeTwoPass": "success",
+  "branchOwnership": "success",
+  "syntheticMergeOwnership": "success",
+  "assemble": "success",
+  "wasedaProductionBaseline": "531d505c19a86eaa2c8bbc4b25179de8089ab585",
+  "rikkyoAuditedBaseline": "06eb47656bf0066af5cfe2072a53cfcdd42e5232",
+  "runtimeSourcesUnchangedDuringContractValidation": true,
+  "allowFullPlanningRuntimeMutation": true,
+  "finalSessionOrchestrationBoundary": {
+    "status": "validated-two-consecutive-clean-runs",
+    "commonArtifact": "src/common-engine/session-orchestration.js",
+    "wasedaPolicyAdapter": "src/waseda-bootstrap/31a-waseda-planning-policy.js",
+    "preserves": [
+      "mode semantics",
+      "retry gap 6/8",
+      "due retry precedence",
+      "finite queue termination",
+      "unlimited recent exclusion window 6"
+    ],
+    "localBrowserPasses": ["LOCAL-2", "LOCAL-3"],
+    "artifactSha256": "e808571eec3e3b291442099897b43471d91f82a092190d0f704657f5e8888a9a"
+  },
+  "allowFirstPlanningAdapterGroupIntroduction": true,
+  "firstApprovedGroup": "foundation-reason-policy-adapter",
+  "firstApprovedGroupScope": [
+    "v75FoundationReason precedence and the four exact Japanese reason strings"
+  ],
+  "firstApprovedGroupMustPreserve": [
+    "weak > recentMistake > due > default precedence",
+    "the four exact Japanese strings",
+    "getProgress/now/isWeakProgress semantics",
+    "all queue order and retry behavior",
+    "all Waseda persistence and cloud contracts"
+  ],
+  "firstPlanningAdapterValidation": {
+    "validatedHead": "728da033e8e815ebb8585c97966de9c253e334a9",
+    "runtimeTransformHead": "44a277acdc3703147cfe1a30ee873597b286a3a7",
+    "branchTwoPass": "success",
+    "syntheticMergeTwoPass": "success",
+    "branchOwnership": "success",
+    "syntheticMergeOwnership": "success",
+    "assemble": "success",
+    "artifactSha256": "3cbd1e048d40ae59b4b8e2ac4ed6922b75a93b765bbe250001ecc2833d6447c0",
+    "productionMainUnchanged": true,
+    "rikkyoRuntimeUnchanged": true,
+    "validatedGroup": "foundation-reason-policy-adapter"
+  },
+  "allowSecondPlanningAdapterGroupIntroduction": true,
+  "secondApprovedGroup": "challenge-score-base-policy-adapter",
+  "secondApprovedGroupScope": [
+    "v75ChallengeScore base Waseda priority/year/frequency/mastery/due/recent/weak scoring and mastery-4 suppression, excluding the already-separated v7.6 memory boost"
+  ],
+  "secondApprovedGroupMustPreserve": [
+    "PRIORITY_SCORE lookup with fallback 0",
+    "yearCount x8 plus sqrt(effectiveFrequency) x4 plus mastery weights [80,110,65,25,4]",
+    "due +115, recent mistake +80, weak +95",
+    "mastery 4 and not due multiplier 0.12",
+    "getProgress/now/effectiveFrequency/isWeakProgress semantics",
+    "the later v7.6 WASEDA_MEMORY_POLICY challenge-memory boost",
+    "all session composition, queue and retry behavior",
+    "all Waseda persistence and cloud contracts"
+  ],
+  "secondPlanningAdapterApprovalValidation": {
+    "validatedHead": "32c2724e60f764a59fa8136a789d27efa7188846",
+    "branchTwoPass": "success",
+    "syntheticMergeTwoPass": "success",
+    "branchOwnership": "success",
+    "syntheticMergeOwnership": "success",
+    "assemble": "success",
+    "productionMainUnchanged": true,
+    "rikkyoRuntimeUnchanged": true,
+    "approvedGroup": "challenge-score-base-policy-adapter"
+  },
+  "secondPlanningAdapterRuntimeValidation": {
+    "validatedHead": "ebbeb439937e3f90bb79a041d7f27d7ddf0e94d1",
+    "runtimeTransformHead": "261c1ae713810578b523cbcf7fb53239d9b3b027",
+    "artifactSha256": "16655e85045d1b83e2caea23ed4a0a6aafe8af50e86f199ecab6506b5268206d",
+    "branchTwoPass": "success",
+    "syntheticMergeTwoPass": "success",
+    "branchOwnership": "success",
+    "syntheticMergeOwnership": "success",
+    "assemble": "success",
+    "productionMainUnchanged": true,
+    "rikkyoRuntimeUnchanged": true,
+    "validatedGroup": "challenge-score-base-policy-adapter"
+  },
+  "allowThirdPlanningAdapterGroupIntroduction": true,
+  "thirdApprovedGroup": "challenge-session-composition-policy-adapter",
+  "thirdContractPath": "src/common-engine/challenge-session-composition-contract.json",
+  "thirdContractStatus": "validated-contract-runtime-mutation-limited-to-approved-methods",
+  "thirdApprovedGroupScope": [
+    "challenge-layer classification and exact challenge/foundation composition ratios",
+    "foundation layer/state eligibility predicates while preserving layer -> year -> getProgress -> state evaluation order",
+    "required challenge count and foundation exception cap calculations"
+  ],
+  "thirdApprovedGroupMustPreserve": [
+    "challenge predicate (studyLayer||core)===challenge",
+    "desired=requested||challenge.length",
+    "required challenge count Math.ceil(desired*0.8)",
+    "challenge-pool-shortage behavior returns challenge-only and does not backfill foundation items",
+    "foundation exception cap Math.floor(desired*0.2)",
+    "foundation layer eligibility excludes reference and challenge",
+    "year eligibility is checked before getProgress",
+    "getProgress is not called for layer- or year-excluded foundation entities",
+    "foundation state eligibility weak OR due OR recent mistake",
+    "foundation exceptions are scored in recommended mode",
+    "challenge items keep v75ChallengeScore",
+    "final challenge plus exception shuffle/slice semantics",
+    "foundation reason attachment only to exceptions",
+    "all retry gaps, due-retry precedence, unlimited queue behavior, persistence and cloud contracts"
+  ],
+  "thirdPlanningAdapterApprovalValidation": {
+    "validatedHead": "f65efc3de9a51cae4c22478eca27ca52a5bec777",
+    "branchTwoPass": "success",
+    "syntheticMergeTwoPass": "success",
+    "branchOwnership": "success",
+    "syntheticMergeOwnership": "success",
+    "assemble": "success",
+    "productionMainUnchanged": true,
+    "rikkyoRuntimeUnchanged": true,
+    "approvedGroup": "challenge-session-composition-policy-adapter"
+  },
+  "thirdTransformPreparation": {
+    "status": "prepared-no-runtime-mutation",
+    "preparedOnTopOf": "4e811c193f3dc11ee083fe36c8da27575d648030",
+    "transformScript": "tools/extract_waseda_challenge_session_composition_policy_adapter.py",
+    "adapterTest": "tools/waseda_challenge_session_composition_policy_adapter_test.mjs",
+    "dualStateContractTestsRequired": true,
+    "dedicatedTransformWorkflowEnabled": true,
+    "productionMainUnchanged": true,
+    "rikkyoRuntimeUnchanged": true
+  },
+  "thirdPlanningAdapterRuntimeValidation": {
+    "runtimeTransformHead": "b8a3fef6fefef9966ec32916c795e56bb0a23e0e",
+    "runtimeTransformParent": "31665b113d81879740eee4e40cc4220bac6a5a5a",
+    "artifactSha256": "e808571eec3e3b291442099897b43471d91f82a092190d0f704657f5e8888a9a",
+    "status": "pending-exact-head-branch-and-synthetic-merge-qa",
+    "productionMainUnchanged": true,
+    "rikkyoRuntimeUnchanged": true,
+    "validatedGroup": "challenge-session-composition-policy-adapter"
+  },
+  "forbidden": [
+    "moving Waseda challenge composition policy into the common engine",
+    "moving getProgress ahead of foundation layer/year exclusion checks",
+    "changing buildSessionPlan generic behavior in the third group",
+    "changing foundation-reason strings or precedence",
+    "changing retry gaps, due-retry precedence or unlimited queue order",
+    "mutating FYam8/rikkyo-uk-vocab",
+    "changing Waseda production main",
+    "deploying either public app"
+  ]
+}

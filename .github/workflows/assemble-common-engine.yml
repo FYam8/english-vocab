@@ -1,0 +1,254 @@
+name: Assemble Waseda app from engine sources
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - refactor/waseda-common-engine-v1
+    paths:
+      - src/common-engine/**
+      - src/waseda-bootstrap/**
+      - tools/assemble_waseda.py
+      - tools/refactor_waseda_persistence_boundary.py
+      - tools/split_waseda_compat_runtime.py
+      - tools/split_waseda_v75_runtime.py
+      - tools/split_waseda_v76_runtime.py
+      - tools/promote_first_common_engine_helper.py
+      - tools/promote_second_common_engine_helper.py
+      - tools/promote_third_common_engine_helper.py
+      - tools/promote_fourth_common_engine_helper.py
+      - tools/promote_fifth_common_engine_helper.py
+      - tools/extract_waseda_memory_policy_adapter.py
+      - tools/extract_waseda_memory_scoring_policy_adapter.py
+      - tools/extract_waseda_foundation_reason_policy_adapter.py
+      - tools/extract_waseda_challenge_score_policy_adapter.py
+      - tools/waseda_memory_policy_adapter_test.mjs
+      - tools/waseda_memory_scoring_policy_adapter_test.mjs
+      - tools/waseda_foundation_reason_policy_adapter_test.mjs
+      - tools/waseda_challenge_score_policy_adapter_test.mjs
+      - tools/common_engine_policy_contract_test.mjs
+      - tools/common_engine_policy_validation_test.mjs
+      - tools/common_engine_session_planning_contract_test.mjs
+      - tools/common_engine_session_planning_validation_test.mjs
+      - .github/workflows/assemble-common-engine.yml
+
+permissions:
+  contents: write
+
+jobs:
+  assemble:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Stop if Waseda production baseline moved
+        run: |
+          git fetch origin main --quiet
+          test "$(git rev-parse origin/main)" = "531d505c19a86eaa2c8bbc4b25179de8089ab585"
+
+      - name: Apply reviewed Waseda persistence boundary
+        run: |
+          python3 tools/refactor_waseda_persistence_boundary.py
+          mkdir -p /tmp/waseda-persistence-boundary
+          for f in 15-waseda-persistence.js 20-engine-candidate.js 30-compat-runtime.js 31-waseda-session-runtime.js; do
+            if [ -f "src/waseda-bootstrap/$f" ]; then cp "src/waseda-bootstrap/$f" "/tmp/waseda-persistence-boundary/$f"; fi
+          done
+          python3 tools/refactor_waseda_persistence_boundary.py
+          for f in 15-waseda-persistence.js 20-engine-candidate.js 30-compat-runtime.js 31-waseda-session-runtime.js; do
+            if [ -f "/tmp/waseda-persistence-boundary/$f" ]; then cmp "src/waseda-bootstrap/$f" "/tmp/waseda-persistence-boundary/$f"; fi
+          done
+          echo "persistence boundary transform idempotence: PASS"
+
+      - name: Mechanically split v7.5 from v7.6 runtime
+        run: |
+          python3 tools/split_waseda_compat_runtime.py
+          python3 tools/split_waseda_compat_runtime.py
+          echo "v7.5/v7.6 runtime split idempotence: PASS"
+
+      - name: Mechanically decompose v7.5 runtime by ownership boundary
+        run: |
+          python3 tools/split_waseda_v75_runtime.py
+          cp src/waseda-bootstrap/30-compat-runtime.js /tmp/waseda-v75-prelude.js
+          cp src/waseda-bootstrap/31-waseda-session-runtime.js /tmp/waseda-v75-session.js
+          if [ -f src/waseda-bootstrap/31a-waseda-planning-policy.js ]; then cp src/waseda-bootstrap/31a-waseda-planning-policy.js /tmp/waseda-v75-planning-policy.js; fi
+          cp src/waseda-bootstrap/32-session-planning-runtime.js /tmp/waseda-v75-planning.js
+          cp src/waseda-bootstrap/33-v75-ui-runtime.js /tmp/waseda-v75-ui.js
+          cp src/waseda-bootstrap/manifest.json /tmp/waseda-v75-split-manifest.json
+          python3 tools/split_waseda_v75_runtime.py
+          cmp src/waseda-bootstrap/30-compat-runtime.js /tmp/waseda-v75-prelude.js
+          cmp src/waseda-bootstrap/31-waseda-session-runtime.js /tmp/waseda-v75-session.js
+          if [ -f /tmp/waseda-v75-planning-policy.js ]; then cmp src/waseda-bootstrap/31a-waseda-planning-policy.js /tmp/waseda-v75-planning-policy.js; fi
+          cmp src/waseda-bootstrap/32-session-planning-runtime.js /tmp/waseda-v75-planning.js
+          cmp src/waseda-bootstrap/33-v75-ui-runtime.js /tmp/waseda-v75-ui.js
+          cmp src/waseda-bootstrap/manifest.json /tmp/waseda-v75-split-manifest.json
+          echo "v7.5 ownership split idempotence: PASS"
+
+      - name: Mechanically decompose v7.6 scheduler by ownership boundary
+        run: |
+          python3 tools/split_waseda_v76_runtime.py
+          cp src/waseda-bootstrap/35-v76-memory-runtime.js /tmp/waseda-v76-core.js
+          cp src/waseda-bootstrap/36-v76-engine-integration.js /tmp/waseda-v76-integration.js
+          cp src/waseda-bootstrap/37-v76-waseda-ui-runtime.js /tmp/waseda-v76-ui.js
+          cp src/waseda-bootstrap/manifest.json /tmp/waseda-v76-subsplit-manifest.json
+          python3 tools/split_waseda_v76_runtime.py
+          cmp src/waseda-bootstrap/35-v76-memory-runtime.js /tmp/waseda-v76-core.js
+          cmp src/waseda-bootstrap/36-v76-engine-integration.js /tmp/waseda-v76-integration.js
+          cmp src/waseda-bootstrap/37-v76-waseda-ui-runtime.js /tmp/waseda-v76-ui.js
+          cmp src/waseda-bootstrap/manifest.json /tmp/waseda-v76-subsplit-manifest.json
+          echo "v7.6 ownership split idempotence: PASS"
+
+      - name: Verify first reviewed school-neutral helper remains canonical
+        run: |
+          python3 -m py_compile tools/promote_first_common_engine_helper.py
+          python3 tools/promote_first_common_engine_helper.py
+          node tools/common_engine_extraction_readiness_test.mjs
+          echo "first common-engine helper remains canonical: PASS"
+
+      - name: Verify second reviewed school-neutral helper remains canonical
+        run: |
+          python3 -m py_compile tools/promote_second_common_engine_helper.py
+          python3 tools/promote_second_common_engine_helper.py
+          node tools/common_engine_extraction_readiness_test.mjs
+          echo "second common-engine helper remains canonical: PASS"
+
+      - name: Verify third reviewed school-neutral helper remains canonical
+        run: |
+          python3 -m py_compile tools/promote_third_common_engine_helper.py
+          python3 tools/promote_third_common_engine_helper.py
+          node tools/common_engine_extraction_readiness_test.mjs
+          echo "third common-engine helper remains canonical: PASS"
+
+      - name: Verify fourth reviewed school-neutral helper remains canonical
+        run: |
+          python3 -m py_compile tools/promote_fourth_common_engine_helper.py
+          python3 tools/promote_fourth_common_engine_helper.py
+          node tools/common_engine_extraction_readiness_test.mjs
+          echo "fourth common-engine helper remains canonical: PASS"
+
+      - name: Verify fifth reviewed school-neutral helper remains canonical
+        run: |
+          python3 -m py_compile tools/promote_fifth_common_engine_helper.py
+          python3 tools/promote_fifth_common_engine_helper.py
+          node tools/common_engine_extraction_readiness_test.mjs
+          echo "fifth common-engine helper remains canonical: PASS"
+
+      - name: Introduce approved Waseda memory policy adapter
+        run: |
+          python3 -m py_compile tools/extract_waseda_memory_policy_adapter.py
+          node tools/common_engine_policy_contract_test.mjs
+          node tools/common_engine_policy_validation_test.mjs
+          python3 tools/extract_waseda_memory_policy_adapter.py
+          node tools/common_engine_policy_contract_test.mjs
+          node tools/waseda_memory_policy_adapter_test.mjs
+          cp src/waseda-bootstrap/34-waseda-memory-policy.js /tmp/waseda-memory-policy.js
+          cp src/waseda-bootstrap/35-v76-memory-runtime.js /tmp/waseda-memory-runtime-after-policy.js
+          cp src/waseda-bootstrap/manifest.json /tmp/waseda-memory-policy-manifest.json
+          python3 tools/extract_waseda_memory_policy_adapter.py
+          cmp src/waseda-bootstrap/34-waseda-memory-policy.js /tmp/waseda-memory-policy.js
+          cmp src/waseda-bootstrap/35-v76-memory-runtime.js /tmp/waseda-memory-runtime-after-policy.js
+          cmp src/waseda-bootstrap/manifest.json /tmp/waseda-memory-policy-manifest.json
+          echo "Waseda memory policy adapter idempotence: PASS"
+
+      - name: Introduce approved Waseda memory scoring policy adapter
+        run: |
+          python3 -m py_compile tools/extract_waseda_memory_scoring_policy_adapter.py
+          node tools/common_engine_policy_contract_test.mjs
+          node tools/common_engine_policy_validation_test.mjs
+          python3 tools/extract_waseda_memory_scoring_policy_adapter.py
+          node tools/common_engine_policy_contract_test.mjs
+          node tools/waseda_memory_scoring_policy_adapter_test.mjs
+          cp src/waseda-bootstrap/34-waseda-memory-policy.js /tmp/waseda-memory-scoring-policy.js
+          cp src/waseda-bootstrap/36-v76-engine-integration.js /tmp/waseda-memory-scoring-integration.js
+          cp src/waseda-bootstrap/manifest.json /tmp/waseda-memory-scoring-manifest.json
+          python3 tools/extract_waseda_memory_scoring_policy_adapter.py
+          cmp src/waseda-bootstrap/34-waseda-memory-policy.js /tmp/waseda-memory-scoring-policy.js
+          cmp src/waseda-bootstrap/36-v76-engine-integration.js /tmp/waseda-memory-scoring-integration.js
+          cmp src/waseda-bootstrap/manifest.json /tmp/waseda-memory-scoring-manifest.json
+          echo "Waseda memory scoring policy adapter idempotence: PASS"
+
+      - name: Introduce approved Waseda foundation reason planning adapter
+        run: |
+          python3 -m py_compile tools/extract_waseda_foundation_reason_policy_adapter.py
+          node tools/common_engine_session_planning_contract_test.mjs
+          node tools/common_engine_session_planning_validation_test.mjs
+          python3 tools/extract_waseda_foundation_reason_policy_adapter.py
+          node tools/common_engine_session_planning_contract_test.mjs
+          node tools/waseda_foundation_reason_policy_adapter_test.mjs
+          cp src/waseda-bootstrap/31a-waseda-planning-policy.js /tmp/waseda-foundation-policy.js
+          cp src/waseda-bootstrap/32-session-planning-runtime.js /tmp/waseda-planning-after-foundation.js
+          cp src/waseda-bootstrap/manifest.json /tmp/waseda-foundation-policy-manifest.json
+          python3 tools/extract_waseda_foundation_reason_policy_adapter.py
+          cmp src/waseda-bootstrap/31a-waseda-planning-policy.js /tmp/waseda-foundation-policy.js
+          cmp src/waseda-bootstrap/32-session-planning-runtime.js /tmp/waseda-planning-after-foundation.js
+          cmp src/waseda-bootstrap/manifest.json /tmp/waseda-foundation-policy-manifest.json
+          echo "Waseda foundation reason planning adapter idempotence: PASS"
+
+      - name: Introduce approved Waseda challenge score planning adapter
+        run: |
+          python3 -m py_compile tools/extract_waseda_challenge_score_policy_adapter.py
+          node tools/common_engine_session_planning_contract_test.mjs
+          node tools/common_engine_session_planning_validation_test.mjs
+          python3 tools/extract_waseda_challenge_score_policy_adapter.py
+          node tools/common_engine_session_planning_contract_test.mjs
+          node tools/waseda_challenge_score_policy_adapter_test.mjs
+          cp src/waseda-bootstrap/31a-waseda-planning-policy.js /tmp/waseda-challenge-score-policy.js
+          cp src/waseda-bootstrap/32-session-planning-runtime.js /tmp/waseda-planning-after-challenge-score.js
+          cp src/waseda-bootstrap/manifest.json /tmp/waseda-challenge-score-manifest.json
+          python3 tools/extract_waseda_challenge_score_policy_adapter.py
+          cmp src/waseda-bootstrap/31a-waseda-planning-policy.js /tmp/waseda-challenge-score-policy.js
+          cmp src/waseda-bootstrap/32-session-planning-runtime.js /tmp/waseda-planning-after-challenge-score.js
+          cmp src/waseda-bootstrap/manifest.json /tmp/waseda-challenge-score-manifest.json
+          echo "Waseda challenge score planning adapter idempotence: PASS"
+
+      - name: Assemble production artifact from source parts
+        run: python3 tools/assemble_waseda.py --write
+
+      - name: Syntax-check split JavaScript sources
+        run: |
+          node --check src/common-engine/session-orchestration.js
+          node --check src/waseda-bootstrap/10-waseda-data.js
+          node --check src/waseda-bootstrap/15-waseda-persistence.js
+          node --check src/waseda-bootstrap/20-engine-candidate.js
+          node --check src/waseda-bootstrap/30-compat-runtime.js
+          node --check src/waseda-bootstrap/31-waseda-session-runtime.js
+          node --check src/waseda-bootstrap/31a-waseda-planning-policy.js
+          node --check src/waseda-bootstrap/32-session-planning-runtime.js
+          node --check src/waseda-bootstrap/33-v75-ui-runtime.js
+          node --check src/waseda-bootstrap/34-waseda-memory-policy.js
+          node --check src/waseda-bootstrap/35-v76-memory-runtime.js
+          node --check src/waseda-bootstrap/36-v76-engine-integration.js
+          node --check src/waseda-bootstrap/37-v76-waseda-ui-runtime.js
+          node --check src/waseda-bootstrap/40-runtime-bootstrap-tail.js
+          node tools/common_engine_compat_ownership_test.mjs
+          node tools/common_engine_extraction_readiness_test.mjs
+          node tools/common_engine_policy_contract_test.mjs
+          node tools/common_engine_policy_validation_test.mjs
+          node tools/common_engine_session_planning_contract_test.mjs
+          node tools/common_engine_session_planning_validation_test.mjs
+          node tools/waseda_memory_policy_adapter_test.mjs
+          node tools/waseda_memory_scoring_policy_adapter_test.mjs
+          node tools/waseda_foundation_reason_policy_adapter_test.mjs
+          node tools/waseda_challenge_score_policy_adapter_test.mjs
+          node tools/common_engine_session_orchestration_test.mjs
+          node tools/waseda_session_orchestration_parity_test.mjs
+
+      - name: Protect Waseda cloud sync and diff hygiene
+        run: |
+          git diff --exit-code 531d505c19a86eaa2c8bbc4b25179de8089ab585...HEAD -- progress-sync.js
+          git diff --check
+
+      - name: Commit generated artifact and reviewed source boundaries
+        run: |
+          CHANGED="$(git status --porcelain -- index.html src/waseda-bootstrap/manifest.json src/waseda-bootstrap/engine-extraction-readiness.json src/waseda-bootstrap/15-waseda-persistence.js src/waseda-bootstrap/20-engine-candidate.js src/waseda-bootstrap/30-compat-runtime.js src/waseda-bootstrap/31-waseda-session-runtime.js src/waseda-bootstrap/31a-waseda-planning-policy.js src/waseda-bootstrap/32-session-planning-runtime.js src/waseda-bootstrap/33-v75-ui-runtime.js src/waseda-bootstrap/34-waseda-memory-policy.js src/waseda-bootstrap/35-v76-memory-runtime.js src/waseda-bootstrap/36-v76-engine-integration.js src/waseda-bootstrap/37-v76-waseda-ui-runtime.js src/waseda-bootstrap/40-runtime-bootstrap-tail.js)"
+          if [ -z "$CHANGED" ]; then
+            echo "Generated Waseda artifact and reviewed source boundaries already up to date"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html src/waseda-bootstrap/manifest.json src/waseda-bootstrap/engine-extraction-readiness.json src/waseda-bootstrap/15-waseda-persistence.js src/waseda-bootstrap/20-engine-candidate.js src/waseda-bootstrap/30-compat-runtime.js src/waseda-bootstrap/31-waseda-session-runtime.js src/waseda-bootstrap/31a-waseda-planning-policy.js src/waseda-bootstrap/32-session-planning-runtime.js src/waseda-bootstrap/33-v75-ui-runtime.js src/waseda-bootstrap/34-waseda-memory-policy.js src/waseda-bootstrap/35-v76-memory-runtime.js src/waseda-bootstrap/36-v76-engine-integration.js src/waseda-bootstrap/37-v76-waseda-ui-runtime.js src/waseda-bootstrap/40-runtime-bootstrap-tail.js
+          git commit -m "refactor: introduce Waseda challenge score policy adapter"
+          git push origin HEAD:refactor/waseda-common-engine-v1

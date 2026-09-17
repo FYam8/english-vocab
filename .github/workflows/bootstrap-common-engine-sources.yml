@@ -1,0 +1,44 @@
+name: Bootstrap byte-exact Waseda engine sources
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  bootstrap:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Verify reviewed production baseline still matches
+        run: |
+          git fetch origin main --quiet
+          test "$(git rev-parse origin/main)" = "531d505c19a86eaa2c8bbc4b25179de8089ab585"
+          test "$(git hash-object index.html)" = "bb77a0c54153502e25bccb1ed89ca33b29b45c83"
+
+      - name: Bootstrap source parts from the exact production artifact
+        run: python3 tools/bootstrap_waseda_sources.py
+
+      - name: Prove deterministic byte-exact reassembly
+        run: python3 tools/assemble_waseda.py --check
+
+      - name: Protect learner-facing production files
+        run: |
+          git diff --exit-code -- index.html progress-sync.js
+          git diff --check
+
+      - name: Commit mechanical source split to refactor branch
+        run: |
+          if [ -z "$(git status --porcelain -- src/waseda-bootstrap)" ]; then
+            echo "Bootstrap sources already up to date"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/waseda-bootstrap
+          git commit -m "refactor: bootstrap byte-exact Waseda source parts"
+          git push origin HEAD:refactor/waseda-common-engine-v1

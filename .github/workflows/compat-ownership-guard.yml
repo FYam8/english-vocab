@@ -1,0 +1,162 @@
+name: Waseda compatibility ownership guard
+
+on:
+  push:
+    branches:
+      - refactor/waseda-common-engine-v1
+    paths:
+      - src/common-engine/**
+      - src/waseda-bootstrap/compat-ownership.json
+      - src/waseda-bootstrap/engine-extraction-readiness.json
+      - src/waseda-bootstrap/15-waseda-persistence.js
+      - src/waseda-bootstrap/20-engine-candidate.js
+      - src/waseda-bootstrap/30-compat-runtime.js
+      - src/waseda-bootstrap/31-waseda-session-runtime.js
+      - src/waseda-bootstrap/31a-waseda-planning-policy.js
+      - src/waseda-bootstrap/32-session-planning-runtime.js
+      - src/waseda-bootstrap/33-v75-ui-runtime.js
+      - src/waseda-bootstrap/34-waseda-memory-policy.js
+      - src/waseda-bootstrap/35-v76-memory-runtime.js
+      - src/waseda-bootstrap/36-v76-engine-integration.js
+      - src/waseda-bootstrap/37-v76-waseda-ui-runtime.js
+      - tools/common_engine_compat_ownership_test.mjs
+      - tools/common_engine_extraction_readiness_test.mjs
+      - tools/common_engine_policy_contract_test.mjs
+      - tools/common_engine_policy_validation_test.mjs
+      - tools/common_engine_session_planning_contract_test.mjs
+      - tools/common_engine_session_planning_validation_test.mjs
+      - tools/waseda_memory_policy_adapter_test.mjs
+      - tools/waseda_memory_scoring_policy_adapter_test.mjs
+      - tools/waseda_foundation_reason_policy_adapter_test.mjs
+      - tools/waseda_challenge_score_policy_adapter_test.mjs
+      - tools/extract_waseda_memory_policy_adapter.py
+      - tools/extract_waseda_memory_scoring_policy_adapter.py
+      - tools/extract_waseda_foundation_reason_policy_adapter.py
+      - tools/extract_waseda_challenge_score_policy_adapter.py
+      - .github/workflows/compat-ownership-guard.yml
+  pull_request:
+    branches:
+      - main
+    paths:
+      - src/common-engine/**
+      - src/waseda-bootstrap/compat-ownership.json
+      - src/waseda-bootstrap/engine-extraction-readiness.json
+      - src/waseda-bootstrap/15-waseda-persistence.js
+      - src/waseda-bootstrap/20-engine-candidate.js
+      - src/waseda-bootstrap/30-compat-runtime.js
+      - src/waseda-bootstrap/31-waseda-session-runtime.js
+      - src/waseda-bootstrap/31a-waseda-planning-policy.js
+      - src/waseda-bootstrap/32-session-planning-runtime.js
+      - src/waseda-bootstrap/33-v75-ui-runtime.js
+      - src/waseda-bootstrap/34-waseda-memory-policy.js
+      - src/waseda-bootstrap/35-v76-memory-runtime.js
+      - src/waseda-bootstrap/36-v76-engine-integration.js
+      - src/waseda-bootstrap/37-v76-waseda-ui-runtime.js
+      - tools/common_engine_compat_ownership_test.mjs
+      - tools/common_engine_extraction_readiness_test.mjs
+      - tools/common_engine_policy_contract_test.mjs
+      - tools/common_engine_policy_validation_test.mjs
+      - tools/common_engine_session_planning_contract_test.mjs
+      - tools/common_engine_session_planning_validation_test.mjs
+      - tools/waseda_memory_policy_adapter_test.mjs
+      - tools/waseda_memory_scoring_policy_adapter_test.mjs
+      - tools/waseda_foundation_reason_policy_adapter_test.mjs
+      - tools/waseda_challenge_score_policy_adapter_test.mjs
+      - tools/extract_waseda_memory_policy_adapter.py
+      - tools/extract_waseda_memory_scoring_policy_adapter.py
+      - tools/extract_waseda_foundation_reason_policy_adapter.py
+      - tools/extract_waseda_challenge_score_policy_adapter.py
+      - .github/workflows/compat-ownership-guard.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ownership:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Syntax check ownership, extraction and policy guards
+        run: |
+          node --check tools/common_engine_compat_ownership_test.mjs
+          node --check tools/common_engine_extraction_readiness_test.mjs
+          node --check tools/common_engine_policy_contract_test.mjs
+          node --check tools/common_engine_policy_validation_test.mjs
+          node --check tools/common_engine_session_planning_contract_test.mjs
+          node --check tools/common_engine_session_planning_validation_test.mjs
+          node --check tools/waseda_memory_policy_adapter_test.mjs
+          node --check tools/waseda_memory_scoring_policy_adapter_test.mjs
+          node --check tools/waseda_foundation_reason_policy_adapter_test.mjs
+          node --check tools/waseda_challenge_score_policy_adapter_test.mjs
+          python3 -m py_compile tools/extract_waseda_memory_policy_adapter.py
+          python3 -m py_compile tools/extract_waseda_memory_scoring_policy_adapter.py
+          python3 -m py_compile tools/extract_waseda_foundation_reason_policy_adapter.py
+          python3 -m py_compile tools/extract_waseda_challenge_score_policy_adapter.py
+      - name: Enforce Waseda/common ownership boundary
+        run: node tools/common_engine_compat_ownership_test.mjs
+      - name: Enforce extraction readiness classification
+        run: node tools/common_engine_extraction_readiness_test.mjs
+      - name: Pin completed pure-helper extraction
+        run: |
+          node - <<'JS'
+          const fs=require('node:fs');
+          const assert=require('node:assert/strict');
+          const r=JSON.parse(fs.readFileSync('src/waseda-bootstrap/engine-extraction-readiness.json','utf8'));
+          assert.equal(r.fifthPromotion,'v76LapseStability');
+          assert.equal(r.fifthPromotionStatus,'promoted');
+          assert.equal(r.readySchoolNeutralHelpers.length,0);
+          const p=r.promotedSchoolNeutralHelpers.map(x=>x.symbol);
+          assert.deepEqual(p,[
+            'v75WeightedWithoutReplacement',
+            'v76Clamp',
+            'v76SeedStability',
+            'v76IntervalForTarget',
+            'v76LapseStability'
+          ]);
+          console.log('pure-helper extraction exact-head checkpoint: PASS');
+          JS
+      - name: Enforce school-neutral policy contract
+        run: node tools/common_engine_policy_contract_test.mjs
+      - name: Enforce policy-contract validation checkpoint
+        run: node tools/common_engine_policy_validation_test.mjs
+      - name: Enforce Waseda session-planning policy contract
+        run: node tools/common_engine_session_planning_contract_test.mjs
+      - name: Enforce session-planning validation checkpoint
+        run: node tools/common_engine_session_planning_validation_test.mjs
+      - name: Pin Waseda memory policy adapter boundary
+        run: node tools/waseda_memory_policy_adapter_test.mjs
+      - name: Pin Waseda memory scoring policy adapter boundary
+        run: node tools/waseda_memory_scoring_policy_adapter_test.mjs
+      - name: Pin Waseda foundation reason policy adapter boundary
+        run: node tools/waseda_foundation_reason_policy_adapter_test.mjs
+      - name: Pin Waseda challenge score policy adapter boundary
+        run: node tools/waseda_challenge_score_policy_adapter_test.mjs
+      - name: Confirm adapter scope remains Waseda-only
+        run: |
+          node - <<'JS'
+          const fs=require('node:fs');
+          const assert=require('node:assert/strict');
+          const v=JSON.parse(fs.readFileSync('src/common-engine/policy-contract-validation.json','utf8'));
+          const p=JSON.parse(fs.readFileSync('src/common-engine/session-planning-contract-validation.json','utf8'));
+          const c=JSON.parse(fs.readFileSync('src/common-engine/challenge-session-composition-contract.json','utf8'));
+          assert.equal(v.allowRikkyoRuntimeMutation,false);
+          assert.equal(v.allowProductionMainMutation,false);
+          assert.equal(v.allowSharedRuntimeArtifactRelease,false);
+          assert.equal(p.allowFullPlanningRuntimeMutation,true);
+          assert.equal(p.finalSessionOrchestrationBoundary.status,'validated-two-consecutive-clean-runs');
+          assert.equal(p.firstPlanningAdapterValidation.validatedHead,'728da033e8e815ebb8585c97966de9c253e334a9');
+          assert.equal(p.secondPlanningAdapterApprovalValidation.validatedHead,'32c2724e60f764a59fa8136a789d27efa7188846');
+          assert.equal(p.secondPlanningAdapterRuntimeValidation.validatedHead,'ebbeb439937e3f90bb79a041d7f27d7ddf0e94d1');
+          assert.equal(p.secondPlanningAdapterRuntimeValidation.runtimeTransformHead,'261c1ae713810578b523cbcf7fb53239d9b3b027');
+          assert.equal(p.secondPlanningAdapterRuntimeValidation.artifactSha256,'16655e85045d1b83e2caea23ed4a0a6aafe8af50e86f199ecab6506b5268206d');
+          assert.equal(p.allowThirdPlanningAdapterGroupIntroduction,true);
+          assert.equal(p.thirdApprovedGroup,'challenge-session-composition-policy-adapter');
+          assert.equal(p.thirdContractStatus,'validated-contract-runtime-mutation-limited-to-approved-methods');
+          assert.equal(p.thirdPlanningAdapterApprovalValidation.validatedHead,'f65efc3de9a51cae4c22478eca27ca52a5bec777');
+          assert.equal(c.status,'contract-only-no-runtime-mutation');
+          assert.equal(c.exactBehavior.mustNotCreateProgressForLayerOrYearExcludedEntities,true);
+          console.log('Waseda-only adapter scope: PASS');
+          JS
+      - name: Diff hygiene
+        run: git diff --check

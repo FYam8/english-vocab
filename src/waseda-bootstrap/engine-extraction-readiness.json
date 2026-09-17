@@ -1,0 +1,169 @@
+{
+  "format": "waseda-vocab-engine-extraction-readiness/v1",
+  "purpose": "Record which mechanically separated helpers are safe to promote into the canonical engine now, which require policy injection first, and which remain Waseda-owned. This classification does not itself change runtime behavior.",
+  "readySchoolNeutralHelpers": [],
+  "promotedSchoolNeutralHelpers": [
+    {
+      "symbol": "v75WeightedWithoutReplacement",
+      "previousSource": "32-session-planning-runtime.js",
+      "target": "20-engine-candidate.js",
+      "reason": "Generic weighted sampling without replacement; depends only on its arguments, Math.random, and the generic weightedChoice helper. It contains no Waseda storage, branding, score-band, study-layer, UI-text, or cloud dependency.",
+      "promotionType": "definition-move-only; name and function body unchanged"
+    },
+    {
+      "symbol": "v76Clamp",
+      "previousSource": "35-v76-memory-runtime.js",
+      "target": "20-engine-candidate.js",
+      "reason": "Pure numeric clamp helper.",
+      "promotionType": "definition-move-only; name and function body unchanged"
+    },
+    {
+      "symbol": "v76SeedStability",
+      "previousSource": "35-v76-memory-runtime.js",
+      "target": "20-engine-candidate.js",
+      "reason": "Pure mapping from mastery level to an initial stability value; still version-named, so promotion may precede later neutral naming.",
+      "promotionType": "definition-move-only; name and function body unchanged"
+    },
+    {
+      "symbol": "v76IntervalForTarget",
+      "previousSource": "35-v76-memory-runtime.js",
+      "target": "20-engine-candidate.js",
+      "reason": "Pure interval calculation from stability and target retention.",
+      "promotionType": "definition-move-only; name and function body unchanged"
+    },
+    {
+      "symbol": "v76LapseStability",
+      "previousSource": "35-v76-memory-runtime.js",
+      "target": "20-engine-candidate.js",
+      "reason": "Pure calculation from memory-model values and retrievability.",
+      "promotionType": "definition-move-only; name and function body unchanged"
+    }
+  ],
+  "policyInjectionRequired": [
+    {
+      "symbol": "v75ChallengeScore",
+      "reason": "Reads Waseda priority/year/frequency/mastery policy and current learner progress."
+    },
+    {
+      "symbol": "v75FoundationReason",
+      "reason": "Contains Japanese Waseda-facing explanation text and Waseda challenge policy."
+    },
+    {
+      "symbol": "buildChallengeSessionPlan",
+      "reason": "Hard-codes the 75-point challenge lane, studyLayer semantics, Waseda scoring policy and current VOCAB globals."
+    },
+    {
+      "symbol": "buildSessionPlan",
+      "reason": "Hard-codes the Waseda mode value 75 and current global pool/scheduler policy."
+    },
+    {
+      "symbol": "v75DueRetry",
+      "reason": "Uses the current Waseda session object shape and retry policy."
+    },
+    {
+      "symbol": "v75PickUnlimitedBase",
+      "reason": "Uses Waseda session shape, studyLayer challenge semantics and current scheduler globals."
+    },
+    {
+      "symbol": "v75NextSessionItem",
+      "reason": "Uses Waseda session queue/retry state and spacing policy."
+    },
+    {
+      "symbol": "v76TargetRetention",
+      "reason": "Hard-codes S-priority and weak-item target-retention policy."
+    },
+    {
+      "symbol": "v76ReviewIntervalDays",
+      "reason": "Delegates to Waseda target-retention policy and hard-coded interval bounds."
+    },
+    {
+      "symbol": "v76UpdateMemoryAfterOutcome",
+      "reason": "Contains diagnostic studyLayer policy, retry behavior and target-retention policy."
+    },
+    {
+      "symbol": "schedulerScore",
+      "reason": "v7.6 override includes Waseda exam-date, S-priority and weak-item urgency policy."
+    }
+  ],
+  "wasedaOwned": [
+    "WASEDA_APP_CONFIG",
+    "wasedaMigrateState",
+    "persistActiveSession",
+    "loadActiveSession",
+    "validateActiveSession",
+    "v75RestoreSessionObject",
+    "v75FoundationReason",
+    "v76ExamDaysLeft",
+    "v76MemoryDetailHTML",
+    "v76EnsureMemorySettings",
+    "examExampleHTML"
+  ],
+  "blockedTokensForReadyHelpers": [
+    "waseshibu_",
+    "WASEDA_APP_CONFIG",
+    "localStorage",
+    "progress-sync",
+    "早稲渋",
+    "75点",
+    "priority",
+    "studyLayer",
+    "examDate",
+    "VOCAB",
+    "state.",
+    "session."
+  ],
+  "firstPromotion": "v75WeightedWithoutReplacement",
+  "firstPromotionStatus": "promoted",
+  "firstPromotionValidation": {
+    "validatedHead": "003e183ff3a8c5e00ffb7980342cb65aa12db997",
+    "branchTwoPass": "success",
+    "syntheticMergeTwoPass": "success",
+    "branchOwnership": "success",
+    "syntheticMergeOwnership": "success"
+  },
+  "secondPromotion": "v76Clamp",
+  "secondPromotionStatus": "promoted",
+  "secondPromotionValidation": {
+    "validatedHead": "6507a960e0e71493c2076c6bc9199ebd9c0f1047",
+    "branchTwoPass": "success",
+    "syntheticMergeTwoPass": "success",
+    "branchOwnership": "success",
+    "syntheticMergeOwnership": "success"
+  },
+  "thirdPromotion": "v76SeedStability",
+  "thirdPromotionStatus": "promoted",
+  "thirdPromotionValidation": {
+    "validatedHead": "0de8fd6d9977e0943503c12cf15ca2b9f6e5dbb4",
+    "branchTwoPass": "success",
+    "syntheticMergeTwoPass": "success",
+    "branchOwnership": "success",
+    "syntheticMergeOwnership": "success"
+  },
+  "fourthPromotion": "v76IntervalForTarget",
+  "fourthPromotionStatus": "promoted",
+  "fourthPromotionValidation": {
+    "validatedHead": "0d850cf1607454139b37877f45d0518080ed3271",
+    "branchTwoPass": "success",
+    "syntheticMergeTwoPass": "success",
+    "branchOwnership": "success",
+    "syntheticMergeOwnership": "success"
+  },
+  "fifthPromotion": "v76LapseStability",
+  "fifthPromotionStatus": "promoted",
+  "fifthPromotionValidation": {
+    "validatedHead": "25c27cffa2ae760394782d01b8a69386cb700baf",
+    "branchTwoPass": "success",
+    "syntheticMergeTwoPass": "success",
+    "branchOwnership": "success",
+    "syntheticMergeOwnership": "success"
+  },
+  "pureHelperExtractionStatus": "complete",
+  "nextPhase": "policy-injection-contract",
+  "promotionValidation": {
+    "requireExactBranchHead": true,
+    "requireSyntheticMerge": true,
+    "requireTwoPassCompatibility": true,
+    "requireOwnershipGuard": true,
+    "allowNextPromotionBeforeGreen": false
+  }
+}

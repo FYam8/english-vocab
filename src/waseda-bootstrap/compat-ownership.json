@@ -1,0 +1,53 @@
+{
+  "format": "waseda-vocab-compat-ownership/v1",
+  "purpose": "Freeze ownership boundaries before flattening the v7.5/v7.6 compatibility runtime. This file is descriptive and must not change runtime behavior.",
+  "wasedaPersistenceOwned": [
+    "WASEDA_APP_CONFIG",
+    "wasedaStorageGet",
+    "wasedaStorageSet",
+    "wasedaStorageRemove",
+    "wasedaMigrateState"
+  ],
+  "wasedaSessionOwned": [
+    "V75_ACTIVE_SESSION_KEY",
+    "V75_SESSION_FORMAT_VERSION",
+    "persistActiveSession",
+    "clearActiveSession",
+    "loadActiveSession",
+    "validateActiveSession",
+    "v75RestoreSessionObject"
+  ],
+  "sharedEngineCandidates": [
+    "v75WeightedWithoutReplacement",
+    "v75ChallengeScore",
+    "buildChallengeSessionPlan",
+    "buildSessionPlan",
+    "v75DueRetry",
+    "v75PickUnlimitedBase",
+    "v75NextSessionItem",
+    "v76InferMemoryModel",
+    "v76EnsureMemoryModel",
+    "v76Retrievability",
+    "v76TargetRetention",
+    "v76UpdateMemoryAfterOutcome"
+  ],
+  "wasedaUiOrContentPolicy": [
+    "v75SessionLabel",
+    "v75DisplayWord",
+    "examExampleHTML"
+  ],
+  "rawPersistenceIdentifiers": [
+    "waseshibu_vocab_state",
+    "waseshibu_vocab_active_session_v1"
+  ],
+  "forbiddenInEngineCandidate": [
+    "localStorage.",
+    "waseshibu_vocab_state",
+    "waseshibu_vocab_active_session_v1"
+  ],
+  "forbiddenInCompatibilityRuntime": [
+    "localStorage.",
+    "waseshibu_vocab_state",
+    "waseshibu_vocab_active_session_v1"
+  ]
+}
