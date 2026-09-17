@@ -143,7 +143,8 @@ jobs:
           assert.equal(v.allowRikkyoRuntimeMutation,false);
           assert.equal(v.allowProductionMainMutation,false);
           assert.equal(v.allowSharedRuntimeArtifactRelease,false);
-          assert.equal(p.allowFullPlanningRuntimeMutation,false);
+          assert.equal(p.allowFullPlanningRuntimeMutation,true);
+          assert.equal(p.finalSessionOrchestrationBoundary.status,'validated-two-consecutive-clean-runs');
           assert.equal(p.firstPlanningAdapterValidation.validatedHead,'728da033e8e815ebb8585c97966de9c253e334a9');
           assert.equal(p.secondPlanningAdapterApprovalValidation.validatedHead,'32c2724e60f764a59fa8136a789d27efa7188846');
           assert.equal(p.secondPlanningAdapterRuntimeValidation.validatedHead,'ebbeb439937e3f90bb79a041d7f27d7ddf0e94d1');
