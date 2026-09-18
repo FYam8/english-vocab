@@ -196,14 +196,13 @@ showFeedback=function(v,ok,userAns=""){
 function v75UpdateSessionBar(showCurrent=true){
   if(!session)return;
   const total=session.actualSessionSize||0;
-  if(session.unlimited){
-    $("sessionCount").textContent=`基本 ${session.baseAnswered}問 / 再確認 ${session.retryAnswered}問`;
-  }else if(currentQuestion&&currentQuestion.isRetry&&showCurrent){
-    $("sessionCount").textContent=`${session.baseAnswered}/${total} ・ 再確認`;
-  }else{
-    const n=showCurrent&&currentQuestion&&!currentQuestion.isRetry&&!questionResolved?Math.min(session.baseAnswered+1,total):session.baseAnswered;
-    $("sessionCount").textContent=`${n}/${total}${session.retryAnswered?` ・ 再確認 ${session.retryAnswered}`:""}`;
-  }
+  const isRetry=!!(showCurrent&&currentQuestion&&currentQuestion.isRetry);
+  const n=showCurrent&&currentQuestion&&!currentQuestion.isRetry&&!questionResolved?Math.min(session.baseAnswered+1,total):session.baseAnswered;
+  $("sessionCount").textContent=globalThis.VocabularyLearningUI.progress({
+    mode:"study",unlimited:!!session.unlimited,isRetry,
+    basePosition:n,baseAnswered:session.baseAnswered,baseTotal:total,
+    retryAnswered:session.retryAnswered,answeredCurrent:!!questionResolved
+  }).secondary;
   $("sessionScore").textContent=`正解 ${session.correct} / 不正解 ${session.wrong}`;
 }
 function v75RenderCurrentQuestion(){

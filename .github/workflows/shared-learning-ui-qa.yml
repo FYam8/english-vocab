@@ -1,0 +1,51 @@
+name: Shared learning UI QA
+on:
+  push:
+    branches: [shared-learning-ui-v1, main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate shared runtime and persistence boundaries
+        run: |
+          python3 tools/assemble_waseda.py --check
+          node tools/learning_ui_runtime_test.mjs
+          node tools/common_engine_compat_ownership_test.mjs
+          node tools/common_engine_session_orchestration_test.mjs
+          node tools/waseda_session_orchestration_parity_test.mjs
+          git diff --exit-code 30c883a4bab19ecdd8f1732cd6cae86de6821f4d HEAD -- src/waseda-bootstrap/10-waseda-data.js src/waseda-bootstrap/15-waseda-persistence.js src/waseda-bootstrap/20-engine-candidate.js src/waseda-bootstrap/31-waseda-session-runtime.js src/waseda-bootstrap/35-v76-memory-runtime.js progress-sync.js
+      - name: Prepare isolated browser regression suite
+        run: |
+          mkdir -p /tmp/ui-qa-site /tmp/ui-qa-tests
+          cp index.html /tmp/ui-qa-site/index.html
+          touch /tmp/ui-qa-site/progress-sync.js
+          cat tools/v75_browser_test.part*.mjs > /tmp/ui-qa-tests/v75.mjs
+          cp tools/v75_content_browser_test.mjs /tmp/ui-qa-tests/content.mjs
+          cp tools/v76_memory_browser_test.mjs /tmp/ui-qa-tests/memory.mjs
+          sed -i 's/2019-2026-v7.5-user-test-remediation/2019-2026-v7.6-memory-curve-scheduler/g' /tmp/ui-qa-tests/v75.mjs /tmp/ui-qa-tests/content.mjs
+          cd /tmp/ui-qa-tests
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps chromium
+      - name: Two consecutive clean browser passes
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 --directory /tmp/ui-qa-site &
+          for attempt in {1..30}; do
+            if curl -fsS http://127.0.0.1:4173/index.html >/dev/null; then break; fi
+            sleep 1
+          done
+          for pass in 1 2; do
+            node /tmp/ui-qa-tests/v75.mjs
+            node /tmp/ui-qa-tests/content.mjs
+            node /tmp/ui-qa-tests/memory.mjs
+            echo "Shared UI browser pass $pass CLEAN"
+          done

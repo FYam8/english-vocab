@@ -1224,6 +1224,26 @@ const VOCABULARY_SESSION_ENGINE=Object.freeze({
     return null;
   }
 });
+/* School-neutral presentation only: never reads or writes learner storage. */
+(function (root) {
+  "use strict";
+  root.VocabularyLearningUI = Object.freeze({
+    version: "1.0.0",
+    progress(input, labels = { baseLabel: "基本", retryLabel: "再確認" }) {
+      const base = labels.baseLabel, retry = labels.retryLabel;
+      if (input.mode === "diagnostic") return { primary: "診断", secondary: `${input.basePosition}/${input.baseTotal}` };
+      if (input.unlimited) return { primary: "学習", secondary: `${base} ${input.baseAnswered}問 / ${retry} ${input.retryAnswered}問` };
+      if (input.isRetry) return {
+        primary: retry,
+        secondary: `${base} ${input.baseAnswered}/${input.baseTotal} ・ ${retry} ${input.retryAnswered + (input.answeredCurrent ? 0 : 1)}`,
+      };
+      return {
+        primary: `問題 ${input.basePosition} / ${input.baseTotal}`,
+        secondary: `${base} ${input.basePosition}/${input.baseTotal}${input.retryAnswered ? ` ・ ${retry} ${input.retryAnswered}` : ""}`,
+      };
+    },
+  });
+})(globalThis);
 /* V75_USER_TEST_REMEDIATION_START */
 /* Vocabulary Coach v7.5 user-test remediation compatibility layer.
  * Injected immediately before init() by tools/apply_v75_patch.py.
@@ -1869,14 +1889,13 @@ showFeedback=function(v,ok,userAns=""){
 function v75UpdateSessionBar(showCurrent=true){
   if(!session)return;
   const total=session.actualSessionSize||0;
-  if(session.unlimited){
-    $("sessionCount").textContent=`基本 ${session.baseAnswered}問 / 再確認 ${session.retryAnswered}問`;
-  }else if(currentQuestion&&currentQuestion.isRetry&&showCurrent){
-    $("sessionCount").textContent=`${session.baseAnswered}/${total} ・ 再確認`;
-  }else{
-    const n=showCurrent&&currentQuestion&&!currentQuestion.isRetry&&!questionResolved?Math.min(session.baseAnswered+1,total):session.baseAnswered;
-    $("sessionCount").textContent=`${n}/${total}${session.retryAnswered?` ・ 再確認 ${session.retryAnswered}`:""}`;
-  }
+  const isRetry=!!(showCurrent&&currentQuestion&&currentQuestion.isRetry);
+  const n=showCurrent&&currentQuestion&&!currentQuestion.isRetry&&!questionResolved?Math.min(session.baseAnswered+1,total):session.baseAnswered;
+  $("sessionCount").textContent=globalThis.VocabularyLearningUI.progress({
+    mode:"study",unlimited:!!session.unlimited,isRetry,
+    basePosition:n,baseAnswered:session.baseAnswered,baseTotal:total,
+    retryAnswered:session.retryAnswered,answeredCurrent:!!questionResolved
+  }).secondary;
   $("sessionScore").textContent=`正解 ${session.correct} / 不正解 ${session.wrong}`;
 }
 function v75RenderCurrentQuestion(){

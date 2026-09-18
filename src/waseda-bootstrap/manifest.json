@@ -7,6 +7,7 @@
     "15-waseda-persistence.js",
     "20-engine-candidate.js",
     "../common-engine/session-orchestration.js",
+    "../common-engine/learning-ui-runtime.js",
     "30-compat-runtime.js",
     "31-waseda-session-runtime.js",
     "31a-waseda-planning-policy.js",
@@ -40,6 +41,10 @@
       "bytes": 2535,
       "sha256": "e0510dcae081e852f9002bc5d7f8f1af3aa1af2c57e0254030eacb61d62974b6"
     },
+    "../common-engine/learning-ui-runtime.js": {
+      "bytes": 1062,
+      "sha256": "3ecd8f6f4ccd4ad5bdc5508301ce4e0d155ef5655cde7e464ac3fb3c5c985ef4"
+    },
     "30-compat-runtime.js": {
       "bytes": 4647,
       "sha256": "7ae89188f178b358eb78a65f7159395d8027aa08fb6e918a1d7d5c7c7e5fea84"
@@ -57,8 +62,8 @@
       "sha256": "643bd528980b0a00103ff9dde07327809b1353b1c8159642bc42103a3359bc0c"
     },
     "33-v75-ui-runtime.js": {
-      "bytes": 45060,
-      "sha256": "e18d032d012ed8d6aa25524b80c10c438b6de371c6919b3c842cd9ea10fe5d9c"
+      "bytes": 45005,
+      "sha256": "4a4e631201016d80076f9b0b0273bfe48926c49fa080551a6881a4fd4250acf3"
     },
     "34-waseda-memory-policy.js": {
       "bytes": 1562,
@@ -120,5 +125,5 @@
   ],
   "baselineSourceGitBlobSha": "bb77a0c54153502e25bccb1ed89ca33b29b45c83",
   "baselineSourceSha256": "a6e58a9321d4e739216957fcbfaa0cf7f1d1621ca0f0bb88a03507da81bf452f",
-  "artifactSha256": "e808571eec3e3b291442099897b43471d91f82a092190d0f704657f5e8888a9a"
+  "artifactSha256": "1e46cc33924b8bafe54199c22c18914e403807a668400064203ed7a8d074523f"
 }
