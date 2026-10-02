@@ -5,6 +5,9 @@ on:
     branches: [main]
     paths:
       - progress-sync.js
+      - shared-progress-transport.js
+      - shared-progress-candidate.json
+      - tools/verify-shared-progress.mjs
       - tools/vocab_cloud_progress_test.js
       - tools/apply_vocab_cloud_progress.py
       - tools/assemble_waseda.py
@@ -28,6 +31,7 @@ jobs:
 
       - name: Syntax and cloud contract guards
         run: |
+          node tools/verify-shared-progress.mjs --upstream
           node --check progress-sync.js
           node tools/vocab_cloud_progress_test.js
 

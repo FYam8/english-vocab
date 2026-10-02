@@ -16,6 +16,7 @@ const page = await context.newPage();
 const pageErrors = [];
 const consoleErrors = [];
 const calls = [];
+let registrationId;
 page.on('pageerror', (e) => pageErrors.push(String(e)));
 page.on('console', (m) => { if (m.type() === 'error') consoleErrors.push(m.text()); });
 
@@ -23,10 +24,10 @@ await page.route(`${API}/**`, async (route) => {
   const req = route.request();
   const url = new URL(req.url());
   calls.push({ path: url.pathname, method: req.method(), body: req.postData() || '' });
-  let payload = {};
-  if (url.pathname === '/v1/register-anonymous') payload = { status: 'production', deviceCode: 'CI-ONLY' };
-  else if (url.pathname === '/v1/control') payload = { status: 'production', deviceCode: 'CI-ONLY', collectionEnabled: true };
-  else if (url.pathname === '/v1/events/batch') payload = { rejected: [] };
+  let payload = {ok:true};
+  if (url.pathname === '/v1/register-anonymous') {registrationId=JSON.parse(req.postData()).registrationId;payload = {ok:true,registrationId,status:'production',deviceCode:'CI-ONLY'};}
+  else if (url.pathname === '/v1/control') payload = {ok:true,registrationId,status:'production',deviceCode:'CI-ONLY',collectionEnabled:true};
+  else if (url.pathname === '/v1/events/batch') payload = {ok:true,accepted:JSON.parse(req.postData()).events.map(e=>e.eventId),duplicate:[],rejected:[]};
   await route.fulfill({
     status: 200,
     contentType: 'application/json',
@@ -60,7 +61,6 @@ try {
   };
   const raw = JSON.stringify(fixture);
   await page.evaluate(({ key, rawState }) => localStorage.setItem(key, rawState), { key: MAIN_KEY, rawState: raw });
-  calls.length = 0;
   await page.reload({ waitUntil: 'domcontentloaded' });
   await page.waitForSelector('#startBtn');
 
