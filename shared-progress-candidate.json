@@ -1,8 +1,12 @@
 {
   "repository": "FYam8/waseshibu-progress-cloud",
-  "commit": "182e36b6a684baa42fcfc46d6cd1889ad456973e",
+  "commit": "25c111ed4fc4dcd76b9af5053d6039698271e340",
   "sourcePath": "src/client/progress-transport.js",
   "localPath": "shared-progress-transport.js",
   "sha256": "9edfe701a45da206ad2b3da120329e5a0571828f89976bc7eb51f6bead87298d",
-  "productionVerified": false
+  "productionVerified": true,
+  "productionTag": "progress-prod-20261003-25c111e",
+  "manifestSha256": "cfff01529f5f71871c5ba3c323b1c9240ca03a24bbd7aaaf30d59263cb52d082",
+  "workerVersion": "d4bfb631-d857-444f-9a20-72c49a73e2dc",
+  "verifiedAt": "2026-10-02T21:12:35.824Z"
 }
