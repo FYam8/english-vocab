@@ -13,7 +13,7 @@ permissions:
   contents: read
 
 env:
-  WASEDA_PRODUCTION_BASELINE_SHA: 531d505c19a86eaa2c8bbc4b25179de8089ab585
+  WASEDA_PRODUCTION_BASELINE_SHA: 6f4788386a1935d6e2703c694257c1f327b0f831
   WASEDA_PRODUCTION_DATA_VERSION: 2019-2026-v7.6-memory-curve-scheduler
 
 jobs:
@@ -128,7 +128,7 @@ jobs:
 
       - name: Protect and validate Waseda cloud adapter
         run: |
-          git diff --exit-code "${WASEDA_PRODUCTION_BASELINE_SHA}"...HEAD -- progress-sync.js
+          node tools/verify-shared-progress.mjs --upstream
           node --check progress-sync.js
           node tools/vocab_cloud_progress_test.js
 
@@ -156,13 +156,15 @@ jobs:
           cp index.html /tmp/common-engine-qa-site/index.html
           cp index.html /tmp/common-engine-cloud-site/index.html
           cp progress-sync.js /tmp/common-engine-cloud-site/progress-sync.js
+          cp shared-progress-transport.js /tmp/common-engine-cloud-site/shared-progress-transport.js
           git show "${WASEDA_PRODUCTION_BASELINE_SHA}:index.html" > /tmp/common-engine-baseline-site/index.html
           for site in /tmp/common-engine-qa-site /tmp/common-engine-baseline-site; do
             cat > "$site/progress-sync.js" <<'JS'
           /* CI-only no-op cloud adapter.
-             The real production progress-sync.js is protected byte-for-byte and
+             The real adapter and immutable shared transport are
              validated separately above; local browser parity must not call production APIs. */
           JS
+            touch "$site/shared-progress-transport.js"
           done
 
       - name: Install Playwright Chromium

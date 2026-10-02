@@ -86,8 +86,8 @@
       "sha256": "c75daac3527b417e35721f974b3407f8fd99521c11943ec089868d2ac3cb99f0"
     },
     "90-shell-suffix.html": {
-      "bytes": 82,
-      "sha256": "89bfca9e9c40aa28dcbe0554737c4db5a03ecb14b9a1f23beca2ddd50fafb75c"
+      "bytes": 136,
+      "sha256": "bd85887041c35f99e67a190ebad8b008a1ea8868982c7f7a59841ed08bcfe82b"
     }
   },
   "boundaries": {
@@ -125,5 +125,5 @@
   ],
   "baselineSourceGitBlobSha": "bb77a0c54153502e25bccb1ed89ca33b29b45c83",
   "baselineSourceSha256": "a6e58a9321d4e739216957fcbfaa0cf7f1d1621ca0f0bb88a03507da81bf452f",
-  "artifactSha256": "1e46cc33924b8bafe54199c22c18914e403807a668400064203ed7a8d074523f"
+  "artifactSha256": "a736416672063c04973e85de6bc96f0248585de74dc49147f2552592e875f6d8"
 }

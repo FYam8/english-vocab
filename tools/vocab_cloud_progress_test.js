@@ -1,6 +1,7 @@
 const fs=require('fs');
 const assert=require('assert');
 const sync=fs.readFileSync('progress-sync.js','utf8');
+const shared=fs.readFileSync('shared-progress-transport.js','utf8');
 const index=fs.readFileSync('index.html','utf8');
 const has=(t,m,l)=>assert.ok(t.includes(m),`missing ${l}: ${m}`);
 const lacks=(t,m,l)=>assert.ok(!t.includes(m),`forbidden ${l}: ${m}`);
@@ -10,11 +11,11 @@ has(sync,'String.fromCharCode(119,97,115,101,115,104,105,98,117)','shared namesp
 has(sync,"STORAGE_KEY=KEY_NS+'_vocab_state'",'stable vocab storage key');
 has(sync,"SYNC_DB=KEY_NS+'-progress-sync'",'shared sync DB');
 has(sync,'SYNC_DB_VERSION=7','shared sync DB version');
-for(const p of ['/v1/register-anonymous','/v1/control','/v1/progress/snapshot','/v1/events/batch'])has(sync,p,p);
+for(const p of ['/v1/register-anonymous','/v1/control','/v1/progress/snapshot','/v1/events/batch'])has(shared,p,p);
 for(const s of ['state:summary','state:mastery','state:retention','state:today'])has(sync,s,s);
-has(sync,"reg?.status!=='production'",'production-only occurrence guard');
-has(sync,'canonicalJson({eventType:record.eventType,payload:record.payload})','timestamp-independent fingerprint');
-has(sync,'pagehide','page-exit reconcile');
+has(shared,"reg?.status!=='production'",'production-only occurrence guard');
+has(shared,'canonicalJson({eventType:record.eventType,payload:record.payload})','timestamp-independent fingerprint');
+has(shared,'pagehide','page-exit reconcile');
 has(sync,'studying remains local-first','local-first isolation');
 has(sync,"mastered=attemptedRows.filter",'objective-only mastered count');
 has(sync,"stable=attemptedRows.filter",'objective-only stable count');

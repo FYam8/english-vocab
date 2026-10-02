@@ -102,5 +102,5 @@ jobs:
           assert.equal(v.thirdPlanningAdapterRuntimeValidation.rikkyoRuntimeUnchanged,true);
           console.log('third planning runtime pin: PASS');
           JS
-          git diff --exit-code 531d505c19a86eaa2c8bbc4b25179de8089ab585...HEAD -- progress-sync.js
+          node tools/verify-shared-progress.mjs --upstream
           git diff --check
