@@ -22,8 +22,8 @@
   ],
   "parts": {
     "00-shell-prefix.html": {
-      "bytes": 18920,
-      "sha256": "124bb350175c2863dc661365a875648c60590a2b09d28c9b75ff19a4a61615e1"
+      "bytes": 19085,
+      "sha256": "90a24309297d6e4ceb0da92b7788003604f49530d3def43b46f64d7f57b9a697"
     },
     "10-waseda-data.js": {
       "bytes": 708906,
@@ -125,5 +125,5 @@
   ],
   "baselineSourceGitBlobSha": "bb77a0c54153502e25bccb1ed89ca33b29b45c83",
   "baselineSourceSha256": "a6e58a9321d4e739216957fcbfaa0cf7f1d1621ca0f0bb88a03507da81bf452f",
-  "artifactSha256": "ae1b150b0d151af3174989952b220c801e9d1893780785d4f41f1b636114e181"
+  "artifactSha256": "572bec3c04f8aadb93255ea70da041e56e71b1b6d4b2efb305cc7b04acd6547c"
 }
